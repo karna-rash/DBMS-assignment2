@@ -1,14 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./components/Student/Home";
 
 function App() {
+  useEffect(() => {
+    // localStorage.clear('token');
+    //Have to sort this
+  }, []);
+const token = sessionStorage.getItem('token');
   return (
-    <div >
-      <h1 className="text-green-500">
-       Test for tailwind
-      </h1>
+    <Router>
+      <div>
+      {!token && <Navbar/>}
+     {token && <Navbar1/>}
 
-    </div>
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
