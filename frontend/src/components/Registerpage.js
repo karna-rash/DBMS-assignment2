@@ -7,6 +7,7 @@ function Registerpage() {
 
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
+  const [dispName, setDispName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [regRes, setRegRes] = useState('0');
@@ -60,7 +61,7 @@ function Registerpage() {
           value={userName}
           placeholder="display name"
           required
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setDispName(e.target.value)}
         />
         <input
           type="email"
