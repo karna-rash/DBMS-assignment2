@@ -1,5 +1,6 @@
 import express from 'express';
 import User from '../models/users.js'
+import jwt from 'jsonwebtoken'
 
 const app = express();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 // Authentication Routes
 router.post('/login', async (req, res) => {
   console.log(req.body);
-  let users = await User.find({ username: req.body.userName });
+  let users = await User.find({ username: req.body.userName }); //change this according to postgres
   if (users.length == 0) {
     res.sendStatus(406).json({ logRes: -1 });
   }
