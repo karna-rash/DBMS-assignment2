@@ -1,5 +1,4 @@
 import client from '../config/database.js'
-
 client.connect((err)=>
 {
   if(err)
