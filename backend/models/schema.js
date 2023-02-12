@@ -1,13 +1,25 @@
 
-import client from '../cofig/database.js'
-client.connect(()=>
+import client from '../config/database.js';
+client.connect(async function(err)
 {
   if(err)
   {
-    console.log(err)
+    throw(err);
   }
-  var sql="CREATE TABLE user_info ( "+
-  " id SERIAL PRIMARY KEY, "+
+
+  var sql1="create table if not exists users ("+
+  " username varchar (40),"+
+  " password varchar(30),"+
+  " display_name varchar(255),"+
+  " primary key (username))";
+
+await client.query(sql1, function (err, result) {
+if (err) throw err;
+
+});
+  var sql="CREATE TABLE if not exists user_info ( "+
+  "id SERIAL PRIMARY KEY, "+
+  "username varchar(40) not null unique, "+
   "email varchar(40), "+
   "account_id INTEGER, "+
   "reputation INTEGER NOT NULL, "+
@@ -20,17 +32,14 @@ client.connect(()=>
   "website_url VARCHAR(255), "+
   "about_me TEXT, "+
   "creation_date TIMESTAMP NOT NULL, "+
-  "last_access_date TIMESTAMP NOT NULL )";
+  "last_access_date TIMESTAMP NOT NULL, "+ 
+  "foreign key (username,display_name) references users "+
+  ");";
 
-  con.query(sql, function (err, result) {
-      if (err) throw err;
+ await client.query(sql, function (err, result) {
+      if (err) console.error(err);
+      else{
+        client.end();
+       }
     });
-
-var sql1="create table user ( id serial primary key, password varchar(30) not null, display_name varchar(255))";
-
-con.query(sql1, function (err, result) {
-  if (err) throw err;
 });
-
-});
-client.close();
