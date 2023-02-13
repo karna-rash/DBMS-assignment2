@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-dotenv.config({path: __dirname+'\\..\\.env' });
+dotenv.config({path: __dirname+'../.env' });
 const app = express();
 
 const router = express.Router();
@@ -44,34 +44,7 @@ router.post('/login', async (req, res) => {
 
 app.post('/register',async (req, res) => {
   console.log(req.body)
-  let user = await User.find({ username: req.body.userName });
-  console.log
-  if (user.length == 0) {
-
-    let otpuser = new Otp(
-      {
-        username: req.body.userName,
-        email: req.body.email,
-        password: req.body.pass,
-        otp: lodash.random(99999, 1000000),
-      });
-    await otpuser.save().then((result) => { console.log(result) }).catch((err) => console.log(err));
-
-    //sending otp
-
-    mailoptions.text = 'Your 6 digit OTP is ' + otpuser.otp;
-    mailoptions.to = req.body.email;
-    transporter.sendMail(mailoptions, (err) => {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        console.log('email sent');
-      }
-
-    })
-    res.json({ regRes: 1 });
-  }
+  
 
   });
 

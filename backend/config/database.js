@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-dotenv.config({path: __dirname+'\\..\\.env' });
+dotenv.config({path: __dirname+'../.env' });
 const { Client } = pg
 const client = new Client({
   user: process.env.PGUSER,
