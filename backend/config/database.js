@@ -6,12 +6,12 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 dotenv.config({path: __dirname+'\\..\\.env' });
 const { Client } = pg
 const client = new Client({
-  user: PGUSER,
-  host: PGHOST,
-  database: PGDB,
-  password: PGPWD,
-  port: PGPORT,
-  ENDPOINT_ID:PGEND_POINT,
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDB,
+  password: process.env.PGPWD,
+  port: process.env.PGPORT,
+  ENDPOINT_ID:process.env.PGEND_POINT,
   ssl:{
     rejectUnauthorized: true
   }
