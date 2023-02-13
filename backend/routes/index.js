@@ -67,9 +67,14 @@ router.post('/register',async (req, res) => {
             console.log(err.stack)
           }
         })
+        res.json({
+          regRes:1
+        })
       }
       else{
-        
+        res.json({
+          regRes:-1
+        })
       }
     }
   })
