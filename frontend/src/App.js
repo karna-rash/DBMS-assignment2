@@ -14,7 +14,7 @@ const token = sessionStorage.getItem('token');
     <Router>
       <div>
       {!token && <Navbar/>}
-     {token && <Navbar1/>}
+       {token && <Navbar1/>}
 
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
