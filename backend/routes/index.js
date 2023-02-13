@@ -44,8 +44,32 @@ router.post('/login', async (req, res) => {
 
 app.post('/register',async (req, res) => {
   console.log(req.body)
-  
+  const query = {
+    name: 'fetch-user',
+    text: 'SELECT count(username) FROM users WHERE username = $1',
+    values: [req.body.userName],
+  }
 
+  client.query(query, (err, res) => {
+    if (err) {
+      console.log(err.stack)
+    } else {
+      if(res.rows[0]==0){
+        const query = {
+          text: 'insert into users values ($1,$2,$3)',
+          values: [req.body.userName,req.body.password,req.body.display_name],
+        }
+        client.query(query, (err, res) => {
+          if (err) {
+            console.log(err.stack)
+          }
+        })
+      }
+      else{
+        
+      }
+    }
+  })
   });
 
 
