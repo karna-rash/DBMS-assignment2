@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import client from '../config/database.js'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -52,17 +53,18 @@ router.post('/register',async (req, res) => {
     text: 'SELECT count(username) FROM users WHERE username = $1',
     values: [req.body.userName],
   }
-
-  client.query(query, (err, res) => {
-    if (err) {
+ 
+  client.query(query, (err, resl) => {
+    if (err) { 
       console.log(err.stack)
     } else {
-      if(res.rows[0]==0){
+      
+      if(resl.rows[0].count==0){
         const query = {
           text: 'insert into users values ($1,$2,$3)',
-          values: [req.body.userName,req.body.password,req.body.display_name],
+          values: [req.body.userName,req.body.password,req.body.displayName],
         }
-        client.query(query, (err, res) => {
+        client.query(query, (err, resl) => {
           if (err) {
             console.log(err.stack)
           }

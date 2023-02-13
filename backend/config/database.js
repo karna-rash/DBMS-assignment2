@@ -16,6 +16,10 @@ const client = new Client({
     rejectUnauthorized: true
   }
 })
-
+client.connect((err)=>
+{
+  if(err) throw err
+  else console.log('connected to database')
+})
 
 export default client;
