@@ -1,5 +1,5 @@
-
 import client from '../config/database.js';
+
 client.connect(async function(err)
 {
   if(err)
@@ -36,7 +36,7 @@ if (err) throw err;
   "foreign key (username,display_name) references users "+
   ");";
 
- await client.query(sql, function (err, result) {
+ client.query(sql, function (err, result) {
       if (err) console.error(err);
       else{
         client.end();

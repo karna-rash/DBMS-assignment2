@@ -1,0 +1,8 @@
+post http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "userName":"test",
+    "displayName":"anamika",
+    "password":"test"
+}

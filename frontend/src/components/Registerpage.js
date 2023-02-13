@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
-import '../App.css';
 import axios from 'axios'
 function Registerpage() {
 
@@ -34,20 +33,22 @@ function Registerpage() {
 
   };
   return (
-
+//-2 for processing the request
+//-1 for username already taken, display the form again
+//0 for initial
+//1 for succesful response , navigate to login page, notify for a second that account creation is successful
     <div className="App">
       <Navbar />
       {
         regRes == -2 && <p>Processing please wait.... Don't Click Button again</p>
       }
 
-      {
-        regRes == 0 && <p>Enter inputs in below fields</p>
-      }
-      {regRes == 1 && navigate('/register/' + userName)}
+   //   {regRes == 1 && navigate('/register/' + userName)}
       {
         regRes == -1 && <p>This username already taken, Enter a different username</p>
       }
+      {
+         regRes ==0 &&   <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -79,10 +80,9 @@ function Registerpage() {
         />
 
         <button type="submit">Register</button>
-
-
-
       </form>
+      </div>
+}
     </div>
 
   );
