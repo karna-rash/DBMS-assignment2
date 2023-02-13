@@ -2,8 +2,10 @@ import express from 'express';
 import User from '../models/users.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import * as url from 'url';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-dotenv.config();
+dotenv.config({path: __dirname+'\\..\\.env' });
 const app = express();
 
 const router = express.Router();
