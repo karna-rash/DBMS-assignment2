@@ -51,11 +51,22 @@ function Registerpage() {
       }
       
       {
-         regRes ==0 &&   <div>
-      <form onSubmit={handleSubmit}>
+         regRes ==0 &&   <div className="min-h-screen py-40 from-mycolour to-mycolour2 bg-gradient-115">
+      
+        <div className="container mx-auto">
+          <div className="flex w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+            <div className="w-1/2 bg-register-image">
+              <h1 className="text-white text-3xl text-center mt-4">Welcome</h1>
+             
+            </div>
+            <div className="w-1/2 py-16 px-12">
+              <h2 className='text-3xl text-center mb-4'>Register</h2>
+              <p className='mb-4 text-center'>Create your account</p>
+              <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={userName}
+          className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="userame"
           required
           onChange={(e) => setUserName(e.target.value)}
@@ -63,6 +74,7 @@ function Registerpage() {
         <input
           type="text"
           value={userName}
+          className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="display name"
           required
           onChange={(e) => setDispName(e.target.value)}
@@ -70,6 +82,7 @@ function Registerpage() {
         <input
           type="email"
           value={email}
+          className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="email"
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -77,13 +90,17 @@ function Registerpage() {
         <input
           type="password"
           value={pass}
+          className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="password"
           required
           onChange={(e) => setPass(e.target.value)}
         />
 
-        <button type="submit">Register</button>
+        <button type="submit" className="border w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Register</button>
       </form>
+            </div>
+          </div>
+        </div>
       </div>
 }
     </div>
