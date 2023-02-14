@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 import axios from 'axios'
+import Loading from './Loading';
 function Registerpage() {
 
   const navigate = useNavigate();
@@ -17,8 +18,8 @@ function Registerpage() {
 
     axios.post('http://localhost:5000/register', {
       userName: userName,
-
-      pass: pass,
+      dispName:dispName,
+      password: pass,
       email: email
     }).then((res) => {
       setRegRes(res.data.regRes);
@@ -38,9 +39,9 @@ function Registerpage() {
 //0 for initial
 //1 for succesful response , navigate to login page, notify for a second that account creation is successful
     <div className="App">
-      <Navbar />
+      
       {
-        regRes == -2 && <p>Processing please wait.... Don't Click Button again</p>
+        regRes == -2 && <Loading/>
       }
 
    //   {regRes == 1 && navigate('/register/' + userName)}
