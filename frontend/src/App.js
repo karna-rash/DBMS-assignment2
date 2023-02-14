@@ -1,6 +1,7 @@
 import Login from './components/Login';
 import Register from './components/Registerpage';
 import Navbar from './components/Navbar';
+import Posts from './components/Posts';
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -21,6 +22,7 @@ const token = sessionStorage.getItem('token');
         //  <Route exact path="/" element={<div><h1>Homepage</h1></div>}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
+          <Route exact path="/posts" element={<Posts />}></Route>
         </Routes>
       </div>
     </Router>
