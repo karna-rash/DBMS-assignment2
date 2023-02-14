@@ -7,19 +7,23 @@ const Login = () => {
         const [pass, setPass] = useState('');
         const [logRes,setLogRes] = useState(0);
   let handleSubmit = async (e) => {
+    e.preventDefault();
     setLogRes(-1);   
     axios.post('http://localhost:5000/login', {
       userName: userName,
 
-      pass: pass,
+      password: pass,
     }).then((res) => {
       setLogRes(res.data.logRes);
       if (res.data.logRes == 1) {
-        document.cookie = "token="+res.data.token;
-        navigate('/student/');
+        console.log('here')
+      //  document.cookie = "token="+res.data.token;
+      navigate('/home2');
+        
       }
 
     }).catch((err) => {
+      
       console.log(err);
     })
   }

@@ -42,7 +42,7 @@ router.post('/login', async (req, res) => {
   // }
   res.json(
     {
-      req:req.body
+      logRes:1
     })
 });
 

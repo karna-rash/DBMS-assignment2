@@ -44,10 +44,12 @@ function Registerpage() {
         regRes == -2 && <Loading/>
       }
 
-   //   {regRes == 1 && navigate('/register/' + userName)}
+      {regRes == 1 && navigate('/register/' + userName)}
+      
       {
         regRes == -1 && <p>This username already taken, Enter a different username</p>
       }
+      
       {
          regRes ==0 &&   <div>
       <form onSubmit={handleSubmit}>
