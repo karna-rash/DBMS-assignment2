@@ -18,8 +18,8 @@ function Registerpage() {
 
     axios.post('http://localhost:5000/register', {
       userName: userName,
-
-      pass: pass,
+      dispName:dispName,
+      password: pass,
       email: email
     }).then((res) => {
       setRegRes(res.data.regRes);
