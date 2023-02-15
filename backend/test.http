@@ -1,8 +1,6 @@
-post http://localhost:5000/register
+get http://localhost:5000/users
 Content-Type: application/json
 
 {
     "userName":"test",
-    "displayName":"anamika",
-    "password":"test"
 }
