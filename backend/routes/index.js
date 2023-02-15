@@ -81,6 +81,25 @@ router.post('/register',async (req, res) => {
     }
   })
   });
-
+  router.get('/tags',(req,res)=>
+  {
+    const query = {
+      name: 'fetch-tags',
+      text: 'SELECT * FROM tags',
+      values: [],
+    }
+     client.query(query, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          {
+            res.json({
+              tags:resl.rows
+            })
+          }
+        })
+        
+  });
 
 export default router;
