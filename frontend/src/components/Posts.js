@@ -75,7 +75,7 @@ const handleSearch = (e)=>
           <div className="sm:flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between">
 					<input className="text-base text-gray-400 flex-grow outline-none px-2 " type="text" placeholder="Search" 
           onChange={(e)=>{setSearchValue(e.target.value,); }}/>
-          {!!autocomp && <Autocomplete tags={matches}/>}
+          {!!autocomp && <Autocomplete tags={matches} searchOption={searchOption}/>}
 					<div class="ms:flex items-center px-2 rounded-lg space-x-4 mx-auto ">
 						<select  className="text-base text-gray-800 outline-none border-2 px-4 py-2 rounded-lg"
             onChange={(e)=>setSearchOption(e.target.value)}>
