@@ -81,6 +81,7 @@ router.post('/register',async (req, res) => {
     }
   })
   });
+
   router.get('/tags',(req,res)=>
   {
     const query = {
@@ -102,4 +103,8 @@ router.post('/register',async (req, res) => {
         
   });
 
+  router.get('/users',(req,res)=>
+  {
+
+  });
 export default router;
