@@ -15,7 +15,7 @@ const handleSearch = (e)=>
 
     return(
 
-        <div>
+        <div >
 
           <div className="sm:flex items-center bg-white rounded-lg overflow-hidden px-2 py-1 justify-between">
 					<input className="text-base text-gray-400 flex-grow outline-none px-2 " type="text" placeholder="Search" 

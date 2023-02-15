@@ -1,8 +1,16 @@
 const Loading = () => {
     return ( 
-        <div className="flex justify-center items-center space x-2">
-            <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600" role="status"></div>
-            <span class="visually-hidden">Loading...</span>
+        <div className="flex justify-center items-center w-screen h-screen">
+            <div className="inline-block w-24 h-24 
+            border-8 
+            border-t-amber-500 
+            border-r-blue-500 
+            border-b-rose-500 
+            border-l-green-500 
+            rounded-full 
+            animate-spin" role="status"></div>
+           
+            <span class="visually-hidden">     Loading...</span>
         </div>
      );
 }
