@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
+
+
 const Login = () => {
         const navigate = useNavigate();
         const [userName, setUserName] = useState('');
@@ -12,13 +14,14 @@ const Login = () => {
     setLogRes(-1);   
     axios.post('http://localhost:5000/login', {
       userName: userName,
-
       password: pass,
     }).then((res) => {
       setLogRes(res.data.logRes);
       if (res.data.logRes == 1) {
-        console.log('here')
         
+       
+        document.cookies = res.data.token;
+
       setTimeout(() => {
         <Loading/>
       }, 2000);
@@ -26,7 +29,7 @@ const Login = () => {
       navigate('/home2');
         
       }
-
+      
     }).catch((err) => {
       
       console.log(err);
