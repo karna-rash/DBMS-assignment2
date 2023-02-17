@@ -62,10 +62,11 @@ var sql3="create table if not exists answers( "+
   " id serial primary key, "+
   " post_id integer, "+
   " answeredby_id integer, "+
-  "down_votes INTEGER DEFAULT 0, "+
-  "up_votes INTEGER DEFAULT 0, "+
+  "body text, "+
   "creation_date TIMESTAMP NOT NULL, "+
   "last_edited TIMESTAMP NOT NULL, "+
+  "down_votes INTEGER DEFAULT 0, "+
+  "up_votes INTEGER DEFAULT 0, "+
   "foreign key (answeredby_id) references users(id), "+
   "foreign key (post_id) references posts(id) "+
   ");"
