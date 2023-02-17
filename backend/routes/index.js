@@ -122,7 +122,7 @@ router.post('/register',async (req, res) => {
         })
   });
 
-  router.get('/posts/:id',(req,res)=>
+  router.get('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id;
      const query1 = {
