@@ -83,6 +83,7 @@ function Posts(props) {
 
   return (
     <div className="flex min-h-screen justify-center from-blue-500 to-emerald-500 bg-gradient-115">
+      <div className="container mx-auto">
       <div className="translate-y-7">
         <div className="relative w-150 ">
           <form>
@@ -110,7 +111,6 @@ function Posts(props) {
                 </select>
 
                 <button
-                  className="bg-indigo-500 text-white text-base rounded-lg px-4 py-2 font-thin"
                   onClick={handleSearch}
                 >
                   <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-2 py-2 hover:bg-indigo-700">
@@ -149,8 +149,11 @@ function Posts(props) {
             </div>
           </form>
         </div>
-      </div>
+      </div >
+      <div className="translate-y-72">
       {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/>}
+      </div>
+    </div>
     </div>
   );
 }
