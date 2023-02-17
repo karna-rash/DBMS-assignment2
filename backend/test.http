@@ -1,6 +1,6 @@
-get http://localhost:5000/users
+get http://localhost:5000/posts/code-smell
 Content-Type: application/json
 
 {
-    "userName":"ab"
+
 }

@@ -125,6 +125,36 @@ router.post('/register',async (req, res) => {
   router.get('/posts/:id',(req,res)=>
   {
      let tag = req.params.id;
+     const query1 = {
+      text: "SELECT * FROM posts where tags like '%%"+tag+"%%' order by id limit 10",
+      values: [],
+    }
+    let posts=[];
+    const query2 = {
+      text: "SELECT id FROM posts where tags like '%%"+tag+"%%'",
+      values: [],
+    }
+     client.query(query1, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rows)
+            posts=resl.rows;
+          }
+        })
+        client.query(query2, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rowCount)
+            res.json({
+              posts:posts,
+              totpage:resl.rowCount/10
+            })
+          }
+        })
           
 
   });
