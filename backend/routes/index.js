@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import client from '../config/database.js'
+import client from '../config/conn.js'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -105,6 +105,20 @@ router.post('/register',async (req, res) => {
 
   router.get('/users',(req,res)=>
   {
-
+    const query = {
+      text: "SELECT username FROM users where username like '%%"+req.body.userName+"%%'",
+      values: [],
+    }
+     client.query(query, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rows)
+            res.json({
+              users:resl.rows
+            })
+          }
+        })
   });
 export default router;
