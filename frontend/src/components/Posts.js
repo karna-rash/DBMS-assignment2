@@ -44,8 +44,11 @@ function Posts(props) {
       });
       setmatches(temp);
       setautocomp(1);
-    } else if (searchOption == "username") {
-    } else {
+    } else if (searchOption == "username") 
+    {
+    } 
+    else
+    {
     }
   }
 
@@ -53,7 +56,20 @@ function Posts(props) {
     autocompleter();
   }, [searchValue]);
 
-  const handleSearch = (e) => {};
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(searchOption=='tag')
+    {
+      axios.get('http://localhost:5000/posts/'+searchValue,{}).
+      then((res)=>
+      {
+
+      }).catch((err)=>
+      {
+
+      })
+    }
+  };
 
   return (
     <div className="flex min-h-screen justify-center from-blue-500 to-emerald-500 bg-gradient-115">
@@ -124,6 +140,7 @@ function Posts(props) {
           </form>
         </div>
       </div>
+      {!!posts && <DisplayPosts/>}
     </div>
   );
 }

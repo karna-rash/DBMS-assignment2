@@ -121,4 +121,11 @@ router.post('/register',async (req, res) => {
           }
         })
   });
+
+  router.get('/posts/:id',(req,res)=>
+  {
+     let tag = req.params.id;
+          
+
+  });
 export default router;
