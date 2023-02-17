@@ -122,9 +122,16 @@ router.post('/register',async (req, res) => {
         })
   });
 
+  router.get('/posts/tag/:id1/:id2',(req,res)=>
+{
+    let tag = req.params.id1; console.log(tag)
+    let pagenum = req.params.id2;
+    console.log(id1,id2)
+})
+
   router.get('/posts/tag/:id',(req,res)=>
   {
-     let tag = req.params.id;
+     let tag = req.params.id; console.log(tag)
      const query1 = {
       text: "SELECT * FROM posts where tags like '%%"+tag+"%%' order by id limit 10",
       values: [],
@@ -156,6 +163,7 @@ router.post('/register',async (req, res) => {
           }
         })
           
-
   });
+
+
 export default router;

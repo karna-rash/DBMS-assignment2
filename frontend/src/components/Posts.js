@@ -62,17 +62,24 @@ function Posts(props) {
     e.preventDefault();
     if(searchOption=='tag')
     {
-      axios.get('http://localhost:5000/posts/tag'+searchValue,{}).
-      then((res)=>
+      axios.get('http://localhost:5000/posts/tag/'+searchValue,{}).
+      then(async (res)=>
       {
            setPosts(res.data.posts)
-          if(posts.length>0) setPostsReady(1);
+           setPages(res.data.totpage) 
+          
       }).catch((err)=>
       {
-           connsole.log(err);
+           console.log(err);
       })
     }
   };
+
+  useEffect(()=>
+  {
+     if(posts.length>0) setPostsReady(1)
+     console.log(posts,' ',pages)
+  },[posts]);
 
   return (
     <div className="flex min-h-screen justify-center from-blue-500 to-emerald-500 bg-gradient-115">
@@ -103,7 +110,7 @@ function Posts(props) {
                 </select>
 
                 <button
-                  clasName="bg-indigo-500 text-white text-base rounded-lg px-4 py-2 font-thin"
+                  className="bg-indigo-500 text-white text-base rounded-lg px-4 py-2 font-thin"
                   onClick={handleSearch}
                 >
                   <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-2 py-2 hover:bg-indigo-700">
@@ -127,7 +134,7 @@ function Posts(props) {
                 <div>
                   <div class="block appearance-none w-full bg-white border overflow-y-auto h-56  border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     {matches.map((match) => (
-                      <option
+                      <option key={match.id}
                         className="hover:text-blue-500 py-2"
                         onClick={(e) => {
                           handleClick(e);
@@ -143,7 +150,7 @@ function Posts(props) {
           </form>
         </div>
       </div>
-      {!!postsReady && <DisplayPosts posts={posts} pages={pages}/>}
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/>}
     </div>
   );
 }
