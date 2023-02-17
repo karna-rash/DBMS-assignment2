@@ -8,6 +8,7 @@ const [totpagenum,settotpagenum] = useState(0);
 const [posts,setPosts] = useState([]);
 const [curpagenum,setCurpagenum] = useState(1);
 
+
 useEffect(()=>
 {
     setPosts(props.posts);
@@ -35,6 +36,7 @@ function handleBack()
   }
 }
 
+
 function handleNext()
 {
   if(curpagenum != totpagenum)
@@ -54,28 +56,42 @@ function handleNext()
   }
 }
 
-    return (
-    //     <div>
-    //         <div>
-    //     {
-            
-    //         posts.map((post)=>(
-    //          <div >
-    //            {posts.title}
-    //          </div>
-    //         ))
-    //     }
-    //     </div>
-    //  <div className="justify-between"> <button className="border w-10 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> {curpagenum} of {totpagenum} <button className="border w-10 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
-    //     </div>
+function List({items}){
+  var arr=items.tags.split(/[<\s>]+/);
+  arr=arr.filter(function (el) {
+    return el != "";
+  })
+
+  return(
+    <div className="flex flex-row">
+    {
+      arr.map(
+        (tag,index)=>{
+           return(
+           <div className="flex justify-between">
+             <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2">{tag}
+             </button>
+            <p>&nbsp;&nbsp;</p> 
+           </div>
+
+           )
+        }
+      )
+    }
+    </div>
+  )
+}
+
+  return (
+
         <div className="w-full overflow-hidden rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             {/* Table header */}
             <thead>
               <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                <th className="px-4 py-3">Title</th>
-                <th className="px-4 py-3">tags</th>
+                <th className="px-4 py-3"><h2>Title</h2></th>
+                <th className="px-4 py-3"><h2>Tags</h2></th>
               </tr>
             </thead>
             {/* Table body */}
@@ -83,15 +99,17 @@ function handleNext()
               {/* Map through the data and create a row for each item */}
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3">{post.title}</td>
-                  <td className="px-4 py-3">{post.tags}</td>
-                  {/* Add more cells as needed */}
+                  <td className="px-4 py-3"><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">{post.title}</a></td>
+                  
+                  <td className="px-4 py-3">
+                  <List items={post}></List>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> {curpagenum} of {totpagenum} <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
+        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> {curpagenum}<button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
     )
 }

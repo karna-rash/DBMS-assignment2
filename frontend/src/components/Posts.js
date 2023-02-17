@@ -11,6 +11,7 @@ function Posts(props) {
   const [matches, setmatches] = useState([]);
   const [posts,setPosts] = useState([]);
   const [pages,setPages] = useState(0);
+  const [yvalue,setyvalue]=useState(28);
 
   function handleClick(e) {
     let search_bar = document.getElementById("search-bar");
@@ -55,11 +56,18 @@ function Posts(props) {
   }
 
   useEffect(() => {
+    setyvalue(72)
     autocompleter();
+    if(searchValue==""){
+      setyvalue(28)
+    }
   }, [searchValue]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setPostsReady(0)
+    setautocomp(0)
+    setyvalue(28)
     if(searchOption=='tag')
     {
       axios.get('http://localhost:5000/posts/tag/'+searchValue,{}).
@@ -112,6 +120,8 @@ function Posts(props) {
 
                 <button
                   onClick={handleSearch}
+                  className="transition duration-150 ease-in-out"
+                  type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
                 >
                   <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-indigo-600 px-2 py-2 hover:bg-indigo-700">
                     <svg
@@ -131,8 +141,8 @@ function Posts(props) {
             </div>
             <div className="absolute mt-auto w-full overflow-hidden rounded-b-lg bg-white">
               {!!autocomp && (
-                <div>
-                  <div class="block appearance-none w-full bg-white border overflow-y-auto h-56  border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <div  >
+                  <div   class=" appearance-none w-full block bg-white border overflow-y-auto h-56  border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     {matches.map((match) => (
                       <option key={match.id}
                         className="hover:text-blue-500 py-2"
@@ -150,8 +160,8 @@ function Posts(props) {
           </form>
         </div>
       </div >
-      <div className="translate-y-72">
-      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/>}
+      <div className={`transform translate-y-${yvalue}`}>
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/> }
       </div>
     </div>
     </div>
