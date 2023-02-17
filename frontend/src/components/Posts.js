@@ -5,10 +5,12 @@ function Posts(props) {
   const [searchValue, setSearchValue] = useState("");
   const [searchOption, setSearchOption] = useState("tag");
   const [autocomp, setautocomp] = useState(0);
-  const [posts, setPosts] = useState(0);
+  const [postsReady, setPostsReady] = useState(0);
   const [tagload, settagload] = useState(0);
   const [tagarray, settagarray] = useState([]);
   const [matches, setmatches] = useState([]);
+  const [posts,setPosts] = useState([]);
+  const [pages,setPages] = useState(0);
 
   function handleClick(e) {
     let search_bar = document.getElementById("search-bar");
@@ -60,13 +62,14 @@ function Posts(props) {
     e.preventDefault();
     if(searchOption=='tag')
     {
-      axios.get('http://localhost:5000/posts/'+searchValue,{}).
+      axios.get('http://localhost:5000/posts/tag'+searchValue,{}).
       then((res)=>
       {
-
+           setPosts(res.data.posts)
+          if(posts.length>0) setPostsReady(1);
       }).catch((err)=>
       {
-
+           connsole.log(err);
       })
     }
   };
@@ -140,7 +143,7 @@ function Posts(props) {
           </form>
         </div>
       </div>
-      {!!posts && <DisplayPosts/>}
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages}/>}
     </div>
   );
 }
