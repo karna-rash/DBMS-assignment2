@@ -124,9 +124,9 @@ router.post('/register',async (req, res) => {
 
   router.get('/posts/tag/:id1/:id2',(req,res)=>
 {
-    let tag = req.params.id1; console.log(tag)
+    let tag = req.params.id1; 
     let pagenum = req.params.id2;
-    console.log(id1,id2)
+    
 })
 
   router.get('/posts/tag/:id',(req,res)=>
