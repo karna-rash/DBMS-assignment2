@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Home2 from './components/Home2';
 import Posts from './components/Posts';
+import Post from './components/Post'
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -13,7 +14,7 @@ function App() {
     // localStorage.clear('token');
     //Have to sort this
   }, []);
-const token = sessionStorage.getItem('token');
+const token = document.cookies;
   return (
     <Router>
       <div>
@@ -26,6 +27,7 @@ const token = sessionStorage.getItem('token');
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/posts" element={<Posts />}></Route>
+          <Route exact path="/posts/:id" element={<Post />}></Route>
         </Routes>
       </div>
     </Router>
