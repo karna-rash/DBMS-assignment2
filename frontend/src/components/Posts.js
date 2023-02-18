@@ -173,7 +173,7 @@ function handleTagClick(e){
         </div>
       </div >
       <div className={`transform translate-y-28`}>
-      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/> }
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}} handleTagClick={handleTagClick}/> }
       </div>
     </div>
     </div>

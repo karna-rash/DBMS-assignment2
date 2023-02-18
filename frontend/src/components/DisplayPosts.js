@@ -24,10 +24,11 @@ function handleBack()
   {
        if(params.searchOption == 'tag')
        {
-           axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum-1,{}).
+           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+(curpagenum-1),{}).
            then((res)=>
            {
                     setPosts(res.data.posts)
+                    setCurpagenum(curpagenum-1);
            }).
            catch((err)=>
            {
@@ -44,10 +45,11 @@ function handleNext()
   {
     if(params.searchOption == 'tag')
        {
-           axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum+1,{}).
+           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+curpagenum+1,{}).
            then((res)=>
            {
                 setPosts(res.data.posts)
+                setCurpagenum(curpagenum+1);
            }).
            catch((err)=>
            {
