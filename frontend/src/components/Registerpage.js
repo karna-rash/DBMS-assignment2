@@ -45,13 +45,10 @@ function Registerpage() {
       }
 
       {regRes == 1 && navigate('/register/' + userName)}
+   
       
       {
-        regRes == -1 && <p>This username already taken, Enter a different username</p>
-      }
-      
-      {
-         regRes ==0 &&   <div className="min-h-screen py-40 from-mycolour to-mycolour2 bg-gradient-115">
+         (regRes ==0 || regRes == -1) &&   <div className="min-h-screen py-40 from-mycolour to-mycolour2 bg-gradient-115">
       
         <div className="container mx-auto">
           <div className="flex w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
@@ -95,6 +92,10 @@ function Registerpage() {
           required
           onChange={(e) => setPass(e.target.value)}
         />
+        {
+          regRes==-1 &&
+          <p>Username already used</p>
+        }
 
         <button type="submit" className="border w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Register</button>
       </form>
