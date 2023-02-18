@@ -56,10 +56,10 @@ function Posts(props) {
   }
 
   useEffect(() => {
-    setyvalue(72)
+    setyvalue(80)
     autocompleter();
     if(searchValue==""){
-      setyvalue(28)
+      setyvalue(32)
     }
   }, [searchValue]);
 
@@ -91,7 +91,7 @@ function Posts(props) {
 
   return (
     <div className="flex min-h-screen justify-center from-blue-500 to-emerald-500 bg-gradient-115">
-      <div className="container mx-auto">
+      <div className="container mx-auto relative">
       <div className="translate-y-7">
         <div className="relative w-150 ">
           <form>
@@ -139,7 +139,7 @@ function Posts(props) {
                 </button>
               </div>
             </div>
-            <div className="absolute mt-auto w-full overflow-hidden rounded-b-lg bg-white">
+            <div className="mt-auto w-full overflow-hidden rounded-b-lg bg-white">
               {!!autocomp && (
                 <div  >
                   <div   class=" appearance-none w-full block bg-white border overflow-y-auto h-56  border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
@@ -160,7 +160,7 @@ function Posts(props) {
           </form>
         </div>
       </div >
-      <div className={`transform translate-y-${yvalue}`}>
+      <div className={`transform translate-y-28`}>
       {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/> }
       </div>
     </div>
