@@ -19,6 +19,17 @@ function Posts(props) {
     setSearchValue(e.target.value);
   }
 
+//this function is for handling clicks on tags after posts have been displayed
+function handleTagClick(e){
+   e.target.value = e.target.innerHTML;
+  handleClick(e);
+  let search_button = document.getElementById("search-button");
+  setTimeout(() => {
+    search_button.click();
+  }, 100);
+  
+}
+//
   function autocompleter() {
     setautocomp(0);
     if (searchValue == "") {
@@ -119,6 +130,7 @@ function Posts(props) {
                 </select>
 
                 <button
+                  id ="search-button" 
                   onClick={handleSearch}
                   className="transition duration-150 ease-in-out"
                   type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
@@ -161,7 +173,7 @@ function Posts(props) {
         </div>
       </div >
       <div className={`transform translate-y-${yvalue}`}>
-      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/> }
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}} handleTagClick={handleTagClick}/> }
       </div>
     </div>
     </div>
