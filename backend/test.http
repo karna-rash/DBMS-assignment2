@@ -1,8 +1,12 @@
-post http://localhost:5000/register
+post http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "userName":"test",
-    "displayName":"anamika",
-    "password":"test"
+   "userName":"abcc98cc",
+   "password":"abcc98cc"
 }
+
+###
+
+get http://localhost:5000/test
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFiY2M5OGNjIiwiaWF0IjoxNjc2NjMyNjk3fQ.gzmfaFcY9_mLlPEz70CtzvXnlOAhhLuLUVyKNq3T8Io

@@ -1,35 +1,52 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import Loading from './Loading';
+
+
 const Login = () => {
         const navigate = useNavigate();
         const [userName, setUserName] = useState('');
         const [pass, setPass] = useState('');
         const [logRes,setLogRes] = useState(0);
   let handleSubmit = async (e) => {
+    e.preventDefault();
     setLogRes(-1);   
     axios.post('http://localhost:5000/login', {
       userName: userName,
-
-      pass: pass,
+      password: pass,
     }).then((res) => {
       setLogRes(res.data.logRes);
       if (res.data.logRes == 1) {
-        document.cookie = "token="+res.data.token;
-        navigate('/student/');
-      }
+        
+       
+        document.cookies = res.data.token;
 
+      setTimeout(() => {
+        <Loading/>
+      }, 2000);
+
+      navigate('/home2');
+        
+      }
+      
     }).catch((err) => {
+      
       console.log(err);
     })
   }
         
-    return (  <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-            <div className="w-full p-6 m-auto bg-orange-300 border-0 rounded-md shadow-md lg:max-w-xl">
-                <h1 className="text-center text-3x1 font-semibold text-black ">Log in</h1>
-
-
-                <form className="mt-6 " onSubmit={handleSubmit}>
+    return (  <div className="relative flex flex-col justify-center min-h-screen from-red-500 to-blue-500 bg-gradient-115 overflow-hidden">
+            <div className="container mx-auto">
+          <div className="flex w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+            <div className="w-1/2 bg-register-image">
+              <h1 className="text-white text-3xl text-center mt-4">Welcome</h1>
+             
+            </div>
+            <div className="w-1/2 py-16 px-12">
+              <h2 className='text-3xl text-center mb-4'>Login</h2>
+              <p className='mb-4 text-center'>Enter your credentials</p>
+              <form className="mt-6 " onSubmit={handleSubmit}>
                     <div className="mb-2 content-center">
                     <label className="block text-sm font-semibold text-black">
                         Username
@@ -53,6 +70,8 @@ const Login = () => {
                     <button className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 w-full">Login</button>
                 </form>
             </div>
+          </div>
+        </div>
 
         </div>
      );
