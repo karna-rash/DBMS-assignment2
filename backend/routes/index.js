@@ -164,7 +164,7 @@ router.post('/register',async (req, res) => {
     let tag = req.params.id1; 
     let pagenum = req.params.id2;
     const query={
-      text: "(SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+(pagenum-1)*8 +");",
+      text: "(SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit "+(pagenum-1)*8 +");",
       values: [],
     }
     client.query(query, (err, resl) => {
@@ -182,17 +182,39 @@ router.post('/register',async (req, res) => {
     
     
 })
+router.get('/posts/:id1',(req,res)=>
+{
+    let post_id = req.params.id1; 
+    const query={
+      text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date ",
+      values: [],
+    }
+    client.query(query, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { console.log(resl.rows)
+        console.log(resl.rowCount)
+        res.json({
+          answers:resl.rows
+        })
+      }
+    })
+    
+    
+})
 
   router.get('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
      const query1 = {
-      text: "SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit 8",
+      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
       values: [],
     }
     let posts=[];
     const query2 = {
-      text: "SELECT id FROM posts where tags like '%%"+tag+"%%'",
+      text: "SELECT id FROM posts where tags like '%%<"+tag+">%%'",
       values: [],
     }
     let rowCount=0;
@@ -205,7 +227,7 @@ router.post('/register',async (req, res) => {
             posts=resl.rows;
           }
         })
-        client.query(query2, (err, resl) => {
+        client.query(query2, (err, resl) => { 
           if (err) {
             console.log(err.stack)
           }
