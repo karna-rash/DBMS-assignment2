@@ -100,7 +100,7 @@ function List({items}){
               {/* Map through the data and create a row for each item */}
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3"><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">{post.title}</a></td>
+                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 " state={{ post }}>{post.title}</Link></td>
                   
                   <td className="px-4 py-3">
                   <List items={post}></List>
@@ -110,7 +110,7 @@ function List({items}){
             </tbody>
           </table>
         </div>
-        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> {curpagenum}<button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
+        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button>   {curpagenum} of {totpagenum}   <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
     )
 }
