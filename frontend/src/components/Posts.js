@@ -90,9 +90,9 @@ function Posts(props) {
   },[posts]);
 
   return (
-    <div className="flex min-h-screen justify-center from-blue-500 to-emerald-500 bg-gradient-115">
+    <div className="flex min-h-screen  justify-center from-blue-500 to-emerald-500 bg-gradient-115">
       <div className="container mx-auto relative">
-      <div className="translate-y-7">
+      <div className="translate-y-4">
         <div className="relative w-150 ">
           <form>
             <div className="flex justify-between overflow-hidden rounded-t-lg bg-white shadow">
@@ -160,7 +160,7 @@ function Posts(props) {
           </form>
         </div>
       </div >
-      <div className={`transform translate-y-28`}>
+      <div className={`transform translate-y-16`}>
       {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}}/> }
       </div>
     </div>
