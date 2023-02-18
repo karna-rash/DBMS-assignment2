@@ -164,7 +164,7 @@ router.post('/register',async (req, res) => {
     let tag = req.params.id1; 
     let pagenum = req.params.id2;
     const query={
-      text: "(SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+pagenum*10+" ) except (SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+(pagenum-1)*10 +");",
+      text: "(SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit "+(pagenum-1)*8 +");",
       values: [],
     }
     client.query(query, (err, resl) => {
@@ -187,7 +187,7 @@ router.post('/register',async (req, res) => {
   {
      let tag = req.params.id; console.log(tag)
      const query1 = {
-      text: "SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit 10",
+      text: "SELECT * FROM posts where tags like '%%"+tag+"%%' order by creation_date limit 8",
       values: [],
     }
     let posts=[];
@@ -212,7 +212,7 @@ router.post('/register',async (req, res) => {
           { console.log(resl.rowCount)
             res.json({
               posts:posts,
-              totpage:(int)(resl.rowCount/10+1)
+              totpage:(int)(resl.rowCount/8+1)
             })
           }
         })
