@@ -47,11 +47,11 @@ var sqll3="create table if not exists posts( "+
   "Owner_id integer, "+
   "OwnerName varchar(255), "+
   "Title varchar(255), "+
-  "AnswerCount integer default 0, "+
   "tags varchar(255), "+
   "body text, "+
   "creation_date timestamp, "+
   "last_modified timestamp, "+
+  "AnswerCount integer default 0, "+
   "foreign key (Owner_id) references users(id) "+
   ");"
   client.query(sqll3, function (err, result) {
@@ -63,8 +63,8 @@ var sql3="create table if not exists answers( "+
   " post_id integer, "+
   " answeredby_id integer, "+
   "body text, "+
-  "creation_date TIMESTAMP NOT NULL, "+
-  "last_edited TIMESTAMP NOT NULL, "+
+  "creation_date TIMESTAMP, "+
+  "last_edited TIMESTAMP, "+
   "down_votes INTEGER DEFAULT 0, "+
   "up_votes INTEGER DEFAULT 0, "+
   "foreign key (answeredby_id) references users(id), "+
