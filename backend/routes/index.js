@@ -195,6 +195,7 @@ router.post('/register',async (req, res) => {
       text: "SELECT id FROM posts where tags like '%%"+tag+"%%'",
       values: [],
     }
+    let rowCount=0;
      client.query(query1, (err, resl) => {
           if (err) {
             console.log(err.stack)
@@ -210,9 +211,11 @@ router.post('/register',async (req, res) => {
           }
           else
           { console.log(resl.rowCount)
+            console.log(Math.ceil(resl.rowCount/8))
+
             res.json({
               posts:posts,
-              totpage:(int)(resl.rowCount/8+1)
+              totpage:Math.ceil(resl.rowCount/8)
             })
           }
         })
