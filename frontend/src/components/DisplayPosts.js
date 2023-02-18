@@ -24,10 +24,11 @@ function handleBack()
   {
        if(params.searchOption == 'tag')
        {
-           axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum-1,{}).
+           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+(curpagenum-1),{}).
            then((res)=>
            {
                     setPosts(res.data.posts)
+                    setCurpagenum(curpagenum-1);
            }).
            catch((err)=>
            {
@@ -44,10 +45,11 @@ function handleNext()
   {
     if(params.searchOption == 'tag')
        {
-           axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum+1,{}).
+           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+curpagenum+1,{}).
            then((res)=>
            {
                 setPosts(res.data.posts)
+                setCurpagenum(curpagenum+1);
            }).
            catch((err)=>
            {
@@ -70,7 +72,7 @@ function List({items}){
         (tag,index)=>{
            return(
            <div className="flex justify-between">
-             <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2">{tag}
+             <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2" onClick={(e)=>{props.handleTagClick(e)}}>{tag}
              </button>
             <p>&nbsp;&nbsp;</p> 
            </div>
@@ -110,7 +112,7 @@ function List({items}){
             </tbody>
           </table>
         </div>
-        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button>   {curpagenum} of {totpagenum}   <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
+        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button>Page {curpagenum} of {totpagenum}<button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
     )
 }
