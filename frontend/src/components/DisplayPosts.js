@@ -102,7 +102,7 @@ function List({items}){
               {/* Map through the data and create a row for each item */}
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3"><a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">{post.title}</a></td>
+                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 " state={{ post }}>{post.title}</Link></td>
                   
                   <td className="px-4 py-3">
                   <List items={post}></List>
