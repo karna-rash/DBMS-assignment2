@@ -182,6 +182,7 @@ router.post('/register',async (req, res) => {
     
     
 })
+//answers
 router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
