@@ -45,7 +45,7 @@ function handleNext()
   {
     if(params.searchOption == 'tag')
        {
-           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+curpagenum+1,{}).
+           axios.get('http://localhost:5000/posts/tag/'+params.searchValue+'/'+(curpagenum+1),{}).
            then((res)=>
            {
                 setPosts(res.data.posts)
@@ -72,7 +72,7 @@ function List({items}){
         (tag,index)=>{
            return(
            <div className="flex justify-between">
-             <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2" onClick={(e)=>{props.handleTagClick(e)}}>{tag}
+             <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 truncate" onClick={(e)=>{props.handleTagClick(e)}}>{tag}
              </button>
             <p>&nbsp;&nbsp;</p> 
            </div>
@@ -87,7 +87,7 @@ function List({items}){
 
   return (
 
-        <div className="w-full overflow-hidden rounded-lg shadow-xs">
+        <div className="w-full overflow-y-auto rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
             {/* Table header */}
@@ -102,7 +102,7 @@ function List({items}){
               {/* Map through the data and create a row for each item */}
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 " state={{ post }}>{post.title}</Link></td>
+                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post }}>{post.title}</Link></td>
                   
                   <td className="px-4 py-3">
                   <List items={post}></List>
@@ -112,7 +112,7 @@ function List({items}){
             </tbody>
           </table>
         </div>
-        <div className="justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button>Page {curpagenum} of {totpagenum}<button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
+        <div className="flex justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> Page {curpagenum} of {totpagenum} <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
     )
 }

@@ -101,7 +101,7 @@ function handleTagClick(e){
   },[posts]);
 
   return (
-    <div className="flex min-h-screen  justify-center from-blue-500 to-emerald-500 bg-gradient-115">
+    <div className="relative flex min-h-screen  justify-center from-blue-500 to-emerald-500 bg-gradient-115 overflow-hidden">
       <div className="container mx-auto relative">
       <div className="translate-y-4">
         <div className="relative w-150 ">
