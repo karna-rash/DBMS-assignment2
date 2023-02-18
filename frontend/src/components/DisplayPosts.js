@@ -27,11 +27,11 @@ function handleBack()
            axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum-1,{}).
            then((res)=>
            {
-
+                    setPosts(res.data.posts)
            }).
            catch((err)=>
            {
-
+               console.log(err);
            })
        }
   }
@@ -47,11 +47,11 @@ function handleNext()
            axios.get('http://localhost:5000/posts/'+params.searchValue+'/'+curpagenum+1,{}).
            then((res)=>
            {
-
+                setPosts(res.data.posts)
            }).
            catch((err)=>
            {
-            
+                console.log(err);
            })
        }
   }
