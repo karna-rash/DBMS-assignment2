@@ -12,7 +12,7 @@ function Posts(props) {
   const [posts,setPosts] = useState([]);
   const [pages,setPages] = useState(0);
   const [yvalue,setyvalue]=useState(28);
-
+  let user={};
   function handleClick(e) {
     let search_bar = document.getElementById("search-bar");
     search_bar.value = e.target.value;
@@ -51,15 +51,33 @@ function handleTagClick(e){
         .catch((err) => {
           console.log(err);
         });
-    } else if (tagload && searchOption == "tag") {
+    } 
+    else if (tagload && searchOption == "tag") {
       let temp = tagarray.filter((tag) => {
         const regex = new RegExp(`${searchValue}`, "gi");
         return tag.tag_name.match(regex);
       });
       setmatches(temp);
       setautocomp(1);
-    } else if (searchOption == "username") 
+    } 
+    else if (searchOption == "username") 
     {
+      axios.post('http://localhost:5000/users',
+      {
+      
+        userName:searchValue,
+      
+      }).
+      then((res)=>
+      {
+            setmatches(res.data.users);
+            console.log(matches)
+            setautocomp(1);
+      }).
+      catch((err)=>
+      {
+        console.log(err);
+      })
     } 
     else
     {
@@ -82,6 +100,19 @@ function handleTagClick(e){
     if(searchOption=='tag')
     {
       axios.get('http://localhost:5000/posts/tag/'+searchValue,{}).
+      then(async (res)=>
+      {
+           setPosts(res.data.posts)
+           setPages(res.data.totpage) 
+          
+      }).catch((err)=>
+      {
+           console.log(err);
+      })
+    }
+    else if(searchOption=='username')
+    {
+      axios.get('http://localhost:5000/posts/user/'+matches[0].id,{}).
       then(async (res)=>
       {
            setPosts(res.data.posts)
@@ -162,7 +193,8 @@ function handleTagClick(e){
                           handleClick(e);
                         }}
                       >
-                        {match.tag_name}
+                        {searchOption=="tag" && match.tag_name}
+                        {searchOption=="username" && match.username}
                       </option>
                     ))}
                   </div>
