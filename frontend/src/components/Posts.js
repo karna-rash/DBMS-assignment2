@@ -60,7 +60,7 @@ function handleTagClick(e){
       setmatches(temp);
       setautocomp(1);
     } 
-    else if (searchOption == "username") 
+    else if (searchOption == "username" && searchValue.length>0) 
     {
       axios.post('http://localhost:5000/users',
       {
@@ -111,8 +111,11 @@ function handleTagClick(e){
       })
     }
     else if(searchOption=='username')
-    { console.log(matches[0].id)
-      axios.get('http://localhost:5000/posts/user/'+toString(matches[0].id),{}).
+    { 
+      console.log(matches[0].id)
+      if(matches.length == 1)
+      {
+      axios.get('http://localhost:5000/posts/user/'+matches[0].id,{}).
       then(async (res)=>
       {
            setPosts(res.data.posts)
@@ -122,6 +125,7 @@ function handleTagClick(e){
       {
            console.log(err);
       })
+    }
     }
   };
 
