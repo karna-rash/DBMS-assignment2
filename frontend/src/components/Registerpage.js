@@ -43,8 +43,8 @@ function Registerpage() {
       {
         regRes == -2 && <Loading/>
       }
-
-      {regRes == 1 && navigate('/register/' + userName)}
+     {/* display that registration is succesful and then navigate*/} 
+      {regRes == 1 && navigate('/login' )}
    
       
       {

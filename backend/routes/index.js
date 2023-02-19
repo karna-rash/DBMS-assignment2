@@ -109,7 +109,7 @@ router.post('/login', async (req, res) => {
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
-    name: 'fetch-user',
+    name: 'fetch-user-count',
     text: 'SELECT count(username) FROM users WHERE username = $1',
     values: [req.body.userName],
   }
@@ -122,10 +122,10 @@ router.post('/register',async (req, res) => {
       if(resl.rows[0].count==0){
         console.log(req.body.userName)
         console.log(req.body.password)
-        console.log(req.body.displayName)
+        console.log(req.body.dispName)
         const query = {
           text: 'insert into users values ($1,$2,$3)',
-          values: [req.body.userName,req.body.password,req.body.displayName],
+          values: [req.body.userName,req.body.password,req.body.dispName],
         }
         client.query(query, (err, resl) => {
           if (err) {
