@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Home2 from './components/Home2';
 import Posts from './components/Posts';
 import Post from './components/Post'
-import Createpost from './components/Createpost';
+//import Createpost from './components/Createpost';
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -30,7 +30,6 @@ const token = document.cookies;
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/posts" element={<Posts />}></Route>
           <Route exact path="/posts/:id" element={<Post />}></Route>
-          <Route exact path="/create_post" element={<Createpost/>}></Route>
         </Routes>
       </div>
     </Router>
