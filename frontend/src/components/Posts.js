@@ -231,11 +231,15 @@ function removeTag(e)
             </div>
 
             {searchOption == "multiple_tags" && (
-            <div className="">
+            <div className="flex flex-row">
              {multytag.map((tag,index)=>(
-              <div key={index}>
-                {tag} 
-                <button className="text-red-500" kay={index} onClick={removeTag}>r</button>
+              <div className="mx-4 bg-gray-400 rounded-lg mt-2"  key={index}>
+                &nbsp;{tag} 
+                <button className="text-red-500" key={index} onClick={removeTag}>
+                  <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-red-600 px-2 py-2 hover:bg-red-700">
+                  <svg width="12px" height="12px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="removeIconTitle" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="removeIconTitle">Remove</title> <path d="M17,12 L7,12"/> <circle cx="12" cy="12" r="10"/> </svg>
+                  </span>
+                </button>
               </div>
              ))}
             </div>)

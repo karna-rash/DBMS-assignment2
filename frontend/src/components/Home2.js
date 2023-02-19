@@ -12,7 +12,7 @@ const Home2 = () => {
           <div className='flex flex-col bg-white items-center justify-center w-full'>
 
         <h2 className='text-3xl text-center'>Welcome  </h2>
-        <button className="bg-sky-400 hover:bg-sky-500 rounded px-4 py-2 w-1/4 text-center mt-4">create post</button>
+        <button className="bg-sky-400 hover:bg-sky-500 rounded px-4 py-2 w-1/4 text-center mt-4"><a href="http://localhost:3000/create_post">Create Post</a></button>
           </div>
         </section>
       </main>
