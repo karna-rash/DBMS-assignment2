@@ -10,6 +10,7 @@ const app = express();
 
 const router = express.Router();
 
+
 function authenticateToken(req, res, next) {
 
   const bearer = req.headers['authorization'];
@@ -25,7 +26,7 @@ function authenticateToken(req, res, next) {
       }
       else {
         console.log(user)
-
+        req.user=user
         next();
       }
     })
@@ -36,6 +37,26 @@ function authenticateToken(req, res, next) {
 router.get('/test',authenticateToken,(req,res)=>
 {
    res.json({ok:1});
+})
+
+
+//by abhinay
+router.post('/create_post',authenticateToken,(req,res)=>
+{
+  
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const post_title=req.body.title;
+    const post_body= req.body.body;
+    const tags=req.body.tags;
+    const creation_date=req.body.creation_date;
+
+    res.json({
+      ok:1,
+      user:req.user,
+      data:req.body
+       });
+
 })
 
 // Authentication Routes
@@ -99,6 +120,9 @@ router.post('/register',async (req, res) => {
     } else {
       
       if(resl.rows[0].count==0){
+        console.log(req.body.userName)
+        console.log(req.body.password)
+        console.log(req.body.displayName)
         const query = {
           text: 'insert into users values ($1,$2,$3)',
           values: [req.body.userName,req.body.password,req.body.displayName],
@@ -120,6 +144,7 @@ router.post('/register',async (req, res) => {
     }
   })
   });
+
 
   router.get('/tags',(req,res)=>
   {
@@ -224,6 +249,7 @@ router.post('/register',async (req, res) => {
     
     
 })
+//searching 
 router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
@@ -247,7 +273,7 @@ router.get('/posts/:id1',(req,res)=>
     
 })
 
-
+//searching posts of page 1 from tags
   router.get('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)

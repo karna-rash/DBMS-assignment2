@@ -1,6 +1,7 @@
-get http://localhost:5000/users
+get http://localhost:5000/test
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IjVmZWNlYjY2IiwidXNlcmlkIjotMSwiaWF0IjoxNjc2ODAyNjExfQ.VRDhF_vCYDNNt5Xw4z-Ox1ou6UrWoAgxoe6MCHvXJKA
 
 {
- "userName":"ab"
+   "new":"hello"
 }
