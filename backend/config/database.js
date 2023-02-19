@@ -11,10 +11,6 @@ const client = new Client({
   database: process.env.PGDB,
   password: process.env.PGPWD,
   port: process.env.PGPORT,
-  ENDPOINT_ID:process.env.PGEND_POINT,
-  ssl:{
-    rejectUnauthorized: true
-  }
 })
 client.connect((err)=>
 {
