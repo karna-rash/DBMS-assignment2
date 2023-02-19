@@ -99,6 +99,9 @@ router.post('/register',async (req, res) => {
     } else {
       
       if(resl.rows[0].count==0){
+        console.log(req.body.userName)
+        console.log(req.body.password)
+        console.log(req.body.displayName)
         const query = {
           text: 'insert into users values ($1,$2,$3)',
           values: [req.body.userName,req.body.password,req.body.displayName],
@@ -223,6 +226,7 @@ router.post('/register',async (req, res) => {
     
     
 })
+//searching 
 router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
@@ -246,7 +250,7 @@ router.get('/posts/:id1',(req,res)=>
     
 })
 
-
+//searching posts of page 1 from tags
   router.get('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
