@@ -111,8 +111,8 @@ function handleTagClick(e){
       })
     }
     else if(searchOption=='username')
-    {
-      axios.get('http://localhost:5000/posts/user/'+matches[0].id,{}).
+    { console.log(matches[0].id)
+      axios.get('http://localhost:5000/posts/user/'+toString(matches[0].id),{}).
       then(async (res)=>
       {
            setPosts(res.data.posts)

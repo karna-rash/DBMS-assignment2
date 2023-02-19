@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import client from '../config/conn.js'
+import client from '../config/database.js'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -145,7 +145,7 @@ router.post('/register',async (req, res) => {
   router.post('/users',(req,res)=>
   { 
     const query = {
-      text: "SELECT username FROM users where username like '%%"+req.body.userName+"%%'",
+      text: "SELECT id,username FROM users where username like '%%"+req.body.userName+"%%'",
       values: [],
     }
      client.query(query, (err, resl) => {
@@ -163,7 +163,8 @@ router.post('/register',async (req, res) => {
 
   router.get('/posts/user/:id',(req,res)=>
   {
-     let userid = req.params.id; console.log(userid)
+     let userid = req.params.id; 
+     console.log(userid,'here')
      const query1 = {
       text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
       values: [],

@@ -70,7 +70,7 @@ function Registerpage() {
         />
         <input
           type="text"
-          value={userName}
+          value={dispName}
           className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="display name"
           required
