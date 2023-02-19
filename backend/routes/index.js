@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import client from '../config/conn.js'
+import client from '../config/database.js'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 

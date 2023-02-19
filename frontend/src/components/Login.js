@@ -34,8 +34,9 @@ const Login = () => {
 
       }, 2000);
 
-      dispatch({type: 'LOGIN',payload: {'userName':userName ,'userid':res.data.userid}})
-      }
+      dispatch({type: 'LOGIN',payload: {"userName":userName ,"userid":res.data.userid} })
+      
+    }
       
     }).catch((err) => {
       
