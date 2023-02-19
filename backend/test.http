@@ -2,5 +2,5 @@ get http://localhost:5000/posts/tag/code-smell/2
 Content-Type: application/json
 
 {
-
+ "userName":"ab"
 }

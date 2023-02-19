@@ -73,6 +73,7 @@ var sql3="create table if not exists answers( "+
   "foreign key (answeredby_id) references users(id), "+
   "foreign key (post_id) references posts(id) "+
   ");"
+  
   client.query(sql3, function (err, result) {
     if (err) console.error(err);
     else{

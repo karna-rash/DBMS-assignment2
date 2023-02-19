@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import client from '../config/conn.js'
+import client from '../config/database.js'
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -64,6 +64,7 @@ router.post('/login', async (req, res) => {
 
       jwt.sign({
         userName: resl.rows[0].username,
+        userid:resl.rows[0].id
       }, process.env.SECRET_KEY, (err, token) => {
         if (err) { console.log(err); }
         res.json(
@@ -141,8 +142,8 @@ router.post('/register',async (req, res) => {
         
   });
 
-  router.get('/users',(req,res)=>
-  {
+  router.post('/users',(req,res)=>
+  { 
     const query = {
       text: "SELECT username FROM users where username like '%%"+req.body.userName+"%%'",
       values: [],
@@ -158,6 +159,45 @@ router.post('/register',async (req, res) => {
             })
           }
         })
+  });
+
+  router.get('/posts/user/:id',(req,res)=>
+  {
+     let userid = req.params.id; console.log(userid)
+     const query1 = {
+      text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
+      values: [],
+    }
+    let posts=[];
+    const query2 = {
+      text: "SELECT id FROM posts where owner_id ="+userid,
+      values: [],
+    }
+    let rowCount=0;
+     client.query(query1, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rows)
+            posts=resl.rows;
+          }
+        })
+        client.query(query2, (err, resl) => { 
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rowCount)
+            console.log(Math.ceil(resl.rowCount/8))
+
+            res.json({
+              posts:posts,
+              totpage:Math.ceil(resl.rowCount/8)
+            })
+          }
+        })
+          
   });
 
   router.get('/posts/tag/:id1/:id2',(req,res)=>
@@ -206,6 +246,7 @@ router.get('/posts/:id1',(req,res)=>
     
 })
 
+
   router.get('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
@@ -245,5 +286,5 @@ router.get('/posts/:id1',(req,res)=>
           
   });
 
-
+  
 export default router;
