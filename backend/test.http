@@ -1,6 +1,6 @@
-get http://localhost:5000/posts/tag/comments/4
+get http://localhost:5000/users
 Content-Type: application/json
 
 {
-
+ "userName":"ab"
 }
