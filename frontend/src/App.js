@@ -15,7 +15,7 @@ function App() {
     // localStorage.clear('token');
     //Have to sort this
   }, []);
-const token = document.cookies;
+  const token = document.cookies;
   return (
     <Router>
       <div>
