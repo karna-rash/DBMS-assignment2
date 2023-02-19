@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 
 const Login = () => {
@@ -9,6 +10,10 @@ const Login = () => {
         const [userName, setUserName] = useState('');
         const [pass, setPass] = useState('');
         const [logRes,setLogRes] = useState(0);
+        const {dispatch}=useAuthContext()
+
+
+
   let handleSubmit = async (e) => {
     e.preventDefault();
     setLogRes(-3);   
@@ -18,16 +23,18 @@ const Login = () => {
     }).then((res) => {
       setLogRes(res.data.logRes);
       if (res.data.logRes == 1) {
-        
-       
+
         document.cookies = res.data.token;
 
+        console.log(logRes)
+
       setTimeout(() => {
+
         <Loading/>
+
       }, 2000);
 
-      
-        
+      dispatch({type: 'LOGIN',payload: {'userName':userName ,'userid':res.data.userid}})
       }
       
     }).catch((err) => {

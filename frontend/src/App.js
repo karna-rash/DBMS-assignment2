@@ -24,7 +24,8 @@ const token = document.cookies;
 
         <Routes>
          <Route exact path="/" element={<Home />}></Route>
-        <Route exact path="/home2" element={<Home2 />}></Route>
+
+          <Route exact path="/home2" element={<Home2 />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/posts" element={<Posts />}></Route>
