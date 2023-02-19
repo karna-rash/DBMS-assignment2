@@ -12,11 +12,25 @@ function Posts(props) {
   const [posts,setPosts] = useState([]);
   const [pages,setPages] = useState(0);
   const [yvalue,setyvalue]=useState(28);
-  let user={};
+  const [multytag,setMultytag] = useState([]);
+ 
+
   function handleClick(e) {
+    if(searchOption=="multiple_tags")
+    {
+        let arr = multytag;
+        arr.push(e.target.value);
+        let search_bar = document.getElementById("search-bar");
+         search_bar.value = '';
+        setSearchValue('');
+        setMultytag(arr);
+    }
+    else
+    {
     let search_bar = document.getElementById("search-bar");
     search_bar.value = e.target.value;
     setSearchValue(e.target.value);
+    }
   }
 
 //this function is for handling clicks on tags after posts have been displayed
@@ -29,13 +43,23 @@ function handleTagClick(e){
   }, 100);
   
 }
+//this function is for removing tags in multi tag display
+function removeTag(e)
+{   e.preventDefault();
+   let ind =  e.target.getAttribute('kay')
+   let arr = multytag
+    arr.splice( ind,1 );
+    console.log(arr)
+    setMultytag(arr);
+}
+
 //
   function autocompleter() {
     setautocomp(0);
     if (searchValue == "") {
       return;
     }
-    if (!tagload && searchOption == "tag") {
+    if (!tagload && (searchOption == "tag" || searchOption=="multiple_tags")) {
       axios
         .get("http://localhost:5000/tags", {})
         .then((res) => {
@@ -52,7 +76,7 @@ function handleTagClick(e){
           console.log(err);
         });
     } 
-    else if (tagload && searchOption == "tag") {
+    else if (tagload && (searchOption == "tag"  || searchOption=="multiple_tags")) {
       let temp = tagarray.filter((tag) => {
         const regex = new RegExp(`${searchValue}`, "gi");
         return tag.tag_name.match(regex);
@@ -197,7 +221,7 @@ function handleTagClick(e){
                           handleClick(e);
                         }}
                       >
-                        {searchOption=="tag" && match.tag_name}
+                        {(searchOption=="tag" || searchOption=="multiple_tags") && match.tag_name}
                         {searchOption=="username" && match.username}
                       </option>
                     ))}
@@ -205,6 +229,18 @@ function handleTagClick(e){
                 </div>
               )}
             </div>
+
+            {searchOption == "multiple_tags" && (
+            <div className="">
+             {multytag.map((tag,index)=>(
+              <div key={index}>
+                {tag} 
+                <button className="text-red-500" kay={index} onClick={removeTag}>r</button>
+              </div>
+             ))}
+            </div>)
+            }
+
           </form>
         </div>
       </div >
