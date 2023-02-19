@@ -1,4 +1,4 @@
-import client from '../config/conn.js';
+import client from '../config/database.js';
 
   var sql1="create table if not exists users ("+
   " id serial primary key, "+
