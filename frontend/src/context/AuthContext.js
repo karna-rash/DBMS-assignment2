@@ -20,9 +20,7 @@ export const AuthContextProvider=({children})=>{
     })
 
     useEffect(()=>{
-        const user={
-            
-        }
+        
     })
 
     return(

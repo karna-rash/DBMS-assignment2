@@ -10,7 +10,7 @@ const Home2 = () => {
       <main className="p-12">
         <section id="about" className="py-12">
           <h2 className='text-center text-3xl'>You are logged in!</h2>
-          <h3>Welcome,{user.userName}</h3>
+          <h3>Welcome</h3>
         </section>
       </main>
     </div>

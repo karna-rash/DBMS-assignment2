@@ -10,6 +10,7 @@ const app = express();
 
 const router = express.Router();
 
+
 function authenticateToken(req, res, next) {
 
   const bearer = req.headers['authorization'];
@@ -25,7 +26,7 @@ function authenticateToken(req, res, next) {
       }
       else {
         console.log(user)
-
+        req.user=user
         next();
       }
     })
@@ -36,6 +37,26 @@ function authenticateToken(req, res, next) {
 router.get('/test',authenticateToken,(req,res)=>
 {
    res.json({ok:1});
+})
+
+
+//by abhinay
+router.post('/create_post',authenticateToken,(req,res)=>
+{
+  
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const post_title=req.body.title;
+    const post_body= req.body.body;
+    const tags=req.body.tags;
+    const creation_date=req.body.creation_date;
+
+    res.json({
+      ok:1,
+      user:req.user,
+      data:req.body
+       });
+
 })
 
 // Authentication Routes
@@ -120,6 +141,7 @@ router.post('/register',async (req, res) => {
     }
   })
   });
+
 
   router.get('/tags',(req,res)=>
   {
