@@ -68,6 +68,7 @@ router.post('/login', async (req, res) => {
         if (err) { console.log(err); }
         res.json(
           {
+          userid:resl.rows[0].id,
           token: token,
           logRes: 1,
           })

@@ -1,4 +1,4 @@
-import client from '../config/conn.js';
+import client from '../config/database.js';
 
   var sql1="create table if not exists users ("+
   " id serial primary key, "+
@@ -52,6 +52,8 @@ var sqll3="create table if not exists posts( "+
   "creation_date timestamp, "+
   "last_modified timestamp, "+
   "AnswerCount integer default 0, "+
+  "down_votes INTEGER DEFAULT 0, "+
+  "up_votes INTEGER DEFAULT 0, "+
   "foreign key (Owner_id) references users(id) "+
   ");"
   client.query(sqll3, function (err, result) {
@@ -67,6 +69,7 @@ var sql3="create table if not exists answers( "+
   "last_edited TIMESTAMP, "+
   "down_votes INTEGER DEFAULT 0, "+
   "up_votes INTEGER DEFAULT 0, "+
+  "ownername varchar(40), "+
   "foreign key (answeredby_id) references users(id), "+
   "foreign key (post_id) references posts(id) "+
   ");"
