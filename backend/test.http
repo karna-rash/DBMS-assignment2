@@ -1,4 +1,4 @@
-get http://localhost:5000/posts/tag/comments/4
+get http://localhost:5000/posts/tag/code-smell/2
 Content-Type: application/json
 
 {

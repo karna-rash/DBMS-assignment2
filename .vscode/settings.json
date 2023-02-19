@@ -1,3 +1,14 @@
 {
-    "code-runner.runInTerminal": true
+    "code-runner.runInTerminal": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "name",
+            "database": "cqadb",
+            "username": "postgres"
+        }
+    ]
 }
