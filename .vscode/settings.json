@@ -6,9 +6,10 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "name",
+            "name": "assig2",
             "database": "cqadb",
-            "username": "postgres"
+            "username": "postgres",
+            "password": "Chintu@iith"
         }
     ]
 }

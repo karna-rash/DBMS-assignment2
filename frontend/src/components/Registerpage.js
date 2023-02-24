@@ -43,8 +43,8 @@ function Registerpage() {
       {
         regRes == -2 && <Loading/>
       }
-
-      {regRes == 1 && navigate('/register/' + userName)}
+     {/* display that registration is succesful and then navigate*/} 
+      {regRes == 1 && navigate('/login' )}
    
       
       {
@@ -70,7 +70,7 @@ function Registerpage() {
         />
         <input
           type="text"
-          value={userName}
+          value={dispName}
           className='border w-full border-gray-400 py-1 px-2 mb-5'
           placeholder="display name"
           required

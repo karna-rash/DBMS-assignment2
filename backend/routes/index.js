@@ -124,6 +124,7 @@ router.post('/login', async (req, res) => {
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
+    name: 'fetch-user-count',
     text: 'SELECT count(username) FROM users WHERE username = $1',
     values: [req.body.userName],
   }
@@ -136,10 +137,10 @@ router.post('/register',async (req, res) => {
       if(resl.rows[0].count==0){
         console.log(req.body.userName)
         console.log(req.body.password)
-        console.log(req.body.displayName)
+        console.log(req.body.dispName)
         const query = {
           text: 'insert into users values ($1,$2,$3)',
-          values: [req.body.userName,req.body.password,req.body.displayName],
+          values: [req.body.userName,req.body.password,req.body.dispName],
         }
         client.query(query, (err, resl) => {
           if (err) {
@@ -186,7 +187,7 @@ router.post('/register',async (req, res) => {
   router.post('/users',(req,res)=>
   { 
     const query = {
-      text: "SELECT username FROM users where username like '%%"+req.body.userName+"%%'",
+      text: "SELECT id,username FROM users where username like '%%"+req.body.userName+"%%'",
       values: [],
     }
      client.query(query, (err, resl) => {
@@ -204,7 +205,8 @@ router.post('/register',async (req, res) => {
 
   router.get('/posts/user/:id',(req,res)=>
   {
-     let userid = req.params.id; console.log(userid)
+     let userid = req.params.id; 
+     console.log(userid,'here')
      const query1 = {
       text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
       values: [],

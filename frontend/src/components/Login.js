@@ -53,7 +53,7 @@ const Login = () => {
       }
 
 
-
+      {/*display for some time that login is succesful and redirecting to home*/ }
       {
           logRes==1 && navigate('/home2')
       }
@@ -88,7 +88,7 @@ const Login = () => {
                         Password
                     </label>
                     <input className="block w-full px-4 py-2 mt-2 textblack bg-white border rounded-md focus:border-rose-400 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                    TYPE="text"
+                    TYPE="password"
                     onChange = {(e)=>setPass(e.target.value)}>
                     </input>
                     

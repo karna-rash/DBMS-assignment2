@@ -12,11 +12,25 @@ function Posts(props) {
   const [posts,setPosts] = useState([]);
   const [pages,setPages] = useState(0);
   const [yvalue,setyvalue]=useState(28);
-  let user={};
+  const [multytag,setMultytag] = useState([]);
+ 
+
   function handleClick(e) {
+    if(searchOption=="multiple_tags")
+    {
+        let arr = multytag;
+        arr.push(e.target.value);
+        let search_bar = document.getElementById("search-bar");
+         search_bar.value = '';
+        setSearchValue('');
+        setMultytag(arr);
+    }
+    else
+    {
     let search_bar = document.getElementById("search-bar");
     search_bar.value = e.target.value;
     setSearchValue(e.target.value);
+    }
   }
 
 //this function is for handling clicks on tags after posts have been displayed
@@ -29,13 +43,23 @@ function handleTagClick(e){
   }, 100);
   
 }
+//this function is for removing tags in multi tag display
+function removeTag(e)
+{   e.preventDefault();
+   let ind =  e.target.getAttribute('kay')
+   let arr = multytag
+    arr.splice( ind,1 );
+    console.log(arr)
+    setMultytag(arr);
+}
+
 //
   function autocompleter() {
     setautocomp(0);
     if (searchValue == "") {
       return;
     }
-    if (!tagload && searchOption == "tag") {
+    if (!tagload && (searchOption == "tag" || searchOption=="multiple_tags")) {
       axios
         .get("http://localhost:5000/tags", {})
         .then((res) => {
@@ -52,7 +76,7 @@ function handleTagClick(e){
           console.log(err);
         });
     } 
-    else if (tagload && searchOption == "tag") {
+    else if (tagload && (searchOption == "tag"  || searchOption=="multiple_tags")) {
       let temp = tagarray.filter((tag) => {
         const regex = new RegExp(`${searchValue}`, "gi");
         return tag.tag_name.match(regex);
@@ -60,7 +84,7 @@ function handleTagClick(e){
       setmatches(temp);
       setautocomp(1);
     } 
-    else if (searchOption == "username") 
+    else if (searchOption == "username" && searchValue.length>0) 
     {
       axios.post('http://localhost:5000/users',
       {
@@ -111,7 +135,10 @@ function handleTagClick(e){
       })
     }
     else if(searchOption=='username')
-    {
+    { 
+      console.log(matches[0].id)
+      if(matches.length == 1)
+      {
       axios.get('http://localhost:5000/posts/user/'+matches[0].id,{}).
       then(async (res)=>
       {
@@ -122,6 +149,7 @@ function handleTagClick(e){
       {
            console.log(err);
       })
+    }
     }
   };
 
@@ -193,7 +221,7 @@ function handleTagClick(e){
                           handleClick(e);
                         }}
                       >
-                        {searchOption=="tag" && match.tag_name}
+                        {(searchOption=="tag" || searchOption=="multiple_tags") && match.tag_name}
                         {searchOption=="username" && match.username}
                       </option>
                     ))}
@@ -201,6 +229,22 @@ function handleTagClick(e){
                 </div>
               )}
             </div>
+
+            {searchOption == "multiple_tags" && (
+            <div className="flex flex-row">
+             {multytag.map((tag,index)=>(
+              <div className="mx-4 bg-gray-400 rounded-lg mt-2"  key={index}>
+                &nbsp;{tag} 
+                <button className="text-red-500" key={index} onClick={removeTag}>
+                  <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-red-600 px-2 py-2 hover:bg-red-700">
+                  <svg width="12px" height="12px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="removeIconTitle" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="removeIconTitle">Remove</title> <path d="M17,12 L7,12"/> <circle cx="12" cy="12" r="10"/> </svg>
+                  </span>
+                </button>
+              </div>
+             ))}
+            </div>)
+            }
+
           </form>
         </div>
       </div >
