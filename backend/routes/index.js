@@ -330,5 +330,67 @@ router.get('/posts/:id1',(req,res)=>
           
   });
 
+  router.get('/posts/user/:id',(req,res)=>
+  {
+     let owner = req.params.id; console.log(owner)
+     const query1 = {
+      text: "SELECT * FROM posts where Owner_id ="+owner+" order by creation_date limit 8",
+      values: [],
+    }
+    let posts=[];
+    const query2 = {
+      text: "SELECT id FROM posts where Owner_id = "+owner,
+      values: [],
+    }
+    let rowCount=0;
+     client.query(query1, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rows)
+            posts=resl.rows;
+          }
+        })
+        client.query(query2, (err, resl) => { 
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rowCount)
+            console.log(Math.ceil(resl.rowCount/8))
+
+            res.json({
+              posts:posts,
+              totpage:Math.ceil(resl.rowCount/8)
+            })
+          }
+        })
+          
+  });
+  router.get('/posts/user/:id1/:id2',(req,res)=>
+  {
+      let tag = req.params.id1; 
+      let pagenum = req.params.id2;
+      const query={
+        text: "(SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+(pagenum-1)*8 +");",
+        values: [],
+      }
+      client.query(query, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        { console.log(resl.rows)
+          console.log(resl.rowCount)
+          res.json({
+            posts:resl.rows
+          })
+        }
+      })
+      
+      
+  })
+
   
 export default router;
