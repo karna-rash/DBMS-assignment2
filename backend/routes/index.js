@@ -50,12 +50,27 @@ router.post('/create_post',authenticateToken,(req,res)=>
     const post_body= req.body.body;
     const tags=req.body.tags;
     const creation_date=req.body.creation_date;
-
     res.json({
       ok:1,
       user:req.user,
       data:req.body
        });
+       
+       const query={
+        name: "insert into posts(Owner_id ,OwnerName,Title ,tags , body ,creation_date) values($1,$2,$3,$4,$5,$6)",
+        values: [ownerid,Ownername,post_title,tags,post_body,creation_date],
+      }
+      client.query(query, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        {
+          console.log(resl)
+          console.log("added post")
+        }
+      })
+
 
 })
 
@@ -109,7 +124,6 @@ router.post('/login', async (req, res) => {
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
-    name: 'fetch-user',
     text: 'SELECT count(username) FROM users WHERE username = $1',
     values: [req.body.userName],
   }
@@ -166,6 +180,8 @@ router.post('/register',async (req, res) => {
         })
         
   });
+
+  
 
   router.post('/users',(req,res)=>
   { 
