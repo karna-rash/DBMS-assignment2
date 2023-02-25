@@ -50,7 +50,7 @@ function handleBack()
        }
        else //multiple tags
        {
-        axios.get('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum-1),{}).
+        axios.post('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum-1),{}).
         then((res)=>
         {
                  setPosts(res.data.posts)
@@ -97,7 +97,7 @@ function handleNext()
        }
        else //multiple tags
        {
-        axios.get('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum+1),{}).
+        axios.post('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum+1),{}).
         then((res)=>
         {
              setPosts(res.data.posts)

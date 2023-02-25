@@ -1,6 +1,7 @@
 import Login from './components/Login';
 import Register from './components/Registerpage';
 import Navbar from './components/Navbar';
+import Navbar1 from './components/Navbar1';
 import Home from './components/Home';
 import Home2 from './components/Home2';
 import Posts from './components/Posts';
@@ -12,15 +13,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   useEffect(() => {
-    // localStorage.clear('token');
+     sessionStorage.clear('token_status');
     //Have to sort this
   }, []);
-const token = document.cookies;
+const token = sessionStorage.getItem('token_status');
   return (
     <Router>
       <div>
       {!token && <Navbar/>}
-     
+      {token && <Navbar1/>}
 
         <Routes>
          <Route exact path="/" element={<Home />}></Route>

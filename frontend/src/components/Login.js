@@ -25,7 +25,7 @@ const Login = () => {
       if (res.data.logRes == 1) {
 
         document.cookies = res.data.token;
-
+        sessionStorage.setItem('token_status',1);
         console.log(logRes)
 
       setTimeout(() => {
