@@ -279,7 +279,7 @@ function removeTag(e)
         </div>
       </div >
       <div className={`transform translate-y-28`}>
-      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue}} handleTagClick={handleTagClick}/> }
+      {!!postsReady && <DisplayPosts posts={posts} pages={pages} params={{searchOption:searchOption,searchValue:searchValue,tags:multytag}} handleTagClick={handleTagClick}/> }
       </div>
     </div>
     </div>

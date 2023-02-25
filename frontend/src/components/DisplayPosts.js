@@ -9,7 +9,6 @@ const [totpagenum,settotpagenum] = useState(0);
 const [posts,setPosts] = useState([]);
 const [curpagenum,setCurpagenum] = useState(1);
 
-
 useEffect(()=>
 {
     setPosts(props.posts);
@@ -50,7 +49,7 @@ function handleBack()
        }
        else //multiple tags
        {
-        axios.post('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum-1),{}).
+        axios.post('http://localhost:5000/posts/multiple_tags/'+(curpagenum-1),{tags:props.params.tags}).
         then((res)=>
         {
                  setPosts(res.data.posts)
@@ -97,7 +96,7 @@ function handleNext()
        }
        else //multiple tags
        {
-        axios.post('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum+1),{}).
+        axios.post('http://localhost:5000/posts/multiple_tags/'+(curpagenum+1),{tags:props.params.tags}).
         then((res)=>
         {
              setPosts(res.data.posts)
