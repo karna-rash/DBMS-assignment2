@@ -48,13 +48,22 @@ router.post('/create_post',authenticateToken,(req,res)=>
     const Ownername=req.user.userName;
     const post_title=req.body.title;
     const post_body= req.body.body;
-    const tags=req.body.tags;
-    // const creation_date=time.now();
+    //const tags=req.body.tags;
+    let tag =[req.body.tags.length];
+    for(let i=0;i<req.body.tags.length;i++){
+      tag[i]="<"+req.body.tags[i]+">";
+    }
+    let tagstring="";
+    for(let j=0;j<req.body.tags.length;j++){
+      tagstring=tagstring+tag[j];
+    }
+    console.log(tagstring);
+    const creation_date=Date.now();
     console.log(req.body)
        
        const query={
-        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ) values ($1,$2,$3,$4,$5,$6) returning *',
-        values: [++maxpostid,ownerid,Ownername,post_title,tags,post_body],
+        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,to_timestamp($7)) returning *',
+        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,creation_date],
       }
       client.query(query, (err, resl) => {
         if (err) {
