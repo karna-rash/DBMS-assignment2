@@ -181,6 +181,7 @@ function removeTag(e)
            console.log(err);
       })  
     }
+    if(posts.length==0) alert("No results for this!");
   };
 
   useEffect(()=>
