@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
         res.json({ tokenStatus: -2 });
       }
       else {
-        console.log(user)
+        console.log(user,req.body)
         req.user=user
         next();
       }
@@ -41,39 +41,35 @@ router.get('/test',authenticateToken,(req,res)=>
 
 
 //by abhinay
-// router.post('/create_post',authenticateToken,(req,res)=>
-// {
+router.post('/create_post',authenticateToken,(req,res)=>
+{
   
-//     const ownerid=req.user.userid;
-//     const Ownername=req.user.userName;
-//     const post_title=req.body.title;
-//     const post_body= req.body.body;
-//     const tags=req.body.tags;
-//     const creation_date=req.body.creation_date;
-    
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const post_title=req.body.title;
+    const post_body= req.body.body;
+    const tags=req.body.tags;
+    // const creation_date=time.now();
+    console.log(req.body)
        
-//        const query={
-//         text: 'insert into posts(Owner_id ,OwnerName,Title ,tags , body ) values ($1,$2,$3,$4,$5)',
-//         values: [ownerid,Ownername,post_title,tags,post_body],
-//       }
-//       client.query(query, (err, resl) => {
-//         if (err) {
-//           console.log(err.stack)
-//         }
-//         else
-//         { 
-//           res.json({
-//           ok:1,
-//           user:req.user,
-//           data:req.body
-//            });
-//           console.log(resl)
-//           console.log("added post")
-//         }
-//       })
+       const query={
+        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ) values ($1,$2,$3,$4,$5,$6) returning *',
+        values: [++maxpostid,ownerid,Ownername,post_title,tags,post_body],
+      }
+      client.query(query, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        { 
+          console.log(resl.rows)
+          console.log("added post");
+          // res.sendStatus(200)
+        }
+      })
 
 
-// })
+})
 
 // Authentication Routes
 router.post('/login', async (req, res) => {
@@ -121,7 +117,44 @@ router.post('/login', async (req, res) => {
   }
 })
 });
+let maxuserid=0;let maxpostid=0;let maxansid=0;
+const q1={
+text : 'select id from users order by id desc limit 1'
+}
+client.query(q1, (err, resl) => {
+  if (err) {
+    console.log(err.stack)
+  }
+  else
+  { 
+    maxuserid=resl.rows[0].id
+  }
+})
+const q2={
+  text : 'select id from posts order by id desc limit 1'
+  }
+  client.query(q2, (err, resl) => {
+    if (err) {
+      console.log(err.stack)
+    }
+    else
+    { 
+      maxpostid=resl.rows[0].id
+    }
+  })
 
+  const q3={
+    text : 'select id from answers order by id desc limit 1'
+    }
+    client.query(q3, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+        maxansid =resl.rows[0].id
+      }
+    })
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
@@ -140,8 +173,8 @@ router.post('/register',async (req, res) => {
         console.log(req.body.password)
         console.log(req.body.dispName)
         const query = {
-          text: 'insert into users(username,password,display_name) values ($1,$2,$3)',
-          values: [req.body.userName,req.body.password,req.body.dispName],
+          text: 'insert into users(id,username,password,display_name) values ($1,$2,$3,$4)',
+          values: [++maxuserid,req.body.userName,req.body.password,req.body.dispName],
         }
         client.query(query, (err, resl) => {
           if (err) {
@@ -370,12 +403,12 @@ router.get('/posts/:id1',(req,res)=>
         console.log(err.stack)
       }
       else
-      { console.log(resl.rows)
-        console.log(resl.rowCount)
+      { //console.log(resl.rows)
+        // console.log(resl.rowCount)
         console.log(pagenum)
         res.json({
           answers:resl.rows,
-          totpage:pagenum
+          totpage:pagenum,
         })
       }
     })
