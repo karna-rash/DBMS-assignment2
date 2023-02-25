@@ -12,17 +12,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 function App() {
-  useEffect(() => {
-     localStorage.clear('token_status');
-    //Have to sort this
-  }, []);
-const token = localStorage.getItem('token_status');
+  // useEffect(() => {
+  //    sessionStorage.clear('token_status');
+  //    console.log('yes');
+  //   //Have to sort this
+  // }, []);
+
 
   return (
     <Router>
       <div>
-      {!token && <Navbar/>}
-      {token && <Navbar1/>}
+      <Navbar/>
+      {/* {token && <Navbar1/>} */}
 
         <Routes>
          <Route exact path="/" element={<Home />}></Route>
