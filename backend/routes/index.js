@@ -383,28 +383,6 @@ router.get('/posts/:id1',(req,res)=>
     
 })
 
-//searching answers acc to pagenum
-router.get('/posts/:id1/:id2',(req,res)=>{
-  let post_id =req.params.id1;
-  let pagenum =req.params.id2;
-  const query ={
-    text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+(pagenum-1)*8+" )"
-  }
-  client.query(query, (err, resl) => {
-    if (err) {
-      console.log(err.stack)
-    }
-    else
-    { console.log(resl.rows)
-      console.log(resl.rowCount)
-      console.log(pagenum)
-      res.json({
-        answers:resl.rows,
-      })
-    }
-  })
-
-})
 
 //searching posts of page 1 from tags
   router.get('/posts/tag/:id',(req,res)=>
@@ -446,6 +424,28 @@ router.get('/posts/:id1/:id2',(req,res)=>{
           
   });
 
+//searching answers acc to pagenum
+router.get('/posts/:id1/:id2',(req,res)=>{
+  let post_id =req.params.id1;
+  let pagenum =req.params.id2;
+  const query ={
+    text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+(pagenum-1)*8+" )"
+  }
+  client.query(query, (err, resl) => {
+    if (err) {
+      console.log(err.stack)
+    }
+    else
+    { console.log(resl.rows)
+      console.log(resl.rowCount)
+      console.log(pagenum)
+      res.json({
+        answers:resl.rows,
+      })
+    }
+  })
+
+})
 
   router.get('/posts/user/:id',(req,res)=>
   {
