@@ -41,38 +41,39 @@ router.get('/test',authenticateToken,(req,res)=>
 
 
 //by abhinay
-router.post('/create_post',authenticateToken,(req,res)=>
-{
+// router.post('/create_post',authenticateToken,(req,res)=>
+// {
   
-    const ownerid=req.user.userid;
-    const Ownername=req.user.userName;
-    const post_title=req.body.title;
-    const post_body= req.body.body;
-    const tags=req.body.tags;
-    const creation_date=req.body.creation_date;
-    res.json({
-      ok:1,
-      user:req.user,
-      data:req.body
-       });
+//     const ownerid=req.user.userid;
+//     const Ownername=req.user.userName;
+//     const post_title=req.body.title;
+//     const post_body= req.body.body;
+//     const tags=req.body.tags;
+//     const creation_date=req.body.creation_date;
+    
        
-       const query={
-        name: "insert into posts(Owner_id ,OwnerName,Title ,tags , body ,creation_date) values($1,$2,$3,$4,$5,$6)",
-        values: [ownerid,Ownername,post_title,tags,post_body,creation_date],
-      }
-      client.query(query, (err, resl) => {
-        if (err) {
-          console.log(err.stack)
-        }
-        else
-        {
-          console.log(resl)
-          console.log("added post")
-        }
-      })
+//        const query={
+//         text: 'insert into posts(Owner_id ,OwnerName,Title ,tags , body ) values ($1,$2,$3,$4,$5)',
+//         values: [ownerid,Ownername,post_title,tags,post_body],
+//       }
+//       client.query(query, (err, resl) => {
+//         if (err) {
+//           console.log(err.stack)
+//         }
+//         else
+//         { 
+//           res.json({
+//           ok:1,
+//           user:req.user,
+//           data:req.body
+//            });
+//           console.log(resl)
+//           console.log("added post")
+//         }
+//       })
 
 
-})
+// })
 
 // Authentication Routes
 router.post('/login', async (req, res) => {
@@ -344,9 +345,24 @@ router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
     const query={
+      text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit 8",
+      values: [],
+    }
+    const query2={
       text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date ",
       values: [],
     }
+    let pagenum=0;
+    client.query(query2, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+        console.log(resl.rowCount)
+        pagenum=Math.ceil(resl.rowCount/8)
+      }
+    })
     client.query(query, (err, resl) => {
       if (err) {
         console.log(err.stack)
@@ -354,8 +370,10 @@ router.get('/posts/:id1',(req,res)=>
       else
       { console.log(resl.rows)
         console.log(resl.rowCount)
+        console.log(pagenum)
         res.json({
-          answers:resl.rows
+          answers:resl.rows,
+          totpage:pagenum
         })
       }
     })
