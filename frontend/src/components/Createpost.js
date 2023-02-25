@@ -1,17 +1,22 @@
+import showdown from 'showdown'
 import MDEditor from '@uiw/react-md-editor'
 import { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
+//import { useAuthContext } from '../hooks/useAuthContext';
 
 const Createpost = () => {
-    const { user }=useAuthContext() 
+   // const { user }=useAuthContext() 
     const [body, setBody] = useState("**Hello world!!!**");
     const [title,settitle]=useState();
     const cdate=Date.now();
-    const Ownername=user.username;
+   // console.log(user)
+    //const Ownername=user;
 
 
-    const handleSubmit=()=>{
-       console.log(body)
+    const handleSubmit=(e)=>{
+      e.preventDefault();
+     let converter = new showdown.Converter();
+     let html     = converter.makeHtml(body);
+      
     }
     
     return (
@@ -27,7 +32,7 @@ const Createpost = () => {
           <label>Post body</label>   
           <MDEditor
           value={body}
-          onChange={(e)=>setBody(e.target.value)}
+          onChange={setBody}
         />
       <button className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 w-auto">Submit</button>
 
