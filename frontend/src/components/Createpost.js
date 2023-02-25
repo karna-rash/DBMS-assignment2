@@ -96,7 +96,10 @@ const Createpost = () => {
      })
      .then((res)=>
      {
-
+             if(res.tokenStatus == 1)
+             {
+              
+             }
      }).catch((err)=>
      {
 

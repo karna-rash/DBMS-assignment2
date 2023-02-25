@@ -5,5 +5,7 @@ Content-Type: application/json
 {
    "title" : "harsha",
    "body" : "harsha vardhan",
-   "tags" : "<html>"
+   "tags":"<code-smell>",
+  // "tags" : ["code-smell","code-quality"],
+   "creation_date" : ""
 }

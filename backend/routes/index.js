@@ -31,7 +31,7 @@ function authenticateToken(req, res, next) {
       }
     })
   }
-  next();
+
 };
 
 router.get('/test',authenticateToken,(req,res)=>
@@ -59,12 +59,21 @@ router.post('/create_post',authenticateToken,(req,res)=>
       client.query(query, (err, resl) => {
         if (err) {
           console.log(err.stack)
+          res.json(
+            {
+             tokenStatus:1,
+             postRes:-1
+            })
         }
         else
         { 
           console.log(resl.rows)
           console.log("added post");
-          // res.sendStatus(200)
+           res.json(
+           {
+            tokenStatus:1,
+            postRes:1
+           })
         }
       })
 
