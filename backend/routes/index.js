@@ -340,7 +340,7 @@ router.post('/register',async (req, res) => {
     
     
 })
-//searching 
+//searching answers
 router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
@@ -349,7 +349,7 @@ router.get('/posts/:id1',(req,res)=>
       values: [],
     }
     const query2={
-      text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date ",
+      text: "SELECT * FROM answers where post_id = '"+post_id+"'",
       values: [],
     }
     let pagenum=0;
@@ -379,6 +379,29 @@ router.get('/posts/:id1',(req,res)=>
     })
     
     
+})
+
+//searching answers acc to pagenum
+router.get('/posts/:id1/:id2',(req,res)=>{
+  let post_id =req.params.id1;
+  let pagenum =req.params.id2;
+  const query ={
+    text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+(pagenum-1)*8+" )"
+  }
+  client.query(query, (err, resl) => {
+    if (err) {
+      console.log(err.stack)
+    }
+    else
+    { console.log(resl.rows)
+      console.log(resl.rowCount)
+      console.log(pagenum)
+      res.json({
+        answers:resl.rows,
+      })
+    }
+  })
+
 })
 
 //searching posts of page 1 from tags
