@@ -7,16 +7,38 @@ const Createpost = () => {
    // const { user }=useAuthContext() 
     const [body, setBody] = useState("**Hello world!!!**");
     const [title,settitle]=useState();
-    const cdate=Date.now();
+    const [tags,setTags] = useState([]);
    // console.log(user)
     //const Ownername=user;
-
+    useEffect(() => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${document.cookies}`,
+        },
+      };
+    },[]);
 
     const handleSubmit=(e)=>{
       e.preventDefault();
      let converter = new showdown.Converter();
      let html     = converter.makeHtml(body);
-      
+     axios.post('http://localhost:5000/create_post',
+     {
+      headers: {
+        Authorization: `Bearer ${document.cookies}`,
+      },
+      title:title,
+      body:html,
+      tags:tags
+     })
+     .then((res)=>
+     {
+
+     }).catch((err)=>
+     {
+
+     }) 
+
     }
     
     return (
