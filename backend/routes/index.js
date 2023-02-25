@@ -246,7 +246,75 @@ router.post('/register',async (req, res) => {
  router.post('/posts/multiple_tags',(req,res)=>
  {
     console.log(req.body);
+    let tag =[5];
+    for(let i=0;i<req.body.tags.length;i++){
+      tag[i]="<"+req.body.tags[i]+">";
+    }
+    for(let i=req.body.tags.length;i<5;i++){
+      tag[i]="";
+    }
+    const query1={
+      text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit 8)",
+      values: [],
+    }
+    let pageCount=0;
+    const query2={
+      text: "(SELECT id FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%')",
+      values: [],
+    }
+    client.query(query2, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+        console.log(resl.rowCount)
+        pageCount=Math.ceil(resl.rowCount/8)
+      }
+    })
+    client.query(query1, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { console.log(resl.rows)
+        res.json({
+          posts:resl.rows,
+          totpage:pageCount
+        })
+      }
+    })
+
  })
+
+ router.get('/posts/multiple_tags/:id1',(req,res)=>
+ {
+     let pagenum = req.params.id1;
+    console.log(req.body);
+    let tag =[5];
+    for(let i=0;i<req.body.tags.length;i++){
+      tag[i]="<"+req.body.tags[i]+">";
+    }
+    for(let i=req.body.tags.length;i<5;i++){
+      tag[i]="";
+    }
+    const query={
+      text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+pagenum*8+") - (SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+(pagenum-1)*8+")",
+      values: [],
+    }
+     client.query(query, (err, resl) => {
+       if (err) {
+         console.log(err.stack)
+       }
+       else
+       { console.log(resl.rows)
+         console.log(resl.rowCount)
+         res.json({
+           posts:resl.rows
+         })
+       }
+     })
+})
 
   router.get('/posts/tag/:id1/:id2',(req,res)=>
 {
