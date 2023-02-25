@@ -63,7 +63,7 @@ router.post('/create_post',authenticateToken,(req,res)=>
             {
              tokenStatus:1,
              postRes:-1
-            })
+            });
         }
         else
         { 
@@ -73,7 +73,7 @@ router.post('/create_post',authenticateToken,(req,res)=>
            {
             tokenStatus:1,
             postRes:1
-           })
+           });
         }
       })
 
