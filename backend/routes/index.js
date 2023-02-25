@@ -288,6 +288,7 @@ router.post('/register',async (req, res) => {
 
  })
 
+
  router.post('/posts/multiple_tags/:id1',(req,res)=>
  {
      let pagenum = req.params.id1;
@@ -316,6 +317,7 @@ router.post('/register',async (req, res) => {
        }
      })
 })
+
 
   router.get('/posts/tag/:id1/:id2',(req,res)=>
 {
@@ -444,6 +446,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
           
   });
 
+
   router.get('/posts/user/:id',(req,res)=>
   {
      let owner = req.params.id; console.log(owner)
@@ -456,7 +459,6 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       text: "SELECT id FROM posts where Owner_id = "+owner,
       values: [],
     }
-    let rowCount=0;
      client.query(query1, (err, resl) => {
           if (err) {
             console.log(err.stack)
