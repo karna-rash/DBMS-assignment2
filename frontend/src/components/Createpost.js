@@ -1,17 +1,44 @@
+import showdown from 'showdown'
 import MDEditor from '@uiw/react-md-editor'
 import { useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
+//import { useAuthContext } from '../hooks/useAuthContext';
 
 const Createpost = () => {
-    const { user }=useAuthContext() 
+   // const { user }=useAuthContext() 
     const [body, setBody] = useState("**Hello world!!!**");
     const [title,settitle]=useState();
-    const cdate=Date.now();
-    const Ownername=user.username;
+    const [tags,setTags] = useState([]);
+   // console.log(user)
+    //const Ownername=user;
+    useEffect(() => {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${document.cookies}`,
+        },
+      };
+    },[]);
 
+    const handleSubmit=(e)=>{
+      e.preventDefault();
+     let converter = new showdown.Converter();
+     let html     = converter.makeHtml(body);
+     axios.post('http://localhost:5000/create_post',
+     {
+      headers: {
+        Authorization: `Bearer ${document.cookies}`,
+      },
+      title:title,
+      body:html,
+      tags:tags
+     })
+     .then((res)=>
+     {
 
-    const handleSubmit=()=>{
-       console.log(body)
+     }).catch((err)=>
+     {
+
+     }) 
+
     }
     
     return (
@@ -27,7 +54,7 @@ const Createpost = () => {
           <label>Post body</label>   
           <MDEditor
           value={body}
-          onChange={(e)=>setBody(e.target.value)}
+          onChange={setBody}
         />
       <button className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 w-auto">Submit</button>
 

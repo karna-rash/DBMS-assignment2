@@ -11,14 +11,70 @@ function Post() {
   const [answers,setanswers]=useState([]);
   const [ansready,setansready]=useState(false);
 
+  const [totpagenum,settotpagenum] = useState(1);
+  const [curpagenum,setCurpagenum] = useState(1);
+
+  function handleBack()
+  {
+    if(curpagenum != 1)
+    {
+        axios.get('http://localhost:5000/posts/'+post.id+'/'+(curpagenum-1),{}).
+        then((res)=>
+        {
+                  setanswers(res.data.answers)
+                  setCurpagenum(curpagenum-1)
+        }).
+        catch((err)=>
+        {
+            console.log(err);
+        })
+    }
+  }
+
+
+  function handleNext()
+  {
+    if(curpagenum != totpagenum)
+    {
+
+        axios.get('http://localhost:5000/posts/'+post.id+'/'+(curpagenum+1),{}).
+        then((res)=>
+        {
+              setanswers(res.data.answers)
+              setCurpagenum(curpagenum+1);
+        }).
+        catch((err)=>
+        {
+              console.log(err);
+        })
+    }
+  }
+
   const handle_answers = (e) =>{
     e.preventDefault()
     setansready(false)
-    axios.get('http://localhost:5000/posts/'+post.id,{}).
+    axios.get('http://localhost:5000/posts/'+post.id+'/'+(curpagenum),{}).
            then((res)=>
            {
                     setanswers(res.data.answers);
                     setansready(true);
+                    console.log(res.data.totpage);
+           }).
+           catch((err)=>
+           {
+               console.log(err);
+           })
+  }
+
+  function handleFirstPage()
+  {
+    setansready(false)
+    axios.get('http://localhost:5000/posts/'+post.id+'/'+(curpagenum),{}).
+           then((res)=>
+           {
+                    setanswers(res.data.answers);
+                    setansready(true);
+                    console.log(res.data.totpage);
            }).
            catch((err)=>
            {
@@ -72,8 +128,18 @@ function Post() {
   useEffect(()=>
   {
      if(answers.length>0) setansready(true)
-     console.log(answers)
-  },[answers]);
+     axios.get('http://localhost:5000/posts/'+post.id,{}).
+           then((res)=>
+           {
+              settotpagenum(res.data.totpage)
+              console.log(res.data.totpage);
+           }).
+           catch((err)=>
+           {
+               console.log(err);
+           })
+      handleFirstPage();
+  },[]);
 
 
 
@@ -111,16 +177,11 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
           </div>
           {
-            !ansready &&
-            <div className="text-center">
-          <button className="bg-indigo-500 text-white py-2 px-16 rounded-lg hover:bg-indigo-600" onClick={(e)=>handle_answers(e)}>See Answers</button>
-          </div>
-          }
-          {
             !!ansready &&
             <List items={answers} ></List>
           }
         </div>
+        <div className="flex justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> Page {curpagenum} of {totpagenum} <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
     </div>
   );
