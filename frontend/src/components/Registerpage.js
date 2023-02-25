@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 import axios from 'axios'
@@ -23,16 +23,28 @@ function Registerpage() {
       email: email
     }).then((res) => {
       setRegRes(res.data.regRes);
-
+      
 
     }).catch((err) => {
       console.log(err);
     });
 
-
-
-
   };
+
+  
+useEffect(()=>
+{
+  if(regRes == 1) 
+  { 
+    alert("registration succesful")
+    setTimeout(()=>
+    {
+      navigate('/login')
+    },1500)
+  }
+},[regRes]);
+
+
   return (
 //-2 for processing the request
 //-1 for username already taken, display the form again
@@ -43,8 +55,7 @@ function Registerpage() {
       {
         regRes == -2 && <Loading/>
       }
-     {/* display that registration is succesful and then navigate*/} 
-      {regRes == 1 && navigate('/login' )}
+
    
       
       {

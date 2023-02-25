@@ -13,10 +13,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   useEffect(() => {
-     sessionStorage.clear('token_status');
+     localStorage.clear('token_status');
     //Have to sort this
   }, []);
-const token = sessionStorage.getItem('token_status');
+const token = localStorage.getItem('token_status');
+
   return (
     <Router>
       <div>
