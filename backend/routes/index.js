@@ -287,7 +287,7 @@ router.post('/register',async (req, res) => {
 
  })
 
- router.get('/posts/multiple_tags/:id1',(req,res)=>
+ router.post('/posts/multiple_tags/:id1',(req,res)=>
  {
      let pagenum = req.params.id1;
     console.log(req.body);
