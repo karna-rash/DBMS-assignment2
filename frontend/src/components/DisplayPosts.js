@@ -35,7 +35,7 @@ function handleBack()
                console.log(err);
            })
        }
-       if(params.searchOption == 'username')
+       else if(params.searchOption == 'username')
        {
            axios.get('http://localhost:5000/posts/user/'+params.searchValue+'/'+(curpagenum-1),{}).
            then((res)=>
@@ -47,6 +47,19 @@ function handleBack()
            {
                console.log(err);
            })
+       }
+       else //multiple tags
+       {
+        axios.get('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum-1),{}).
+        then((res)=>
+        {
+                 setPosts(res.data.posts)
+                 setCurpagenum(curpagenum-1);
+        }).
+        catch((err)=>
+        {
+            console.log(err);
+        })
        }
   }
 }
@@ -69,7 +82,7 @@ function handleNext()
                 console.log(err);
            })
        }
-       if(params.searchOption == 'tag')
+      else if(params.searchOption == 'username')
        {
            axios.get('http://localhost:5000/posts/user/'+params.searchValue+'/'+(curpagenum+1),{}).
            then((res)=>
@@ -81,6 +94,19 @@ function handleNext()
            {
                 console.log(err);
            })
+       }
+       else //multiple tags
+       {
+        axios.get('http://localhost:5000/posts/multiple_tags/'+params.searchValue+'/'+(curpagenum+1),{}).
+        then((res)=>
+        {
+             setPosts(res.data.posts)
+             setCurpagenum(curpagenum+1);
+        }).
+        catch((err)=>
+        {
+             console.log(err);
+        })
        }
   }
 }
