@@ -1,10 +1,9 @@
 post http://localhost:5000/create_post
-Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IjVmZWNlYjY2IiwidXNlcmlkIjotMSwiaWF0IjoxNjc2ODA4NjIzfQ.YHPIvwzSGf6TkBRDi3ZM4NLTz7rY6GVjCSkmlfCJIUs
+Content-Type: application/json
 
 {
    "title" : "harsha",
    "body" : "harsha vardhan",
-   "tags" : "<html>",
-   "creation_date" : ""
+   "tags" : "<html>"
 }
