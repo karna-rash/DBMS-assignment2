@@ -139,7 +139,7 @@ router.post('/register',async (req, res) => {
         console.log(req.body.password)
         console.log(req.body.dispName)
         const query = {
-          text: 'insert into users values ($1,$2,$3)',
+          text: 'insert into users(username,password,display_name) values ($1,$2,$3)',
           values: [req.body.userName,req.body.password,req.body.dispName],
         }
         client.query(query, (err, resl) => {
@@ -299,7 +299,7 @@ router.post('/register',async (req, res) => {
       tag[i]="";
     }
     const query={
-      text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+pagenum*8+") - (SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+(pagenum-1)*8+")",
+      text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+pagenum*8+") except (SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit "+(pagenum-1)*8+")",
       values: [],
     }
      client.query(query, (err, resl) => {
