@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DisplayPosts from "./DisplayPosts";
+import Navbar from './Navbar';
 import axios from "axios";
 function Posts(props) {
   const [searchValue, setSearchValue] = useState("");
@@ -167,6 +168,7 @@ function Posts(props) {
   }, [posts]);
 
   return (
+    <div><Navbar/>
     <div className="relative flex min-h-screen  justify-center from-blue-500 to-emerald-500 bg-gradient-115 overflow-hidden">
       <div className="container mx-auto relative">
         <div className="translate-y-4">
@@ -300,6 +302,7 @@ function Posts(props) {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

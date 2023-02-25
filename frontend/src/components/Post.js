@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import parse from "html-react-parser";
+import Navbar from './Navbar';
 import { useState,useEffect } from "react";
 function Post() {
   const location = useLocation();
@@ -163,6 +164,7 @@ function Post() {
   }
 
   return (
+    <div><Navbar/>
     <div className="relative flex flex-col justify-center min-h-screen from-red-500 to-blue-500 bg-gradient-115 overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
@@ -183,6 +185,7 @@ function Post() {
         </div>
         <div className="flex justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> Page {curpagenum} of {totpagenum} <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
       </div>
+    </div>
     </div>
   );
 }

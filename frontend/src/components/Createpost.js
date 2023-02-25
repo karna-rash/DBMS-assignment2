@@ -2,6 +2,7 @@ import showdown from 'showdown'
 import MDEditor from '@uiw/react-md-editor'
 import { useState } from 'react';
 import Posts from './Posts';
+import Navbar from './Navbar';
 import { useEffect} from "react";
 import axios from "axios";
 //import { useAuthContext } from '../hooks/useAuthContext';
@@ -119,6 +120,7 @@ const Createpost = () => {
     }
     
     return (
+      <div><Navbar/>
       <div className="flex flex-col justify-center min-h-screen from-red-500 to-blue-500 bg-gradient-115 overflow-hidden">
         <div className="flex flex-col bg-white mx-20 rounded-md ">
           <h1 className="text-3x1 text-center">Create Post</h1>
@@ -204,6 +206,7 @@ const Createpost = () => {
           </form>
                
         </div>
+         </div>
          </div>
     );
 }

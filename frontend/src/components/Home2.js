@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useEffect } from 'react';
+import Navbar from './Navbar';
 
 const Home2 = () => {
 
   const {user}=useAuthContext()
-
   return (
+    <div><Navbar/>
     <div className="relative flex flex-col min-h-screen from-red-500 to-yellow-500 bg-gradient-115 overflow-hidden">
       <main className="p-12">
         <section id="about" className="py-12">
@@ -16,6 +18,7 @@ const Home2 = () => {
           </div>
         </section>
       </main>
+    </div>
     </div>
   );
 };

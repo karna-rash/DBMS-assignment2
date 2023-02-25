@@ -1,7 +1,9 @@
 import React from 'react';
+import Navbar from './Navbar';
 
 const Home = () => {
   return (
+    <div><Navbar/>
     <div className="bg-gray-100 h-screen font-sans">
       <main className="p-12">
         <section id="about" className="py-12">
@@ -30,6 +32,7 @@ const Home = () => {
       <footer className="bg-black p-6">
         <p className="text-white text-center">&copy;</p>
       </footer>
+    </div>
     </div>
   );
 };

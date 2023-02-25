@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <div>
-      <Navbar/>
+      
       {/* {token && <Navbar1/>} */}
 
         <Routes>

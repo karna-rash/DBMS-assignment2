@@ -50,6 +50,7 @@ useEffect(()=>
 //-1 for username already taken, display the form again
 //0 for initial
 //1 for succesful response , navigate to login page, notify for a second that account creation is successful
+    <div><Navbar/>
     <div className="App">
       
       {
@@ -115,6 +116,7 @@ useEffect(()=>
         </div>
       </div>
 }
+    </div>
     </div>
 
   );

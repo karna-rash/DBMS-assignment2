@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Navbar from './Navbar';
 import axios from 'axios';
 import Loading from './Loading';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -26,7 +27,6 @@ const Login = () => {
 
         document.cookies = res.data.token;
         sessionStorage.setItem('token_status',1);
-             
 
       setTimeout(() => {
 
@@ -45,6 +45,7 @@ const Login = () => {
   }
         
     return (
+      <div><Navbar/>
        <div className="App">
 
 
@@ -106,6 +107,7 @@ const Login = () => {
 
         </div>
     }
+    </div>
     </div>
      );
 }
