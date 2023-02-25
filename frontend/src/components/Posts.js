@@ -18,12 +18,27 @@ function Posts(props) {
   function handleClick(e) {
     if(searchOption=="multiple_tags")
     {
-        let arr = multytag;
-        arr.push(e.target.value);
-        let search_bar = document.getElementById("search-bar");
-         search_bar.value = '';
-        setSearchValue('');
-        setMultytag(arr);
+        if(multytag.length == 5)
+        {
+          alert("A post cannot have more than five tags.")
+        } 
+        else
+        {
+          let arr = multytag;
+          if(!arr.includes(e.target.value))
+          {
+          arr.push(e.target.value);
+          let search_bar = document.getElementById("search-bar");
+           search_bar.value = '';
+          setSearchValue('');
+          setMultytag([...arr]);
+          }
+          else
+          {
+            alert("This tag is already selected!");
+          }
+        }
+        
     }
     else
     {
@@ -46,11 +61,13 @@ function handleTagClick(e){
 //this function is for removing tags in multi tag display
 function removeTag(e)
 {   e.preventDefault();
-   let ind =  e.target.getAttribute('kay')
+  
+   let ind =  e.target.getAttribute('ind')
+ 
    let arr = multytag
     arr.splice( ind,1 );
-    console.log(arr)
-    setMultytag(arr);
+   
+    setMultytag([...arr]);
 }
 
 //
@@ -95,7 +112,7 @@ function removeTag(e)
       then((res)=>
       {
             setmatches(res.data.users);
-            console.log(matches)
+            
             setautocomp(1);
       }).
       catch((err)=>
@@ -150,6 +167,19 @@ function removeTag(e)
            console.log(err);
       })
     }
+    }
+    else //multiple tag
+    {
+          axios.post('http://localhost:5000/posts/multiple_tags',{tags:multytag}).
+      then(async (res)=>
+      {
+           setPosts(res.data.posts)
+           setPages(res.data.totpage) 
+          
+      }).catch((err)=>
+      {
+           console.log(err);
+      })  
     }
   };
 
@@ -235,8 +265,8 @@ function removeTag(e)
              {multytag.map((tag,index)=>(
               <div className="mx-4 bg-gray-400 rounded-lg mt-2"  key={index}>
                 &nbsp;{tag} 
-                <button className="text-red-500" key={index} onClick={removeTag}>
-                  <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-red-600 px-2 py-2 hover:bg-red-700">
+                <button className="text-red-500"  onClick={removeTag}>
+                  <span class="m-1 inline-flex cursor-pointer items-center rounded-md bg-red-600 px-2 py-2 hover:bg-red-700" ind={index}>
                   <svg width="12px" height="12px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="removeIconTitle" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000000"> <title id="removeIconTitle">Remove</title> <path d="M17,12 L7,12"/> <circle cx="12" cy="12" r="10"/> </svg>
                   </span>
                 </button>

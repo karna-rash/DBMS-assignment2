@@ -243,6 +243,11 @@ router.post('/register',async (req, res) => {
           
   });
 
+ router.post('/posts/multiple_tags',(req,res)=>
+ {
+    console.log(req.body);
+ })
+
   router.get('/posts/tag/:id1/:id2',(req,res)=>
 {
     let tag = req.params.id1; 
