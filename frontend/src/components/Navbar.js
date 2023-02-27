@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
 
   const [token,setToken] = useState(sessionStorage.getItem('token_status'));
-
+  const navigate=useNavigate()
 
   
   function handleSignout(e)
   {
     setToken(0);
     sessionStorage.setItem('token_status',0);
-    document.cookies = '';
-    console.log(token)
+    document.cookie = '';
+    console.log(token);
+    navigate('/login');
   }
 
     return ( <div>
