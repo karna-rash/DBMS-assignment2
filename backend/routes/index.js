@@ -305,13 +305,13 @@ router.post('/register',async (req, res) => {
      let query1;
      if(flg=='latest'){
       query1 = {
-        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
+        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date desc limit 8",
         values: [],
       }
      }
      else if(flg=='oldest'){
       query1 = {
-        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date desc limit 8",
+        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
         values: [],
       }
      }
@@ -457,8 +457,8 @@ router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
     const query={
-      text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit 8",
-      values: [],
+      text: "SELECT * FROM answers where post_id = $1 order by creation_date desc limit 8",
+      values: [post_id],
     }
     const query2={
       text: "SELECT * FROM answers where post_id = '"+post_id+"'",
@@ -502,12 +502,12 @@ router.get('/posts/:id1',(req,res)=>
      let query1;
      if(flg=='latest'){
       query1 = {
-      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
+      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
       values: [],
     }}
     else if(flg =='oldest'){
        query1 = {
-        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
         values: [],
       }
     }

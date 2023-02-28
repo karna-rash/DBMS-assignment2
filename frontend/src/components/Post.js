@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import parse from "html-react-parser";
 import Navbar from './Navbar';
@@ -10,7 +10,6 @@ function Post() {
   const post = location.state.post;
   const date1 = new Date(post.creation_date);
   const date2 = new Date(post.last_modified);
-
   const [answers,setanswers]=useState([]);
   const [ansready,setansready]=useState(false);
 
