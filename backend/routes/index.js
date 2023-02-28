@@ -174,6 +174,7 @@ const q2={
         maxansid =resl.rows[0].id
       }
     })
+    
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
@@ -574,5 +575,12 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       
   })
 
-  
+  router.post('/upvote',authenticateToken,(req,res)=>
+  {
+
+  });
+  router.post('/downvote',authenticateToken,(req,res)=>
+  {
+     
+  });
 export default router;
