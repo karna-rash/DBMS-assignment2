@@ -82,9 +82,14 @@ const Createpost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(multytag.length == 0) 
+    {
+      alert("Atleast one tag must be selected")
+      return;
+    }
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
-    console.log('hello')
+  
     axios
       .post("http://localhost:5000/create_post",{
         title: title,
@@ -101,6 +106,13 @@ const Createpost = () => {
          setTimeout(() => {
           navigate("/home2");
          }, 2000);
+        }
+        else
+        {
+             alert("You have to login to post!");
+             setTimeout(() => {
+              navigate("/login");
+             }, 2000);
         }
       })
       .catch((err) => {
@@ -131,6 +143,7 @@ const Createpost = () => {
               className="block w-full px-4 py-2 mt-2 textblack bg-white border rounded-md focus:border-rose-400 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40"
               TYPE="text"
               onChange={(e) => settitle(e.target.value)}
+              required
             ></input>
             <label>Post body</label>
             <MDEditor value={body} onChange={setBody} />
@@ -143,6 +156,7 @@ const Createpost = () => {
                 onChange={(e) => {
                   setSearchValue(e.target.value);
                 }}
+        
               />
             </div>
             <div className="mt-auto w-full overflow-hidden rounded-b-lg bg-white">

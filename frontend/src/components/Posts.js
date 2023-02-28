@@ -14,6 +14,7 @@ function Posts(props) {
   const [pages, setPages] = useState(0);
   const [yvalue, setyvalue] = useState(28);
   const [multytag, setMultytag] = useState([]);
+  const [filter,setFilter] = useState('latest')
 
   function handleClick(e) {
     if (searchOption == "multiple_tags") {
@@ -126,7 +127,7 @@ function Posts(props) {
     setyvalue(28);
     if (searchOption == "tag") {
       axios
-        .get("http://localhost:5000/posts/tag/" + searchValue, {})
+        .post("http://localhost:5000/posts/tag/" + searchValue, { filter:filter})
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
@@ -138,7 +139,7 @@ function Posts(props) {
       console.log(matches[0].id);
       if (matches.length == 1) {
         axios
-          .get("http://localhost:5000/posts/user/" + matches[0].id, {})
+          .post("http://localhost:5000/posts/user/" + matches[0].id, {filter:filter})
           .then(async (res) => {
             setPosts(res.data.posts);
             setPages(res.data.totpage);
@@ -150,7 +151,7 @@ function Posts(props) {
     } //multiple tag
     else {
       axios
-        .post("http://localhost:5000/posts/multiple_tags", { tags: multytag })
+        .post("http://localhost:5000/posts/multiple_tags", { tags: multytag,filter:filter })
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
@@ -159,11 +160,12 @@ function Posts(props) {
           console.log(err);
         });
     }
-    if (posts.length == 0) alert("No results for this!");
+    
   };
 
   useEffect(() => {
     if (posts.length > 0) setPostsReady(1);
+    if (posts.length == 0) alert("No results for this!");
     console.log(posts, " ", pages);
   }, [posts]);
 
@@ -195,6 +197,17 @@ function Posts(props) {
                     </option>
                     <option value="username">username</option>
                     <option value="multiple_tags">multiple tags</option>
+                  </select>
+                   
+                  <select
+                    className="text-base text-gray-800 outline-none border-2 px-4 py-2 rounded-lg"
+                    onChange={(e) => setFilter(e.target.value)}
+                  >
+                    <option value="latest" selected>
+                      latest
+                    </option>
+                    <option value="oldest">oldest</option>
+                    <option value="upvotes">upvotes</option>
                   </select>
 
                   <button

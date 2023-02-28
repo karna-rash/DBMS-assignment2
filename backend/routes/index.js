@@ -57,12 +57,13 @@ router.post('/create_post',authenticateToken,(req,res)=>
       tagstring=tagstring+tag[j];
     }
     //console.log(tagstring);
-    const creation_date=Date.now();
+    const creation_date=new Date(Date.now());
+    let time =creation_date.toISOString();
     //console.log(req.body)
        
        const query={
-        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,to_timestamp($7)) returning *',
-        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,creation_date],
+        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,$7)',
+        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,time],
       }
       client.query(query, (err, resl) => {
         if (err) {
@@ -173,6 +174,7 @@ const q2={
         maxansid =resl.rows[0].id
       }
     })
+    
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
@@ -436,12 +438,26 @@ router.get('/posts/:id1',(req,res)=>
 
 
 //searching posts of page 1 from tags
-  router.get('/posts/tag/:id',(req,res)=>
+  router.post('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
+     let flg = req.body.filter;
+     if(flg=='latest'){
      const query1 = {
       text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
       values: [],
+    }}
+    else if(flg =='oldest'){
+      const query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
+        values: [],
+      }
+    }
+    else {
+      const query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by up_votes desc limit 8",
+        values: [],
+      }
     }
     let posts=[];
     const query2 = {
@@ -559,5 +575,12 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       
   })
 
-  
+  router.post('/upvote',authenticateToken,(req,res)=>
+  {
+
+  });
+  router.post('/downvote',authenticateToken,(req,res)=>
+  {
+     
+  });
 export default router;

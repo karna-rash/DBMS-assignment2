@@ -80,3 +80,11 @@ var sql3="create table if not exists answers( "+
       client.end();
      }
   });
+
+var sql4="create table if not exists post-upvotes(userid integer not null, postid integer not null, status integer default 0, primary key (userid,postid), foreign key (userid) references users(id), foreign key (postid) references post(id));"
+client.query(sql4, function (err, result) {
+  if (err) console.error(err);
+  else{
+    client.end();
+   }
+});
