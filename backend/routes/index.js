@@ -57,12 +57,13 @@ router.post('/create_post',authenticateToken,(req,res)=>
       tagstring=tagstring+tag[j];
     }
     //console.log(tagstring);
-    const creation_date=Date.now();
+    const creation_date=new Date(Date.now());
+    let time =creation_date.toISOString();
     //console.log(req.body)
        
        const query={
-        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,to_timestamp($7)) returning *',
-        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,creation_date],
+        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,$7)',
+        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,time],
       }
       client.query(query, (err, resl) => {
         if (err) {
