@@ -12,7 +12,6 @@ const router = express.Router();
 
 
 function authenticateToken(req, res, next) {
-
   const bearer = req.headers['authorization'];
   const token = bearer && bearer.split(' ')[1];
   if (token == null) {
@@ -25,7 +24,6 @@ function authenticateToken(req, res, next) {
         res.json({ tokenStatus: -2 });
       }
       else {
-        console.log(user,req.body)
         req.user=user
         next();
       }
@@ -48,6 +46,7 @@ router.post('/create_post',authenticateToken,(req,res)=>
     const Ownername=req.user.userName;
     const post_title=req.body.title;
     const post_body= req.body.body;
+    //console.log(req)
     //const tags=req.body.tags;
     let tag =[req.body.tags.length];
     for(let i=0;i<req.body.tags.length;i++){
@@ -57,9 +56,9 @@ router.post('/create_post',authenticateToken,(req,res)=>
     for(let j=0;j<req.body.tags.length;j++){
       tagstring=tagstring+tag[j];
     }
-    console.log(tagstring);
+    //console.log(tagstring);
     const creation_date=Date.now();
-    console.log(req.body)
+    //console.log(req.body)
        
        const query={
         text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,to_timestamp($7)) returning *',
@@ -76,13 +75,14 @@ router.post('/create_post',authenticateToken,(req,res)=>
         }
         else
         { 
-          console.log(resl.rows)
+          //console.log(resl.rows)
           console.log("added post");
            res.json(
            {
             tokenStatus:1,
             postRes:1
            });
+           
         }
       })
 
