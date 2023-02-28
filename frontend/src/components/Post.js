@@ -3,6 +3,8 @@ import axios from "axios";
 import parse from "html-react-parser";
 import Navbar from './Navbar';
 import { useState,useEffect } from "react";
+import { Link } from "react-router-dom";
+import CreateAnswer from "./createAnswer";
 function Post() {
   const location = useLocation();
   const post = location.state.post;
@@ -177,7 +179,9 @@ function Post() {
           </div>
           <div className="text-left mx-8 border-2 border-black">
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
+            
           </div>
+          <CreateAnswer post={post}></CreateAnswer>
           {
             !!ansready &&
             <List items={answers} ></List>

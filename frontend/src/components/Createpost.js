@@ -134,7 +134,7 @@ const Createpost = () => {
             ></input>
             <label>Post body</label>
             <MDEditor value={body} onChange={setBody} />
-            <div className="flex w-1/2 justify-between overflow-hidden rounded-t-lg bg-white shadow">
+            <div className="flex flex-row w-1/2 mt-2 overflow-hidden rounded-lg bg-gray-400 border shadow">
               <input
                 id="search-bar"
                 className="text-base text-gray-400 flex-grow outline-none px-4 py-3"
@@ -197,8 +197,8 @@ const Createpost = () => {
                 </div>
               ))}
             </div>
-            <button className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 w-auto">
-              Submit
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+              Post your question
             </button>
           </form>
         </div>
