@@ -437,12 +437,26 @@ router.get('/posts/:id1',(req,res)=>
 
 
 //searching posts of page 1 from tags
-  router.get('/posts/tag/:id',(req,res)=>
+  router.post('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
+     let flg = req.body.filter;
+     if(flg=='latest'){
      const query1 = {
       text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
       values: [],
+    }}
+    else if(flg =='oldest'){
+      const query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
+        values: [],
+      }
+    }
+    else {
+      const query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by up_votes desc limit 8",
+        values: [],
+      }
     }
     let posts=[];
     const query2 = {
