@@ -770,9 +770,12 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       { 
         console.log(resl.rows)
         console.log(resl.rowCount)
-        res.json({
-          posts:resl.rows
-        })
+        console.log("added post");
+           res.json(
+           {
+            tokenStatus:1,
+            postRes:1
+           });
       }
     })
 
