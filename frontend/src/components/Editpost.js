@@ -110,36 +110,41 @@ const Editpost = () => {
         let converter = new showdown.Converter();
         let html = converter.makeHtml(body);
 
+       if(window.confirm('Are you sure that you want to update these changes in the post?')){
         axios
-            .post("http://localhost:5000/edit_post", {
-                title: title,
-                body: html,
-                tags: multytag,
-                postid:post.id
+        .post("http://localhost:5000/edit_post", {
+            title: title,
+            body: html,
+            tags: multytag,
+            postid:post.id
 
-            }, {
-                headers: {
-                    'Content-Type': "application/json",
-                    'Authorization': `Bearer ${document.cookie}`,
-                }
-            })
-            .then((res) => {
-                if (res.data.tokenStatus == 1) {
-                    alert("Question edited succesful redirecting to homepage")
-                    setTimeout(() => {
-                        navigate("/home2");
-                    }, 1000);
-                }
-                else {
-                    alert("You have to login to delete the post! redirecting to login page");
-                    setTimeout(() => {
-                        navigate("/login");
-                    }, 1000);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        }, {
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': `Bearer ${document.cookie}`,
+            }
+        })
+        .then((res) => {
+            if (res.data.tokenStatus == 1) {
+                alert("Question edited succesful redirecting to homepage")
+                setTimeout(() => {
+                    navigate("/home2");
+                }, 1000);
+            }
+            else {
+                alert("You have to login to delete the post! redirecting to login page");
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+       }
+       else{
+        console.log('Do nothing')
+       }
     };
 
     function removeTag(e) {

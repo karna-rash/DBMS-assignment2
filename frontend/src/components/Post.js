@@ -140,7 +140,9 @@ function Post() {
 
  const handleDelete=(e,post_id)=>{
   e.preventDefault()
-  axios.delete('http://localhost:5000/delete_post/'+post_id,{},{
+  if (window.confirm('Are u sure u want to delete this post?')) {
+
+    axios.delete('http://localhost:5000/delete_post/'+post_id,{},{
     headers: {
       'Content-Type': "application/json",
       'Authorization': `Bearer ${document.cookie}`,
@@ -163,6 +165,10 @@ function Post() {
 .catch((err) => {
     console.log(err);
 });
+  }
+  else{
+    console.log("go back");
+  }
  }
 
  

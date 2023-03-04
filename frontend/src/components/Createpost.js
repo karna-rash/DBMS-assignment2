@@ -88,7 +88,8 @@ const Createpost = () => {
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
   
-    axios
+     if(window.confirm('Are u that you want to post this question?')){
+      axios
       .post("http://localhost:5000/create_post",{
         title: title,
         body: html,
@@ -115,7 +116,11 @@ const Createpost = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });   
+     }
+     else{
+      console.log('do nothing')
+     }
   };
 
   function removeTag(e) {
