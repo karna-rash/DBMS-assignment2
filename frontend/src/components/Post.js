@@ -296,7 +296,7 @@ function Post() {
           </div>
           <div className="flex flex-row justify-between w-1/2">
                 <div className="mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
-                <div>
+                <div className = "mt-4">
 
                 {
             EDS==1 &&

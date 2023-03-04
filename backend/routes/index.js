@@ -672,7 +672,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
       let posts=[]
       const query1={
-       text: "SELECT * FROM posts where owner_id ="+req.user.userid,       
+       text: "SELECT * FROM posts where owner_id ="+req.user.userid+" limit 8",       
         values: [],
       }
       client.query(query1, (err, resl) => {
