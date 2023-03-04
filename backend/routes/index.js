@@ -770,7 +770,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       { 
         console.log(resl.rows)
         console.log(resl.rowCount)
-        console.log("added post");
+        console.log("edited post");
            res.json(
            {
             tokenStatus:1,
@@ -789,6 +789,28 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       const postid=req.params.id;
       //write delete query for the post
       //write a trigger in schema to delete all answers when an question post is deleted
+      //fill this query harsha
+      const query={
+        text:'',
+        value:[],
+      }
+
+
+      client.query(query,(err,resl)=>{
+        if(err){
+          console.log(err.stack);
+        }
+        else{
+          console.log(resl.rows)
+          console.log(resl.rowCount)
+          console.log("deleted post");
+             res.json(
+             {
+              tokenStatus:1,
+              postRes:1
+             });
+        }
+      })
   })
 
 
