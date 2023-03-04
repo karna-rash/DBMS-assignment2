@@ -125,16 +125,16 @@ const Editpost = () => {
             })
             .then((res) => {
                 if (res.data.tokenStatus == 1) {
-                    alert("Question edited succesful")
+                    alert("Question edited succesful redirecting to homepage")
                     setTimeout(() => {
                         navigate("/home2");
-                    }, 2000);
+                    }, 1000);
                 }
                 else {
-                    alert("You have to login to post!");
+                    alert("You have to login to delete the post! redirecting to login page");
                     setTimeout(() => {
                         navigate("/login");
-                    }, 2000);
+                    }, 1000);
                 }
             })
             .catch((err) => {

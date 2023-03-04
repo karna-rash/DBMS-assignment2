@@ -784,6 +784,14 @@ router.get('/posts/:id1/:id2',(req,res)=>{
 
   })
 
+  //delete a post along with answers
+  router.delete('/delete_post:id',authenticateToken,(req,res)=>{
+      const postid=req.params.id;
+      //write delete query for the post
+      //write a trigger in schema to delete all answers when an question post is deleted
+  })
+
+
   router.post('/upvote',authenticateToken,(req,res)=>
   {
 

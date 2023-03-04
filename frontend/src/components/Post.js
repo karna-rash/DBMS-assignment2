@@ -138,6 +138,33 @@ function Post() {
     }
  }
 
+ const handleDelete=(e,post_id)=>{
+  e.preventDefault()
+  axios.delete('http://localhost:5000/delete_post/'+post_id,{},{
+    headers: {
+      'Content-Type': "application/json",
+      'Authorization': `Bearer ${document.cookie}`,
+  }
+  })
+  .then((res) => {
+    if (res.data.tokenStatus == 1) {
+        alert("Question deleted succesful")
+        setTimeout(() => {
+            navigate("/home2");
+        }, 2000);
+    }
+    else {
+        alert("You have to login to post!");
+        setTimeout(() => {
+            navigate("/login");
+        }, 2000);
+    }
+})
+.catch((err) => {
+    console.log(err);
+});
+ }
+
  
   function List({items}){  
     return(
@@ -273,10 +300,15 @@ function Post() {
 
                 {
             EDS==1 &&
-            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded">
+            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 mb-4 border border-blue-700 rounded">
             <Link to={'/posts/'+ post.id+'/edit_post/'} state={{post: post}}>Edit</Link>
             </a>
           }
+             {
+            EDS==1 &&
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>delete</button>
+          }
+
                 </div>
                 </div>
               {
