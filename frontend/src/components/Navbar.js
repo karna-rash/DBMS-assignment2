@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 
 const Navbar1 = ()=>
 {
@@ -124,27 +126,30 @@ const Navbar1 = ()=>
 
 const Navbar2 = (props)=>
 {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const navigate = useNavigate();
   
   function handleSignout(e)
   {
     sessionStorage.setItem('token_status',0);
       props.setToken(0); 
-
+    //  setCookie('token', '', { path: '/' });
+      removeCookie('token',{path:'/'});
+    //  setTimeout(()=>{console.log(cookies.token)},1000)
       navigate('/login');
     
   }
 
-  useEffect(()=>
-  {
-   if(props.token==0)
-   {
+  // useEffect(()=>
+  // {
+  //  if(props.token==0)
+  //  {
     
-    document.cookie = '';
-   // console.log('Useeffect:',props.token);
+  //   document.cookie = '';
+  //  // console.log('Useeffect:',props.token);
     
-  }
-  },[props.token]);
+  // }
+  // },[props.token]);
 
 
 
@@ -278,7 +283,7 @@ const Navbar = () => {
 
 
     return ( <div>
-      { token == 0 && <Navbar1/> }
+      { (token == 0 || token == null ) && <Navbar1/> }
   { token == 1 && <Navbar2 token={token} setToken={setToken}/>}
 </div>  );
 };

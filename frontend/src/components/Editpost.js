@@ -6,9 +6,11 @@ import Navbar from "./Navbar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate ,useLocation} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 
 const Editpost = () => {
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const location = useLocation();
     const post = location.state.post;
     function List(tags) {
@@ -121,7 +123,7 @@ const Editpost = () => {
         }, {
             headers: {
                 'Content-Type': "application/json",
-                'Authorization': `Bearer ${document.cookie}`,
+                'Authorization': `Bearer ${cookies}`,
             }
         })
         .then((res) => {

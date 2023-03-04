@@ -165,7 +165,7 @@ function Posts(props) {
 
   useEffect(() => {
     if (posts.length > 0) setPostsReady(1);
-    if (posts.length == 0) alert("No results for this!");
+  //  if (posts.length == 0) alert("No results for this!");
     console.log(posts, " ", pages);
   }, [posts]);
 

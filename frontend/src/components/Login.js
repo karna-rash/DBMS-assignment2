@@ -4,9 +4,11 @@ import Navbar from './Navbar';
 import axios from 'axios';
 import Loading from './Loading';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useCookies } from 'react-cookie';
 
 
 const Login = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
         const navigate = useNavigate();
         const [userName, setUserName] = useState('');
         const [pass, setPass] = useState('');
@@ -25,7 +27,7 @@ const Login = () => {
       setLogRes(res.data.logRes);
       if (res.data.logRes == 1) {
 
-        document.cookie = res.data.token;
+        setCookie('token', res.data.token, { path: '/' })
         sessionStorage.setItem('token_status',1);
 
       setTimeout(() => {

@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import DisplayPosts from './DisplayPosts';
-const Home2 = () => {
+import { useCookies } from 'react-cookie';
 
+const Home2 = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [postsReady, setPostsReady] = useState(0);
   const [posts, setPosts] = useState([]);
   const [pages, setPages] = useState(0);
@@ -17,7 +19,7 @@ const Home2 = () => {
       },{
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${document.cookie}`
+          'Authorization': `Bearer ${cookies}`
         }})
       .then(async (res) => {
         setPosts(res.data.posts);

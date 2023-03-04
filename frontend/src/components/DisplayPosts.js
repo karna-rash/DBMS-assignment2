@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 
 function DisplayPosts(props)
 {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
 const [params,setparams] = useState([]);
 const [totpagenum,settotpagenum] = useState(0);
 const [posts,setPosts] = useState([]);
@@ -112,7 +115,7 @@ function handleNext()
         axios.post('http://localhost:5000/home2/'+(curpagenum+1),{},{
           headers: {
             'Content-Type': "application/json",
-            'Authorization': `Bearer ${document.cookie}`
+            'Authorization': `Bearer ${cookies}`
           }}).then((res)=>{
 
              setPosts(res.data.posts)

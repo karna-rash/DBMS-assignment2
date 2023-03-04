@@ -813,11 +813,11 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   })
 
 
-  router.post('/upvote',authenticateToken,(req,res)=>
+  router.post('/upvote/:id',authenticateToken,(req,res)=>
   {
 
   });
-  router.post('/downvote',authenticateToken,(req,res)=>
+  router.post('/downvote/:id',authenticateToken,(req,res)=>
   {
      
   });
