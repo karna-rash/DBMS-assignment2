@@ -613,8 +613,74 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
       let tag = req.params.id1; 
       let pagenum = req.params.id2;
-      const query={
+      const query1={
         text: "(SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+(pagenum-1)*8 +");",
+        values: [],
+      }
+      client.query(query, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        { console.log(resl.rows)
+          console.log(resl.rowCount)
+          res.json({
+            posts:resl.rows
+          })
+        }
+      })
+      
+      
+  })
+
+  //for user home
+  router.post('/home2',authenticateToken,(req,res)=>
+  {
+      let posts=[]
+      const query1={
+       text: "SELECT * FROM posts where owner_id ="+req.user.userid,       
+        values: [],
+      }
+      client.query(query1, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        { console.log(resl.rows)
+          console.log(resl.rowCount)
+    
+            posts=resl.rows
+       
+        }
+      })
+      const query2 = {
+        text: "SELECT id FROM posts where Owner_id = "+req.user.userid,
+        values: [],
+      }
+
+      client.query(query2, (err, resl) => { 
+        if (err) {
+          console.log(err.stack)
+        }
+        else
+        { console.log(resl.rowCount)
+          console.log(Math.ceil(resl.rowCount/8))
+
+          res.json({
+            posts:posts,
+            totpage:Math.ceil(resl.rowCount/8)
+          })
+        }
+      })
+
+  })
+
+  //user home2 next and back
+  router.post('/home2/:id',authenticateToken,(req,res)=>
+  {
+      let pagenum = req.params.id;
+      const query={
+        text: "(SELECT * FROM posts where owner_id="+req.user.userid+" order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where owner_id="+req.user.userid+" order by creation_date limit "+(pagenum-1)*8 +");",
         values: [],
       }
       client.query(query, (err, resl) => {

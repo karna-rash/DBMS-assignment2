@@ -1,8 +1,8 @@
-post http://localhost:5000/create_answer
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IjVmZWNlYjY2IiwidXNlcmlkIjotMSwiaWF0IjoxNjc2ODA4NjIzfQ.YHPIvwzSGf6TkBRDi3ZM4NLTz7rY6GVjCSkmlfCJIUs
+get http://localhost:5000/home2/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImVmMmQxMjdkIiwidXNlcmlkIjo2LCJpYXQiOjE2Nzc5MTY4ODB9.fErX1z7bL_cJaaTFf6qQ-rKsDQycy5VmzOIWZxLACA8
+
 
 {
-   "postid": 4,
-   "body" : "harsha vardhan"
+
 }

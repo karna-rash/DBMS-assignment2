@@ -47,6 +47,20 @@ function handleBack()
                console.log(err);
            })
        }
+       else if(params.searchOption == 'home2'){
+        axios.post('http://localhost:5000/home2/'+(curpagenum-1),{},{
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${document.cookie}`
+          }}).then((res)=>{
+
+             setPosts(res.data.posts)
+             setCurpagenum(curpagenum-1);
+          }).catch((err)=>{
+            console.log(err)
+          })
+
+       }
        else //multiple tags
        {
         axios.post('http://localhost:5000/posts/multiple_tags/'+(curpagenum-1),{tags:props.params.tags}).
@@ -93,6 +107,19 @@ function handleNext()
            {
                 console.log(err);
            })
+       }
+       else if(params.searchOption=='home2'){
+        axios.post('http://localhost:5000/home2/'+(curpagenum+1),{},{
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${document.cookie}`
+          }}).then((res)=>{
+
+             setPosts(res.data.posts)
+             setCurpagenum(curpagenum+1);
+          }).catch((err)=>{
+            console.log(err)
+          })
        }
        else //multiple tags
        {
@@ -154,7 +181,6 @@ function List({items}){
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
                   <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post }}>{post.title}</Link></td>
-                  
                   <td className="px-4 py-3">
                   <List items={post}></List>
                   </td>
