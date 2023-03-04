@@ -785,14 +785,15 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   })
 
   //delete a post along with answers
-  router.delete('/delete_post:id',authenticateToken,(req,res)=>{
+  router.post('/delete_post/:id',authenticateToken,(req,res)=>{
       const postid=req.params.id;
       //write delete query for the post
       //write a trigger in schema to delete all answers when an question post is deleted
       //fill this query harsha
+      console.log("error")
       const query={
-        text:'',
-        value:[],
+        text:'delete from answers where post_id ='+postid+'; delete from posts where id= '+postid,
+        value:[postid],
       }
 
 
@@ -801,8 +802,6 @@ router.get('/posts/:id1/:id2',(req,res)=>{
           console.log(err.stack);
         }
         else{
-          console.log(resl.rows)
-          console.log(resl.rowCount)
           console.log("deleted post");
              res.json(
              {
