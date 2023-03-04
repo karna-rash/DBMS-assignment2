@@ -48,7 +48,7 @@ const Createpost = () => {
     }
     if (!tagload) {
       axios
-        .get("http://localhost:5000/tags", {})
+        .post("http://localhost:5000/tags", {})
         .then((res) => {
           settagload(1);
           settagarray(res.data.tags);
@@ -82,9 +82,14 @@ const Createpost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(multytag.length == 0) 
+    {
+      alert("Atleast one tag must be selected")
+      return;
+    }
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
-    console.log('hello')
+  
     axios
       .post("http://localhost:5000/create_post",{
         title: title,
@@ -101,6 +106,13 @@ const Createpost = () => {
          setTimeout(() => {
           navigate("/home2");
          }, 2000);
+        }
+        else
+        {
+             alert("You have to login to post!");
+             setTimeout(() => {
+              navigate("/login");
+             }, 2000);
         }
       })
       .catch((err) => {
@@ -131,10 +143,11 @@ const Createpost = () => {
               className="block w-full px-4 py-2 mt-2 textblack bg-white border rounded-md focus:border-rose-400 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40"
               TYPE="text"
               onChange={(e) => settitle(e.target.value)}
+              required
             ></input>
             <label>Post body</label>
             <MDEditor value={body} onChange={setBody} />
-            <div className="flex w-1/2 justify-between overflow-hidden rounded-t-lg bg-white shadow">
+            <div className="flex flex-row w-1/2 mt-2 overflow-hidden rounded-lg bg-gray-400 border shadow">
               <input
                 id="search-bar"
                 className="text-base text-gray-400 flex-grow outline-none px-4 py-3"
@@ -143,6 +156,7 @@ const Createpost = () => {
                 onChange={(e) => {
                   setSearchValue(e.target.value);
                 }}
+        
               />
             </div>
             <div className="mt-auto w-full overflow-hidden rounded-b-lg bg-white">
@@ -197,8 +211,8 @@ const Createpost = () => {
                 </div>
               ))}
             </div>
-            <button className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 w-auto">
-              Submit
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+              Post your question
             </button>
           </form>
         </div>

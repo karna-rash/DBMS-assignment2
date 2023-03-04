@@ -57,12 +57,13 @@ router.post('/create_post',authenticateToken,(req,res)=>
       tagstring=tagstring+tag[j];
     }
     //console.log(tagstring);
-    const creation_date=Date.now();
+    const creation_date=new Date(Date.now());
+    let time =creation_date.toISOString();
     //console.log(req.body)
        
        const query={
-        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,to_timestamp($7)) returning *',
-        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,creation_date],
+        text: 'insert into posts(id,Owner_id ,OwnerName,Title ,tags , body ,creation_date) values ($1,$2,$3,$4,$5,$6,$7)',
+        values: [++maxpostid,ownerid,Ownername,post_title,tagstring,post_body,time],
       }
       client.query(query, (err, resl) => {
         if (err) {
@@ -85,8 +86,48 @@ router.post('/create_post',authenticateToken,(req,res)=>
            
         }
       })
+})
 
-
+router.post('/create_answer',authenticateToken,(req,res)=>
+{
+  
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const postid=req.body.postid;
+    const body= req.body.body;
+    //console.log(req)
+    //const tags=req.body.tags;
+    
+    //console.log(tagstring);
+    const creation_date=new Date(Date.now());
+    let time =creation_date.toISOString();
+    //console.log(req.body)
+       
+       const query={
+        text: 'insert into answers(id,answeredby_id,OwnerName, post_id, body ,creation_date) values ($1,$2,$3,$4,$5,$6)',
+        values: [++maxansid,ownerid,Ownername,postid,body,time],
+      }
+      client.query(query, (err, resl) => {
+        if (err) {
+          console.log(err.stack)
+          res.json(
+            {
+             tokenStatus:1,
+             postRes:-1
+            });
+        }
+        else
+        { 
+          //console.log(resl.rows)
+          console.log("added post");
+           res.json(
+           {
+            tokenStatus:1,
+            postRes:1
+           });
+           
+        }
+      })
 })
 
 // Authentication Routes
@@ -173,6 +214,7 @@ const q2={
         maxansid =resl.rows[0].id
       }
     })
+    
 router.post('/register',async (req, res) => {
   console.log(req.body)
   const query = {
@@ -255,14 +297,31 @@ router.post('/register',async (req, res) => {
         })
   });
 
-  router.get('/posts/user/:id',(req,res)=>
+  router.post('/posts/user/:id',(req,res)=>
   {
      let userid = req.params.id; 
+     let flg=req.body.filter;
      console.log(userid,'here')
-     const query1 = {
-      text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
-      values: [],
-    }
+     let query1;
+     if(flg=='latest'){
+      query1 = {
+        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date desc limit 8",
+        values: [],
+      }
+     }
+     else if(flg=='oldest'){
+      query1 = {
+        text: "SELECT * FROM posts where owner_id ="+userid+ " order by creation_date limit 8",
+        values: [],
+      }
+     }
+     else{
+      query1 = {
+        text: "SELECT * FROM posts where owner_id ="+userid+ " order by up_votes desc limit 8",
+        values: [],
+      }
+     }
+     
     let posts=[];
     const query2 = {
       text: "SELECT id FROM posts where owner_id ="+userid,
@@ -398,8 +457,8 @@ router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
     const query={
-      text: "SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit 8",
-      values: [],
+      text: "SELECT * FROM answers where post_id = $1 order by creation_date desc limit 8",
+      values: [post_id],
     }
     const query2={
       text: "SELECT * FROM answers where post_id = '"+post_id+"'",
@@ -436,12 +495,27 @@ router.get('/posts/:id1',(req,res)=>
 
 
 //searching posts of page 1 from tags
-  router.get('/posts/tag/:id',(req,res)=>
+  router.post('/posts/tag/:id',(req,res)=>
   {
      let tag = req.params.id; console.log(tag)
-     const query1 = {
-      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
+     let flg = req.body.filter;
+     let query1;
+     if(flg=='latest'){
+      query1 = {
+      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
       values: [],
+    }}
+    else if(flg =='oldest'){
+       query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
+        values: [],
+      }
+    }
+    else {
+       query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by up_votes desc limit 8",
+        values: [],
+      }
     }
     let posts=[];
     const query2 = {
@@ -559,5 +633,12 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       
   })
 
-  
+  router.post('/upvote',authenticateToken,(req,res)=>
+  {
+
+  });
+  router.post('/downvote',authenticateToken,(req,res)=>
+  {
+     
+  });
 export default router;

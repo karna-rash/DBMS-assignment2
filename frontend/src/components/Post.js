@@ -1,19 +1,21 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import parse from "html-react-parser";
 import Navbar from './Navbar';
 import { useState,useEffect } from "react";
+import { Link } from "react-router-dom";
+import CreateAnswer from "./createAnswer";
 function Post() {
   const location = useLocation();
   const post = location.state.post;
   const date1 = new Date(post.creation_date);
   const date2 = new Date(post.last_modified);
-
   const [answers,setanswers]=useState([]);
   const [ansready,setansready]=useState(false);
 
   const [totpagenum,settotpagenum] = useState(1);
   const [curpagenum,setCurpagenum] = useState(1);
+  const navigate = useNavigate();
 
   function handleBack()
   {
@@ -83,6 +85,57 @@ function Post() {
            })
   }
   
+ function handleUpvote(e)
+ {
+    let id = e.target.id
+    if(id!=null)
+    {
+     
+     //change the css of this button
+     
+      axios.post('http://localhost:5000/upvote/'+id,{})
+      .then((res)=>
+      {
+         if(res.data.tokenStatus == -1)
+         {
+          alert("You have to login to upvote/downvote an answer")
+          setTimeout(() => {
+            navigate('/login');
+          }, 1000); 
+        }
+      })
+      .catch((err)=>
+      {
+         console.log(err)
+      })
+    }
+ }
+
+ function handleDownvote(e)
+ {
+  //change css of the button 
+  
+  let id = e.target.id
+    if(id!=null)
+    {
+      axios.post('http://localhost:5000/downvote/'+id,{})
+      .then((res)=>
+      {
+        if(res.data.tokenStatus == -1)
+        {
+         alert("You have to login to upvote/downvote an answer")
+         setTimeout(() => {
+           navigate('/login');
+         }, 1000); 
+       }
+      })
+      .catch((err)=>
+      {
+        console.log(err)
+      })
+    }
+ }
+
   function List({items}){  
     return(
       <div className="flex flex-col">
@@ -93,12 +146,16 @@ function Post() {
              return(
              <div className="flex flex-row border border-black mx-2 my-2">
               <div className="flex flex-col">
-             <button className="hover:bg-blue-600">
-             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z"/></svg>
+             <button className="hover:bg-blue-600"
+             onClick={handleUpvote}>
+             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id={item.id}><path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z"/>
+             </svg>
              </button>
              <h3 className="text-center">{item.up_votes-item.down_votes}</h3>
-             <button className="hover:bg-blue-600">
-             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.901 10.566A1.001 1.001 0 0 0 20 10h-4V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v7H4a1.001 1.001 0 0 0-.781 1.625l8 10a1 1 0 0 0 1.562 0l8-10c.24-.301.286-.712.12-1.059zM12 19.399 6.081 12H10V4h4v8h3.919L12 19.399z"/></svg>
+             <button className="hover:bg-blue-600"
+             onClick={handleDownvote}>
+             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id={item.id}><path d="M20.901 10.566A1.001 1.001 0 0 0 20 10h-4V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v7H4a1.001 1.001 0 0 0-.781 1.625l8 10a1 1 0 0 0 1.562 0l8-10c.24-.301.286-.712.12-1.059zM12 19.399 6.081 12H10V4h4v8h3.919L12 19.399z" />
+             </svg>
              </button>
               </div>
               <div className="flex flex-col justify-between border border-black bg-slate-200 my-2 mx-2">
@@ -177,7 +234,9 @@ function Post() {
           </div>
           <div className="text-left mx-8 border-2 border-black">
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
+            
           </div>
+          <CreateAnswer post={post}></CreateAnswer>
           {
             !!ansready &&
             <List items={answers} ></List>
