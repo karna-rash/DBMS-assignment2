@@ -75,10 +75,8 @@ const Createpost = () => {
   useEffect(() => {
     setyvalue(80);
     autocompleter();
-    if (searchValue == "") {
-      setyvalue(32);
-    }
   }, [searchValue]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -741,7 +741,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
     const Ownername=req.user.userName;
     const post_title=req.body.title;
     const post_body= req.body.body;
-    const postid=req.body.post_id;
+    const postid=req.body.postid;
 
      //console.log(req)
     //const tags=req.body.tags;
