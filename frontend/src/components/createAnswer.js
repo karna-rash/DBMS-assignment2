@@ -48,7 +48,7 @@ const CreateAnswer = (props) => {
   return (
     <div>
         <div className="flex flex-col bg-white mx-10 my-5 rounded-md mt-2">
-          <h1 className="text-3x1 text-center">Your Answer</h1>
+          <p className="text-2xl text-center">Your Answer</p>
           <form className="mt-6 mx-5" onSubmit={handleSubmit}>
             <label >Answer Body</label>
             <MDEditor className="my-6" value={body} onChange={setBody} />
