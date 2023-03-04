@@ -170,7 +170,7 @@ function Post() {
                  {item.last_edited!=null &&<div className="mx-8 mb-2">last edited: {date_time(item.last_edited)}</div>}
                 </div>
                 <div className="flex justify-between">
-                <div className="mx-8 mb-2 text-center">answered by: {item.answeredby_id}</div>
+                <div className="mx-8 mb-2 text-center">answered by: {item.ownername}</div>
                 </div>
                <p>&nbsp;&nbsp;</p> 
                <br></br>
@@ -191,7 +191,7 @@ function Post() {
      axios.get('http://localhost:5000/posts/'+post.id,{}).
            then((res)=>
            {
-              settotpagenum(res.data.totpage)
+              settotpagenum(res.data.totpage);
               console.log(res.data.totpage);
            }).
            catch((err)=>
@@ -246,6 +246,9 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
             
           </div>
+          <div className="flex flex-row item-center">
+                <div className="mx-8 mb-2 mt-2 text-center">Posted by: {post.ownername}</div>
+                </div>
           <CreateAnswer post={post}></CreateAnswer>
           {
             !!ansready &&

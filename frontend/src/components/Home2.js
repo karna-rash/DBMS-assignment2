@@ -38,12 +38,17 @@ const Home2 = () => {
           <section id="about" className="py-12">
             <div className='flex flex-col bg-white items-center justify-center w-full'>
               <h2 className='text-3xl text-center'>Welcome  </h2>
-                <button className="bg-sky-400 hover:bg-sky-500 rounded px-4 py-2 w-1/4 text-center mt-4" onClick={(e)=>handleSearch(e)}>See posts</button>
-            </div>
+              <div className='flex flex-row bg-white text-center justify-between w-1/2'>
+                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a href="http://localhost:3000/create_post">Create Post</a></button>
+                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={(e)=>handleSearch(e)}>See posts</button>
+
+
+              </div>
+              </div>
           </section>
         </main>
-        <div >
       {!!postsReady && (
+        <div className='flex flex-col bg-white items-center justify-center rounded-lg mx-12'>
             <DisplayPosts
               posts={posts}
               pages={pages}
@@ -52,8 +57,8 @@ const Home2 = () => {
                  Edit_status: 1
               }}
             />
+            </div>
           )}
-      </div>
       </div>
       
     </div>
