@@ -176,6 +176,28 @@ router.post('/login', async (req, res) => {
   }
 })
 });
+
+router.post('/login/posts',authenticateToken,(req,res)=>{
+  const ownerid=req.user.userid;
+  const query={
+    text: 'select * from posts where Owner_id = $1 order by creation_date desc',
+    values: [ownerid],
+  }
+  console.log(ownerid);
+  client.query(query, (err, resl) => {
+    if (err) {
+      console.log(err.stack)
+    }
+    else
+    { 
+      res.json(
+        {
+         posts: resl.rows
+        });
+    }
+  })
+});
+
 let maxuserid=0;let maxpostid=0;let maxansid=0;
 const q1={
 text : 'select id from users order by id desc limit 1'
@@ -707,4 +729,5 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
      
   });
+
 export default router;
