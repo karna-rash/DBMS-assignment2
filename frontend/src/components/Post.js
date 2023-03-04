@@ -274,12 +274,13 @@ function Post() {
   
     return(
       <div className="flex flex-row mx-8">
+        Tags: <p>&nbsp;&nbsp;</p>
       {
         arr.map(
           (tag,index)=>{
              return(
              <div className="flex justify-between">
-               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 truncate" >{tag}
+               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 pt-1 pb-1 truncate" >{tag}
                </button>
               <p>&nbsp;&nbsp;</p> 
              </div>
@@ -310,8 +311,8 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
             
           </div>
-          <div className="flex flex-row justify-between w-1/2">
-                <div className="mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+                <div className="flex flex-row mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+          <div className="flex flex-row justify-center w-full">
                 <div className = "mt-4">
 
                 {
@@ -322,7 +323,7 @@ function Post() {
           }
              {
             EDS==1 &&
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>delete</button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold w-18 h-9 py-1 px-2 mt-2 mb-4 ml-16 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>Delete</button>
           }
 
                 </div>
