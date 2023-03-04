@@ -7,7 +7,6 @@ const Navbar = () => {
   const [token,setToken] = useState(sessionStorage.getItem('token_status'));
   const navigate=useNavigate()
 
-  
   function handleSignout(e)
   {
     setToken(0);
@@ -186,11 +185,12 @@ const Navbar = () => {
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
+                <a href="/home2" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
     
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Users</a>
     
                 <a href="/posts" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Posts</a>
+                
                 <a href="/create_post" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create Post</a>
                
               </div>

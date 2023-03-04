@@ -37,9 +37,7 @@ const Home2 = () => {
         <main className="p-12">
           <section id="about" className="py-12">
             <div className='flex flex-col bg-white items-center justify-center w-full'>
-
               <h2 className='text-3xl text-center'>Welcome  </h2>
-              <button className="bg-sky-400 hover:bg-sky-500 rounded px-4 py-2 w-1/4 text-center mt-4"><a href="http://localhost:3000/create_post">Create Post</a></button>
                 <button className="bg-sky-400 hover:bg-sky-500 rounded px-4 py-2 w-1/4 text-center mt-4" onClick={(e)=>handleSearch(e)}>See posts</button>
             </div>
           </section>
@@ -50,7 +48,8 @@ const Home2 = () => {
               posts={posts}
               pages={pages}
               params={
-                {searchOption: 'home2'
+                {searchOption: 'home2',
+                 Edit_status: 1
               }}
             />
           )}

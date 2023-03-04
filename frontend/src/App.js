@@ -9,6 +9,7 @@ import Post from './components/Post'
 import Createpost from './components/Createpost';
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Editpost from './components/Editpost';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/posts" element={<Posts />}></Route>
           <Route exact path="/posts/:id" element={<Post />}></Route>
           <Route exact path="/create_post" element={<Createpost/>}></Route>
+          <Route exact path="/posts/:id/edit_post/" element={<Editpost/>}></Route>
         </Routes>
       </div>
     </Router>

@@ -180,7 +180,7 @@ function List({items}){
               {/* Map through the data and create a row for each item */}
               {posts.map((post) => (
                 <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post }}>{post.title}</Link></td>
+                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post: post,Edit_status: params.Edit_status }}>{post.title}</Link></td>
                   <td className="px-4 py-3">
                   <List items={post}></List>
                   </td>
