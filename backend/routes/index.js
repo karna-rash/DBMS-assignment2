@@ -721,6 +721,37 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       
   })
 
+
+  //edit post by user
+  router.post('/edit_post',authenticateToken,(req,res)=>
+  {
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const post_title=req.body.title;
+    const post_body= req.body.body;
+    const postid=req.body.post_id;
+
+     //console.log(req)
+    //const tags=req.body.tags;
+    let tag =[req.body.tags.length];
+    for(let i=0;i<req.body.tags.length;i++){
+      tag[i]="<"+req.body.tags[i]+">";
+    }
+    let tagstring="";
+    for(let j=0;j<req.body.tags.length;j++){
+      tagstring=tagstring+tag[j];
+    }
+    //console.log(tagstring);
+    const last_modified=new Date(Date.now());
+    let time =last_modified.toISOString();
+    
+
+
+
+
+
+  })
+
   router.post('/upvote',authenticateToken,(req,res)=>
   {
 
