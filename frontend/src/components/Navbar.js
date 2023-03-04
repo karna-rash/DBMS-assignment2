@@ -141,7 +141,7 @@ const Navbar2 = (props)=>
    {
     
     document.cookie = '';
-    console.log('Useeffect:',props.token);
+   // console.log('Useeffect:',props.token);
     
   }
   },[props.token]);
@@ -273,25 +273,13 @@ const Navbar2 = (props)=>
 const Navbar = () => {
 
   const [token,setToken] = useState(sessionStorage.getItem('token_status'));
-  console.log('From rerenderinng:',token);
+  //console.log('From rerenderinng:',token);
   const navigate=useNavigate()
-  // useEffect(()=>
-  // {
-   
-  //   setTimeout(()=>
-  //    {
-  //     setToken(sessionStorage.getItem('token_status'));
-  //     console.log('useEffect session:',sessionStorage.getItem('token_status'))
-  //    },300)
-    
-  // },[]);
 
 
     return ( <div>
-      { token == 0 && <Navbar1/>
-  }
-  { token == 1 && <Navbar2 token={token} setToken={setToken}/>
-}
+      { token == 0 && <Navbar1/> }
+  { token == 1 && <Navbar2 token={token} setToken={setToken}/>}
 </div>  );
 };
   

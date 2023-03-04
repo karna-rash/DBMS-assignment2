@@ -95,7 +95,12 @@ function Post() {
      
      //change the css of this button
      
-      axios.post('http://localhost:5000/upvote/'+id,{})
+      axios.post('http://localhost:5000/upvote/'+id,{
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': `Bearer ${document.cookie}`,
+      }
+      })
       .then((res)=>
       {
          if(res.data.tokenStatus == -1)
@@ -120,7 +125,12 @@ function Post() {
   let id = e.target.id
     if(id!=null)
     {
-      axios.post('http://localhost:5000/downvote/'+id,{})
+      axios.post('http://localhost:5000/downvote/'+id,{
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': `Bearer ${document.cookie}`,
+      }
+      })
       .then((res)=>
       {
         if(res.data.tokenStatus == -1)
@@ -142,7 +152,7 @@ function Post() {
   e.preventDefault()
   if (window.confirm('Are u sure u want to delete this post?')) {
 
-    axios.post('http://localhost:5000/delete_post/'+post_id,{},{
+    axios.post('http://localhost:5000/delete_post/'+post_id,{
     headers: {
       'Content-Type': "application/json",
       'Authorization': `Bearer ${document.cookie}`,
