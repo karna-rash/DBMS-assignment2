@@ -273,9 +273,9 @@ function Post() {
 
                 {
             EDS==1 &&
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded">
+            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded">
             <Link to={'/posts/'+ post.id+'/edit_post/'} state={{post: post}}>Edit</Link>
-            </button>
+            </a>
           }
                 </div>
                 </div>
