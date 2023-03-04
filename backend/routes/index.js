@@ -118,6 +118,11 @@ router.post('/create_answer',authenticateToken,(req,res)=>
         }
         else
         { 
+          client.query1(q1,(err,resll)=>{
+            if(err){
+              
+            }
+          });
           //console.log(resl.rows)
           console.log("added post");
            res.json(
@@ -744,8 +749,25 @@ router.get('/posts/:id1/:id2',(req,res)=>{
     //console.log(tagstring);
     const last_modified=new Date(Date.now());
     let time =last_modified.toISOString();
-    
-
+    console.log(postid,post_title)
+    const query ={
+      text : 'update posts set title = $2, tags = $3, body = $4, last_modified = $5 where id = $1',
+      values: [postid,post_title,tagstring,post_body,time]
+    }
+    console.log(tagstring)
+    client.query(query, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+        console.log(resl.rows)
+        console.log(resl.rowCount)
+        res.json({
+          posts:resl.rows
+        })
+      }
+    })
 
 
 

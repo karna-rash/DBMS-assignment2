@@ -63,7 +63,7 @@ const Editpost = () => {
         }
         if (!tagload) {
             axios
-                .post("http://localhost:5000/tags", {})
+                .get("http://localhost:5000/tags", {})
                 .then((res) => {
                     settagload(1);
                     settagarray(res.data.tags);
