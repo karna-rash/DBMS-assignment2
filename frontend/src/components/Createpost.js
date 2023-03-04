@@ -99,7 +99,7 @@ const Createpost = () => {
       }, {
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${cookies}`,
+          'Authorization': `Bearer ${cookies.token}`,
         }})      
         .then((res) => {
         if (res.data.tokenStatus == 1) {

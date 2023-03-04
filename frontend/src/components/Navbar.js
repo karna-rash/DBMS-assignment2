@@ -135,7 +135,7 @@ const Navbar2 = (props)=>
       props.setToken(0); 
     //  setCookie('token', '', { path: '/' });
       removeCookie('token',{path:'/'});
-    //  setTimeout(()=>{console.log(cookies.token)},1000)
+      setTimeout(()=>{console.log(cookies.token)},100)
       navigate('/login');
     
   }

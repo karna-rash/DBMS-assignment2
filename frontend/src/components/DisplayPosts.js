@@ -54,7 +54,7 @@ function handleBack()
         axios.post('http://localhost:5000/home2/'+(curpagenum-1),{},{
           headers: {
             'Content-Type': "application/json",
-            'Authorization': `Bearer ${document.cookie}`
+            'Authorization': `Bearer ${cookies.token}`
           }}).then((res)=>{
 
              setPosts(res.data.posts)
@@ -115,7 +115,7 @@ function handleNext()
         axios.post('http://localhost:5000/home2/'+(curpagenum+1),{},{
           headers: {
             'Content-Type': "application/json",
-            'Authorization': `Bearer ${cookies}`
+            'Authorization': `Bearer ${cookies.token}`
           }}).then((res)=>{
 
              setPosts(res.data.posts)

@@ -98,7 +98,7 @@ function Post() {
       axios.post('http://localhost:5000/upvote/'+id,{
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${document.cookie}`,
+          'Authorization': `Bearer ${cookies.token}`,
       }
       })
       .then((res)=>
@@ -128,7 +128,7 @@ function Post() {
       axios.post('http://localhost:5000/downvote/'+id,{
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${document.cookie}`,
+          'Authorization': `Bearer ${cookies.token}`,
       }
       })
       .then((res)=>
@@ -155,7 +155,7 @@ function Post() {
     axios.post('http://localhost:5000/delete_post/'+post_id,{
     headers: {
       'Content-Type': "application/json",
-      'Authorization': `Bearer ${document.cookie}`,
+      'Authorization': `Bearer ${cookies.token}`,
   }
   })
   .then((res) => {

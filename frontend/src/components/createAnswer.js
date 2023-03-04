@@ -23,7 +23,7 @@ const CreateAnswer = (props) => {
     e.preventDefault();
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
-    console.log(document.cookie)
+    console.log(cookies.token)
     axios
       .post("http://localhost:5000/create_answer",{
         body: html,
@@ -31,7 +31,7 @@ const CreateAnswer = (props) => {
       }, {
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${cookies}`,
+          'Authorization': `Bearer ${cookies.token}`,
         }})      
         .then((res) => {
         if (res.data.tokenStatus == 1) {

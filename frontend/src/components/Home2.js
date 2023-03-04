@@ -19,7 +19,7 @@ const Home2 = () => {
       },{
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${cookies}`
+          'Authorization': `Bearer ${cookies.token}`
         }})
       .then(async (res) => {
         setPosts(res.data.posts);

@@ -123,7 +123,7 @@ const Editpost = () => {
         }, {
             headers: {
                 'Content-Type': "application/json",
-                'Authorization': `Bearer ${cookies}`,
+                'Authorization': `Bearer ${cookies.token}`,
             }
         })
         .then((res) => {
