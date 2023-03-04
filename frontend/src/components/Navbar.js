@@ -1,24 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-const Navbar = () => {
-
-  const [token,setToken] = useState(sessionStorage.getItem('token_status'));
-  const navigate=useNavigate()
-
-  
-  function handleSignout(e)
-  {
-    setToken(0);
-    sessionStorage.setItem('token_status',0);
-    document.cookie = '';
-    console.log(token);
-    navigate('/login');
-  }
-
-    return ( <div>
-      { !token && ( 
+const Navbar1 = ()=>
+{
+  return(
+    <div>
       <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
@@ -132,9 +118,40 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-    )
+    </div>
+  )
+}
+
+const Navbar2 = (props)=>
+{
+  const navigate = useNavigate();
+  
+  function handleSignout(e)
+  {
+    sessionStorage.setItem('token_status',0);
+      props.setToken(0); 
+
+      navigate('/login');
+    
   }
-  { !!token && (
+
+  useEffect(()=>
+  {
+   if(props.token==0)
+   {
+    
+    document.cookie = '';
+    console.log('Useeffect:',props.token);
+    
+  }
+  },[props.token]);
+
+
+
+
+
+  return (
+    <div>
     <nav class="bg-gray-800">
       <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
@@ -248,7 +265,31 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </div>
   )
+}
+
+const Navbar = () => {
+
+  const [token,setToken] = useState(sessionStorage.getItem('token_status'));
+  console.log('From rerenderinng:',token);
+  const navigate=useNavigate()
+  // useEffect(()=>
+  // {
+   
+  //   setTimeout(()=>
+  //    {
+  //     setToken(sessionStorage.getItem('token_status'));
+  //     console.log('useEffect session:',sessionStorage.getItem('token_status'))
+  //    },300)
+    
+  // },[]);
+
+
+    return ( <div>
+      { token == 0 && <Navbar1/>
+  }
+  { token == 1 && <Navbar2 token={token} setToken={setToken}/>
 }
 </div>  );
 };
