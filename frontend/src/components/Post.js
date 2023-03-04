@@ -229,12 +229,6 @@ function Post() {
         <div className="flex flex-col bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
           <div className="flex flex-row justify center">
           <div className="text-center text-3xl mt-2 mb-2 mx-10">{post.title}</div>
-          {
-            EDS==1 &&
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-700 rounded">
-            <Link to={'/posts/'+ post.id+'/edit_post/'} state={{post: post}}>Edit</Link>
-            </button>
-          }
           </div>
           <div className="flex justify-between w-full">
             <div className="mx-8 mb-2">Asked:{difference(date1)}</div>
@@ -246,8 +240,17 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
             
           </div>
-          <div className="flex flex-row item-center">
-                <div className="mx-8 mb-2 mt-2 text-center">Posted by: {post.ownername}</div>
+          <div className="flex flex-row justify-between w-1/2">
+                <div className="mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+                <div>
+
+                {
+            EDS==1 &&
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded">
+            <Link to={'/posts/'+ post.id+'/edit_post/'} state={{post: post}}>Edit</Link>
+            </button>
+          }
+                </div>
                 </div>
           <CreateAnswer post={post}></CreateAnswer>
           {
