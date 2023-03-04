@@ -8,6 +8,8 @@ import CreateAnswer from "./createAnswer";
 function Post() {
   const location = useLocation();
   const post = location.state.post;
+  const EDS =location.state.Edit_status;
+
   const date1 = new Date(post.creation_date);
   const date2 = new Date(post.last_modified);
   const [answers,setanswers]=useState([]);
@@ -136,6 +138,40 @@ function Post() {
     }
  }
 
+ const handleDelete=(e,post_id)=>{
+  e.preventDefault()
+  if (window.confirm('Are u sure u want to delete this post?')) {
+
+    axios.post('http://localhost:5000/delete_post/'+post_id,{},{
+    headers: {
+      'Content-Type': "application/json",
+      'Authorization': `Bearer ${document.cookie}`,
+  }
+  })
+  .then((res) => {
+    if (res.data.tokenStatus == 1) {
+        alert("Question deleted succesful")
+        setTimeout(() => {
+            navigate("/home2");
+        }, 2000);
+    }
+    else {
+        alert("You have to login to post!");
+        setTimeout(() => {
+            navigate("/login");
+        }, 2000);
+    }
+})
+.catch((err) => {
+    console.log(err);
+});
+  }
+  else{
+    console.log("go back");
+  }
+ }
+
+ 
   function List({items}){  
     return(
       <div className="flex flex-col">
@@ -168,7 +204,7 @@ function Post() {
                  {item.last_edited!=null &&<div className="mx-8 mb-2">last edited: {date_time(item.last_edited)}</div>}
                 </div>
                 <div className="flex justify-between">
-                <div className="mx-8 mb-2 text-center">answered by: {item.answeredby_id}</div>
+                <div className="mx-8 mb-2 text-center">answered by: {item.ownername}</div>
                 </div>
                <p>&nbsp;&nbsp;</p> 
                <br></br>
@@ -189,7 +225,7 @@ function Post() {
      axios.get('http://localhost:5000/posts/'+post.id,{}).
            then((res)=>
            {
-              settotpagenum(res.data.totpage)
+              settotpagenum(res.data.totpage);
               console.log(res.data.totpage);
            }).
            catch((err)=>
@@ -220,12 +256,40 @@ function Post() {
   return( formattedDate + " at " + formattedTime);
   }
 
+  function ListTags({items}){
+    var arr=items.tags.split(/[<\s>]+/);
+    arr=arr.filter(function (el) {
+      return el != "";
+    })
+  
+    return(
+      <div className="flex flex-row mx-8">
+      {
+        arr.map(
+          (tag,index)=>{
+             return(
+             <div className="flex justify-between">
+               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 truncate" >{tag}
+               </button>
+              <p>&nbsp;&nbsp;</p> 
+             </div>
+  
+             )
+          }
+        )
+      }
+      </div>
+    )
+  }
+
   return (
     <div><Navbar/>
     <div className="relative flex flex-col justify-center min-h-screen from-red-500 to-blue-500 bg-gradient-115 overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
-          <div className="text-center text-3xl mt-2 mb-2">{post.title}</div>
+          <div className="flex flex-row justify center">
+          <div className="text-center text-3xl mt-2 mb-2 mx-10">{post.title}</div>
+          </div>
           <div className="flex justify-between w-full">
             <div className="mx-8 mb-2">Asked:{difference(date1)}</div>
             {post.last_modified!=null &&<div className="mx-8 mb-2">
@@ -236,6 +300,26 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
             
           </div>
+          <div className="flex flex-row justify-between w-1/2">
+                <div className="mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+                <div className = "mt-4">
+
+                {
+            EDS==1 &&
+            <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 mb-4 border border-blue-700 rounded">
+            <Link to={'/posts/'+ post.id+'/edit_post/'} state={{post: post}}>Edit</Link>
+            </a>
+          }
+             {
+            EDS==1 &&
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>delete</button>
+          }
+
+                </div>
+                </div>
+              {
+            <ListTags items={post}></ListTags>
+              }
           <CreateAnswer post={post}></CreateAnswer>
           {
             !!ansready &&

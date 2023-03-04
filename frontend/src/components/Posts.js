@@ -309,6 +309,7 @@ function Posts(props) {
                 searchOption: searchOption,
                 searchValue: searchValue,
                 tags: multytag,
+                Edit_status:0
               }}
               handleTagClick={handleTagClick}
             />

@@ -48,7 +48,7 @@ const Createpost = () => {
     }
     if (!tagload) {
       axios
-        .post("http://localhost:5000/tags", {})
+        .get("http://localhost:5000/tags", {})
         .then((res) => {
           settagload(1);
           settagarray(res.data.tags);
@@ -75,10 +75,8 @@ const Createpost = () => {
   useEffect(() => {
     setyvalue(80);
     autocompleter();
-    if (searchValue == "") {
-      setyvalue(32);
-    }
   }, [searchValue]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,7 +88,8 @@ const Createpost = () => {
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
   
-    axios
+     if(window.confirm('Are u that you want to post this question?')){
+      axios
       .post("http://localhost:5000/create_post",{
         title: title,
         body: html,
@@ -117,7 +116,11 @@ const Createpost = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });   
+     }
+     else{
+      console.log('do nothing')
+     }
   };
 
   function removeTag(e) {

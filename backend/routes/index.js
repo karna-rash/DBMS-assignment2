@@ -107,6 +107,9 @@ router.post('/create_answer',authenticateToken,(req,res)=>
         text: 'insert into answers(id,answeredby_id,OwnerName, post_id, body ,creation_date) values ($1,$2,$3,$4,$5,$6)',
         values: [++maxansid,ownerid,Ownername,postid,body,time],
       }
+      const q1={
+        text: 'update posts set answercount=answercount+1 where id='+postid
+      }
       client.query(query, (err, resl) => {
         if (err) {
           console.log(err.stack)
@@ -118,6 +121,15 @@ router.post('/create_answer',authenticateToken,(req,res)=>
         }
         else
         { 
+
+          client.query(q1,(err,resll)=>{
+            if(err){
+              console.log(err.stack)
+            }
+            else{
+              console.log('ok');
+            }
+          });
           //console.log(resl.rows)
           console.log("added post");
            res.json(
@@ -660,7 +672,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
       let posts=[]
       const query1={
-       text: "SELECT * FROM posts where owner_id ="+req.user.userid,       
+       text: "SELECT * FROM posts where owner_id ="+req.user.userid+" limit 8",       
         values: [],
       }
       client.query(query1, (err, resl) => {
@@ -720,6 +732,86 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       
       
   })
+
+
+  //edit post by user
+  router.post('/edit_post',authenticateToken,(req,res)=>
+  {
+    const ownerid=req.user.userid;
+    const Ownername=req.user.userName;
+    const post_title=req.body.title;
+    const post_body= req.body.body;
+    const postid=req.body.postid;
+
+     //console.log(req)
+    //const tags=req.body.tags;
+    let tag =[req.body.tags.length];
+    for(let i=0;i<req.body.tags.length;i++){
+      tag[i]="<"+req.body.tags[i]+">";
+    }
+    let tagstring="";
+    for(let j=0;j<req.body.tags.length;j++){
+      tagstring=tagstring+tag[j];
+    }
+    //console.log(tagstring);
+    const last_modified=new Date(Date.now());
+    let time =last_modified.toISOString();
+    console.log(postid,post_title)
+    const query ={
+      text : 'update posts set title = $2, tags = $3, body = $4, last_modified = $5 where id = $1',
+      values: [postid,post_title,tagstring,post_body,time]
+    }
+    console.log(tagstring)
+    client.query(query, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+        console.log(resl.rows)
+        console.log(resl.rowCount)
+        console.log("edited post");
+           res.json(
+           {
+            tokenStatus:1,
+            postRes:1
+           });
+      }
+    })
+
+
+
+
+  })
+
+  //delete a post along with answers
+  router.post('/delete_post/:id',authenticateToken,(req,res)=>{
+      const postid=req.params.id;
+      //write delete query for the post
+      //write a trigger in schema to delete all answers when an question post is deleted
+      //fill this query harsha
+      console.log("error")
+      const query={
+        text:'delete from answers where post_id ='+postid+'; delete from posts where id= '+postid,
+        value:[postid],
+      }
+
+
+      client.query(query,(err,resl)=>{
+        if(err){
+          console.log(err.stack);
+        }
+        else{
+          console.log("deleted post");
+             res.json(
+             {
+              tokenStatus:1,
+              postRes:1
+             });
+        }
+      })
+  })
+
 
   router.post('/upvote',authenticateToken,(req,res)=>
   {
