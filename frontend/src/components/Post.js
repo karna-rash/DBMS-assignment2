@@ -138,6 +138,7 @@ function Post() {
     }
  }
 
+ 
   function List({items}){  
     return(
       <div className="flex flex-col">
@@ -222,6 +223,32 @@ function Post() {
   return( formattedDate + " at " + formattedTime);
   }
 
+  function ListTags({items}){
+    var arr=items.tags.split(/[<\s>]+/);
+    arr=arr.filter(function (el) {
+      return el != "";
+    })
+  
+    return(
+      <div className="flex flex-row mx-8">
+      {
+        arr.map(
+          (tag,index)=>{
+             return(
+             <div className="flex justify-between">
+               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 truncate" >{tag}
+               </button>
+              <p>&nbsp;&nbsp;</p> 
+             </div>
+  
+             )
+          }
+        )
+      }
+      </div>
+    )
+  }
+
   return (
     <div><Navbar/>
     <div className="relative flex flex-col justify-center min-h-screen from-red-500 to-blue-500 bg-gradient-115 overflow-hidden">
@@ -252,6 +279,9 @@ function Post() {
           }
                 </div>
                 </div>
+              {
+            <ListTags items={post}></ListTags>
+              }
           <CreateAnswer post={post}></CreateAnswer>
           {
             !!ansready &&
