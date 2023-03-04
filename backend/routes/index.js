@@ -107,6 +107,9 @@ router.post('/create_answer',authenticateToken,(req,res)=>
         text: 'insert into answers(id,answeredby_id,OwnerName, post_id, body ,creation_date) values ($1,$2,$3,$4,$5,$6)',
         values: [++maxansid,ownerid,Ownername,postid,body,time],
       }
+      const q1={
+        text: 'update posts set answercount=answercount+1 where id='+postid
+      }
       client.query(query, (err, resl) => {
         if (err) {
           console.log(err.stack)
@@ -118,9 +121,13 @@ router.post('/create_answer',authenticateToken,(req,res)=>
         }
         else
         { 
-          client.query1(q1,(err,resll)=>{
+
+          client.query(q1,(err,resll)=>{
             if(err){
-              
+              console.log(err.stack)
+            }
+            else{
+              console.log('ok');
             }
           });
           //console.log(resl.rows)
