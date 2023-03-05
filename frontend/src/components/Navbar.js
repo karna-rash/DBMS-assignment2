@@ -136,14 +136,14 @@ const Navbar2 = (props)=>
     //  setCookie('token', '', { path: '/' });
       removeCookie('token',{path:'/'});
       setTimeout(()=>{console.log(cookies);console.log(document.cookie)},100)
-      
+      navigate('/login');
     
   }
 
   useEffect(()=>
   {
 
-  if(cookies.token == '') navigate('/login');
+ console.log('Useeffect',cookies)
  
   },[cookies]);
 
