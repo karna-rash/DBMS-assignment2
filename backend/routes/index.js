@@ -790,14 +790,24 @@ router.get('/posts/:id1/:id2',(req,res)=>{
       //write delete query for the post
       //write a trigger in schema to delete all answers when an question post is deleted
       //fill this query harsha
-      console.log("error")
-      const query={
-        text:'delete from answers where post_id ='+postid+'; delete from posts where id= '+postid,
-        value:[postid],
+      const query1={
+        text:"delete from answers where post_id = $1",
+        values:[postid],
+      }
+      const query2={
+        text:"delete from posts where id= $1",
+        values:[postid],
       }
 
-
-      client.query(query,(err,resl)=>{
+      client.query(query1,(err,resl)=>{
+        if(err){
+          console.log(err.stack);
+        }
+        else{
+          console.log("deleted answers");
+        }
+      })
+      client.query(query2,(err,resl)=>{
         if(err){
           console.log(err.stack);
         }
