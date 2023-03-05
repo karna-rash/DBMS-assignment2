@@ -15,7 +15,8 @@ function Posts(props) {
   const [yvalue, setyvalue] = useState(28);
   const [multytag, setMultytag] = useState([]);
   const [filter,setFilter] = useState('latest')
-
+  const [PostsPresent, setPostsPresent] = useState(true);
+  
   function handleClick(e) {
     if (searchOption == "multiple_tags") {
       if (multytag.length == 5) {
@@ -131,6 +132,12 @@ function Posts(props) {
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
+          if(posts.length==0){
+            setPostsPresent(false);
+          }
+          else{
+            setPostsPresent(true);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -143,6 +150,7 @@ function Posts(props) {
           .then(async (res) => {
             setPosts(res.data.posts);
             setPages(res.data.totpage);
+            
           })
           .catch((err) => {
             console.log(err);
@@ -155,6 +163,7 @@ function Posts(props) {
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
+        
         })
         .catch((err) => {
           console.log(err);
@@ -164,7 +173,8 @@ function Posts(props) {
   };
 
   useEffect(() => {
-    if (posts.length > 0) setPostsReady(1);
+    if (posts.length > 0){ setPostsReady(1);
+    setPostsPresent(true);}
   //  if (posts.length == 0) alert("No results for this!");
     console.log(posts, " ", pages);
   }, [posts]);
@@ -315,7 +325,7 @@ function Posts(props) {
             />
           )}
           {
-            !postsReady && (
+            !PostsPresent && (
               <div className="flex flex-col mx-12 rounded-lg bg-white items-center justify-center">
             <div className="flex items-center">
               <div className="w-12 h-12 mt-2 flex items-center justify-center bg-gray-300 rounded-md mr-2">
