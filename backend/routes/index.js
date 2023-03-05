@@ -895,7 +895,8 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   });
   router.post('/status',authenticateToken,(req,res)=>
   {
-     let post=req.body.id;
+    console.log("ikkada",req.body) 
+    let post=req.body.id;
      let userid=req.user.id;
     //  userid=1
      let ans=9999;
@@ -919,6 +920,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
         }
         res.json(
           {
+           tokenStatus:1,
            status: ans
           });
       }

@@ -23,8 +23,26 @@ function Post() {
   const [downvotes, setdownvotes] = useState(0);
   const navigate = useNavigate();
   const [status,setStatus] = useState(0);
+
+
 useEffect(()=>
 {
+  
+  if (answers.length > 0) setansready(true);
+    axios
+      .get("http://localhost:5000/posts/" + post.id, {})
+      .then((res) => {
+        settotpagenum(res.data.totpage);
+        console.log(res.data.totpage);
+        setupvotes(res.data.up_votes);
+        setdownvotes(res.data.down_votes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    handleFirstPage();
+  
+  
   axios.post("http://localhost:5000/status",{
     id:post.id
   },{
@@ -35,9 +53,10 @@ useEffect(()=>
   })
   .then((res)=>
   {
-    if(res.data.tokenStatus==1)
+    if(res.data.tokenStatus == 1)
     {
-         console.log('ikkade',res.data)
+         console.log('ikka',res.data)
+         setStatus(res.data.status)
     }
     else
     {
@@ -272,21 +291,6 @@ useEffect(()=>
     );
   }
 
-  useEffect(() => {
-    if (answers.length > 0) setansready(true);
-    axios
-      .get("http://localhost:5000/posts/" + post.id, {})
-      .then((res) => {
-        settotpagenum(res.data.totpage);
-        console.log(res.data.totpage);
-        setupvotes(res.data.up_votes);
-        setdownvotes(res.data.down_votes);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    handleFirstPage();
-  }, []);
 
   function difference(date) {
     const now = new Date();
