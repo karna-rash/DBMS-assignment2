@@ -325,7 +325,7 @@ function Posts(props) {
             />
           )}
           {
-            !PostsPresent && (
+            !postsReady && (
               <div className="flex flex-col mx-12 rounded-lg bg-white items-center justify-center">
             <div className="flex items-center">
               <div className="w-12 h-12 mt-2 flex items-center justify-center bg-gray-300 rounded-md mr-2">

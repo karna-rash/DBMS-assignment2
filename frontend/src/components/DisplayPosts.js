@@ -175,21 +175,28 @@ function List({items}){
             <thead>
               <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
                 <th className="px-4 py-3"><h2>Title</h2></th>
+                <th className="px-4 py-3"><h2>Posted by</h2></th>
                 <th className="px-4 py-3"><h2>Tags</h2></th>
               </tr>
             </thead>
             {/* Table body */}
             <tbody>
-              {/* Map through the data and create a row for each item */}
-              {posts.map((post) => (
-                <tr key={post.id} className="bg-white divide-y">
-                  <td className="px-4 py-3 "><Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post: post,Edit_status: params.Edit_status }}>{post.title}</Link></td>
-                  <td className="px-4 py-3">
-                  <List items={post}></List>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {/* Map through the data and create a row for each item */}
+  {posts.map((post) => (
+    <tr key={post.id} className="bg-white divide-y">
+      <td className="px-4 py-3 border-b">
+        <Link to={'/posts/' + post.id} className="hover:text-blue-500 truncate" state={{ post: post, Edit_status: params.Edit_status }}>
+          {post.title}
+        </Link>
+      </td>
+      <td className="px-4 py-3">{post.ownername}</td>
+      <td className="px-4 py-3">
+        <List items={post}></List>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
         </div>
         <div className="flex justify-between w-full"> <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleBack}>back</button> Page {curpagenum} of {totpagenum} <button className="border w-24 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onClick={handleNext}>next</button></div>
