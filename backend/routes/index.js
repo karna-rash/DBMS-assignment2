@@ -807,7 +807,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
           console.log("deleted answers");
         }
       })
-      client.query(query2,(err,resl)=>{
+      client.query(query2,(err,resl)=>{ 
         if(err){
           console.log(err.stack);
         }
@@ -825,6 +825,69 @@ router.get('/posts/:id1/:id2',(req,res)=>{
 
   router.post('/upvote/:id',authenticateToken,(req,res)=>
   {
+   const type=req.body.type;
+   const id = req.params.id;
+   let userid=req.user.id;
+   const status=req.body.status;
+   //userid=-1
+   console.log(userid)
+   let ans;
+   if(status==1) ans='upvote';
+   else ans='downvote';
+   let sql,sql2;
+   if(type==1){
+    sql={
+      text: 'insert into post_upvotes values($1,$2,$3)',
+      values: [userid,id,status]
+    }
+    if(ans=='upvote')
+    sql2={
+      text: 'update posts set up_votes=up_votes+1 where id= '+id,
+      values: [],
+    }
+    else
+    sql2={
+      text: 'update posts set down_votes=down_votes+1 where id= '+id,
+      values: [],
+    }
+   }
+   else{
+    sql={
+      text: 'insert into answer_upvotes values($1,$2,$3)',
+      values: [userid,id,status]
+    }
+    if(ans=='upvote')
+    sql2={
+      text: 'update answers set up_votes=up_votes+1 where id= '+id,
+      values: [],
+    }
+    else
+    sql2={
+      text: 'update answers set down_votes=down_votes+1 where id= '+id,
+      values: [],
+    }
+   }
+   client.query(sql,(err,resl)=>{
+    if(err){
+      console.log(err.stack);
+    }
+    else{
+      console.log("ayyindi");
+      client.query(sql2,(err,resl)=>{ 
+        if(err){
+          console.log(err.stack);
+        }
+        else{
+          console.log("ayyindi2");
+             res.json(
+             {
+              reqStat:1
+             });
+        }
+      })
+    }
+  })
+  
 
   });
   router.post('/downvote/:id',authenticateToken,(req,res)=>
