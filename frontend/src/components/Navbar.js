@@ -224,9 +224,9 @@ const Navbar2 = (props)=>
     
             {/* <!-- Profile dropdown --> */}
             <div class="flex">
-              <div>
+              {/* <div>
               <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profile</a>
-              </div>
+              </div> */}
               <div>
               <button onClick={handleSignout} class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign out</button>
 
