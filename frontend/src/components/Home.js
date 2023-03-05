@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 const Home = () => {
   return (
     <div><Navbar/>
-    <div className="relative flex flex-col min-h-screen bg-no-repeat bg-cover justify-center bg-scroll" style={{backgroundImage: `url("https://lh3.googleusercontent.com/p/AF1QipN6SzIG0VC1OiXHjiV2Ru9ZCJMCd0YT1iPJ-pU=s680-w680-h510")`}}>
+    <div className="relative flex flex-col min-h-screen bg-no-repeat bg-scroll bg-cover justify-center " style={{backgroundImage: `url("https://lh3.googleusercontent.com/p/AF1QipN6SzIG0VC1OiXHjiV2Ru9ZCJMCd0YT1iPJ-pU=s680-w680-h510")`}}>
     <div className="flex flex-col justify-center items-center rounded-lg mx-36">
               <h1 className="text-black text-3xl text-center mt-4 mb-12">Welcome</h1>
       <main className="p-12 flex flex-col bg-white">

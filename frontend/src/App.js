@@ -10,6 +10,7 @@ import Createpost from './components/Createpost';
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Editpost from './components/Editpost';
+import Profile from './components/Profile';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
 
         <Routes>
          <Route exact path="/" element={<Home />}></Route>
-
+         <Route excat path="/profile" element={<Profile/>}></Route>
           <Route exact path="/home2" element={<Home2 />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
