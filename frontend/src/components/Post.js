@@ -25,7 +25,9 @@ function Post() {
   const [status,setStatus] = useState(0);
 useEffect(()=>
 {
-  axios.post("http://localhost:5000/status",{},{
+  axios.post("http://localhost:5000/status",{
+    id:post.id
+  },{
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${cookies.token}`,
@@ -35,7 +37,11 @@ useEffect(()=>
   {
     if(res.data.tokenStatus==1)
     {
-      
+         console.log('ikkade',res.data)
+    }
+    else
+    {
+      console.log('ikkade',res.data)
     }
   })
   .catch((err)=>
