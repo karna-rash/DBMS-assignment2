@@ -55,12 +55,12 @@ useEffect(()=>
   {
     if(res.data.tokenStatus == 1)
     {
-         console.log('ikka',res.data)
+
          setStatus(res.data.status)
     }
     else
     {
-      console.log('ikkade',res.data)
+
     }
   })
   .catch((err)=>
@@ -135,16 +135,23 @@ useEffect(()=>
   function handleUpvote(e) {
     let id = e.target.id;
     let type = 1
+    if(status == 1) { setStatus(0); setupvotes(upvotes - 1)}
+    if(status == 0) { setStatus(1); setupvotes(upvotes + 1)}
+    if(status == -1) { setStatus(0); setupvotes(upvotes + 1); setdownvotes(downvotes - 1)}
     if (id != null) {
       //change the css of this button
 
       axios
-        .post("http://localhost:5000/upvote/" + id,{}, {
+        .post("http://localhost:5000/upvote/" + id,{
+          type: type,
+          status:status,
+          button:1
+        }, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
-          type: type,
+         
         })
         .then((res) => {
           if (res.data.tokenStatus == -1) {
@@ -158,7 +165,10 @@ useEffect(()=>
         })
         .catch((err) => {
           console.log(err);
-          alert("Failed to update due to internal error. Try again");
+          alert("Failed to update due to internal error. Reloading");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         });
     }
   }
@@ -167,9 +177,18 @@ useEffect(()=>
     //change css of the button
 
     let id = e.target.id;
+    let type = 1
+    if(status == 1) {setStatus(0); setdownvotes(downvotes - 1 )}
+    if(status == 0) {setStatus(1); setdownvotes(downvotes + 1)}
+    if(status == -1) {setStatus(0); setdownvotes(downvotes - 1); setupvotes(upvotes+1)}
+
     if (id != null) {
       axios
-        .post("http://localhost:5000/downvote/" + id,{} ,{
+        .post("http://localhost:5000/upvote/" + id,{
+          type: type,
+          status:status,
+          button:1
+        } ,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
@@ -182,9 +201,17 @@ useEffect(()=>
               navigate("/login");
             }, 1000);
           }
+          else
+          {
+
+          }
         })
         .catch((err) => {
           console.log(err);
+          alert("Failed to update due to internal error. Reloading");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         });
     }
   }
@@ -352,7 +379,7 @@ useEffect(()=>
           <div className="flex flex-col bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
             <div className="flex flex-row border border-black mx-2 my-2">
               <div className="flex flex-col mt-8">
-                <button className="hover:bg-blue-600" onClick={handleUpvote}>
+                <button className={status === 1 ? "bg-blue-500" : "hover:bg-blue-600"} onClick={handleUpvote}>
                   <svg
                     width="24px"
                     height="24px"
@@ -364,7 +391,7 @@ useEffect(()=>
                   </svg>
                 </button>
                 <h3 className="text-center mb-4">{upvotes}</h3>
-                <button className="hover:bg-blue-600" onClick={handleDownvote}>
+                <button className={status === -1 ? "bg-blue-500" : "hover:bg-blue-600"} onClick={handleDownvote}>
                   <svg
                     width="24px"
                     height="24px"
