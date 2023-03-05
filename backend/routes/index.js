@@ -831,42 +831,77 @@ router.get('/posts/:id1/:id2',(req,res)=>{
    const type=req.body.type;
    const id = req.params.id;
    let userid=req.user.id;
+   const button=req.body.button;
    const status=req.body.status;
    //userid=-1
    console.log(userid)
    let ans;
-   if(status==1) ans='upvote';
+   if(button==1) ans='upvote';
    else ans='downvote';
    let sql,sql2;
    if(type==1){
+    if(status==0)
     sql={
       text: 'insert into post_upvotes values($1,$2,$3)',
-      values: [userid,id,status]
+      values: [userid,id,button]
     }
-    if(ans=='upvote')
+    else
+    sql={
+      text: 'delete from post_upvotes where postid=$2 and userid=$1',
+      values: [userid,id]
+    }
+    if(ans=='upvote' && status==0)
     sql2={
       text: 'update posts set up_votes=up_votes+1 where id= '+id,
       values: [],
     }
-    else
+    else if(ans=='downvote' && status==0)
     sql2={
       text: 'update posts set down_votes=down_votes+1 where id= '+id,
       values: [],
     }
+    else if(ans=='upvote' && status==1){
+      sql2={
+        text: 'update posts set up_votes=up_votes-1 where id= '+id,
+        values: [],
+      }
+    }
+    else if(ans=='downvote' && status==-1)
+    sql2={
+      text: 'update posts set down_votes=down_votes-1 where id= '+id,
+      values: [],
+    }
    }
    else{
+    if(status==0)
     sql={
       text: 'insert into answer_upvotes values($1,$2,$3)',
-      values: [userid,id,status]
+      values: [userid,id,button]
     }
-    if(ans=='upvote')
+    else
+    sql={
+      text: 'delete from answer_upvotes where postid=$2 and userid=$1',
+      values: [userid,id]
+    }
+    if(ans=='upvote' && status==0)
     sql2={
       text: 'update answers set up_votes=up_votes+1 where id= '+id,
       values: [],
     }
-    else
+    else if(ans=='downvote' && status==0)
     sql2={
       text: 'update answers set down_votes=down_votes+1 where id= '+id,
+      values: [],
+    }
+    else if(ans=='upvote' && status==1){
+      sql2={
+        text: 'update answers set up_votes=up_votes-1 where id= '+id,
+        values: [],
+      }
+    }
+    else if(ans=='downvote' && status==-1)
+    sql2={
+      text: 'update answers set down_votes=down_votes-1 where id= '+id,
       values: [],
     }
    }
@@ -876,6 +911,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
     }
     else{
       console.log("ayyindi");
+      console.log(button,status);
       client.query(sql2,(err,resl)=>{ 
         if(err){
           console.log(err.stack);
@@ -884,6 +920,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
           console.log("ayyindi2");
              res.json(
              {
+              tokenStatus:1,
               reqStat:1
              });
         }
