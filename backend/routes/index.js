@@ -893,9 +893,36 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   
 
   });
-  router.post('/downvote/:id',authenticateToken,(req,res)=>
+  router.post('/status',authenticateToken,(req,res)=>
   {
-     
+     let post=req.body.id;
+     let userid=req.user.id;
+    //  userid=1
+     let ans=9999;
+     const query={
+      text: 'select status from post_upvotes where userid=$1 and postid=$2',
+      values: [userid,post]
+     }
+     client.query(query,(err,resl)=>{
+      if(err){
+        console.log(err.stack);
+      }
+      else{
+        console.log("ayyindi");
+        
+
+        if(resl.rowCount==0){
+          ans=0;
+        }
+        else{
+          ans=resl.rows[0].status
+        }
+        res.json(
+          {
+           status: ans
+          });
+      }
+     })
   });
 
 export default router;
