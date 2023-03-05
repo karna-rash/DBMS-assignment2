@@ -15,7 +15,7 @@ const Home2 = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [postsReady, setPostsReady] = useState(0);
   const [posts, setPosts] = useState([]);
-  const [pages, setPages] = useState(0);
+  const [pages, setPages] = useState(1);
   const handleSearch = (e) => {
     e.preventDefault();
     setPostsReady(0);
@@ -29,7 +29,9 @@ const Home2 = () => {
       })
       .then(async (res) => {
         setPosts(res.data.posts);
-        setPages(res.data.totpage);
+        if (res.data.totpage !== 0) {
+            setPages(res.data.totpage);
+        }
         setPostsReady(1)
       })
       .catch((err) => {
