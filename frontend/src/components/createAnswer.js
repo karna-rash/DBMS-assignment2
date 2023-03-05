@@ -37,7 +37,7 @@ const CreateAnswer = (props) => {
         if (res.data.tokenStatus == 1) {
           alert("Answer posted succesful")
          setTimeout(() => {
-          navigate("/home2");
+          window.location.reload();
          }, 2000);
         }
         else
