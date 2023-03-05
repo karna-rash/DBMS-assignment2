@@ -43,8 +43,9 @@ const Home2 = () => {
       <div className="relative flex flex-col min-h-screen from-red-500 to-yellow-500 bg-gradient-115 overflow-hidden">
         <main className="p-12">
           <section id="about" className="py-12">
-            <div className='flex fbg-gray-900 text-white px-3 py-8 rounded-md text-sm font-mediumlex-col bg-white items-center justify-center w-full'>
-              <h2 className='text-3xl text-center black'>Welcome</h2>
+            <div className='flex flex-col fbg-gray-900 text-white px-3 py-8 rounded-t text-sm font-mediumlex-col bg-white items-center justify-center w-full'>
+              <h2 className='text-3xl text-center font-semibold text-black'>Welcome</h2>
+  <hr className="my-4 w-1/2" />
               <div className='flex flex-row bg-white text-center justify-between w-1/2'>
                 <button className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 duration-300 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a href="http://localhost:3000/create_post">Create Post</a></button>
                 <button className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110  duration-300 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={(e) => handleSearch(e)}>See posts</button>
@@ -52,9 +53,10 @@ const Home2 = () => {
 
               </div>
             </div>
-            <div className='flex flex-col  bg-white  justify-center w-full'>
+            <div className='flex flex-col rounded-b bg-white  justify-center w-full'>
               <div className='mx-10'>
-                <h1 className='text-8x1 '>Instructions</h1>
+  <hr className="my-4 w-full" />
+                <h1 className='text-8x1 text-center font-bold '>Instructions</h1>
                 <ol className='list-decimal'>
                   <li className='my-4'>
                     <Accordion>
