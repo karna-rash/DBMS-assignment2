@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
 import Loading from './Loading';
-import { useAuthContext } from '../hooks/useAuthContext';
+//import { useAuthContext } from '../hooks/useAuthContext';
 import { useCookies } from 'react-cookie';
 
 
@@ -13,7 +13,7 @@ const Login = () => {
         const [userName, setUserName] = useState('');
         const [pass, setPass] = useState('');
         const [logRes,setLogRes] = useState(0);
-        const {dispatch}=useAuthContext()
+    //    const {dispatch}=useAuthContext()
 
 
 
@@ -36,7 +36,7 @@ const Login = () => {
 
       }, 2000);
 
-      dispatch({type: 'LOGIN',payload: {"userName":userName} })
+     // dispatch({type: 'LOGIN',payload: {"userName":userName} })
       
     }
       

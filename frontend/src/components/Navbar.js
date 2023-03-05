@@ -132,24 +132,20 @@ const Navbar2 = (props)=>
   function handleSignout(e)
   {
     sessionStorage.setItem('token_status',0);
-      props.setToken(0); 
+      props.setToken(0); console.log(document.cookie)
     //  setCookie('token', '', { path: '/' });
       removeCookie('token',{path:'/'});
-      setTimeout(()=>{console.log(cookies.token)},100)
-      navigate('/login');
+      setTimeout(()=>{console.log(cookies);console.log(document.cookie)},100)
+      
     
   }
 
-  // useEffect(()=>
-  // {
-  //  if(props.token==0)
-  //  {
-    
-  //   document.cookie = '';
-  //  // console.log('Useeffect:',props.token);
-    
-  // }
-  // },[props.token]);
+  useEffect(()=>
+  {
+
+  if(cookies.token == '') navigate('/login');
+ 
+  },[cookies]);
 
 
 
