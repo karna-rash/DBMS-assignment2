@@ -334,6 +334,63 @@ router.post('/register',async (req, res) => {
         })
   });
 
+  let flg1;
+//searching posts of page 1 from tags
+  router.post('/posts/tag/:id',(req,res)=>
+  {
+     let tag = req.params.id; console.log(tag)
+     let flg = req.body.filter;
+     flg1=flg;
+     let query1;
+     if(flg=='latest'){
+      query1 = {
+      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
+      values: [],
+    }}
+    else if(flg =='oldest'){
+       query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
+        values: [],
+      }
+    }
+    else {
+       query1 = {
+        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by up_votes desc limit 8",
+        values: [],
+      }
+    }
+    let posts=[];
+    const query2 = {
+      text: "SELECT id FROM posts where tags like '%%<"+tag+">%%'",
+      values: [],
+    }
+    let rowCount=0;
+     client.query(query1, (err, resl) => {
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rows)
+            posts=resl.rows;
+          }
+        })
+        client.query(query2, (err, resl) => { 
+          if (err) {
+            console.log(err.stack)
+          }
+          else
+          { console.log(resl.rowCount)
+            console.log(Math.ceil(resl.rowCount/8))
+
+            res.json({
+              posts:posts,
+              totpage:Math.ceil(resl.rowCount/8)
+            })
+          }
+        })
+          
+  });
+
   router.post('/posts/user/:id',(req,res)=>
   {
      let userid = req.params.id; 
@@ -394,6 +451,7 @@ router.post('/register',async (req, res) => {
  router.post('/posts/multiple_tags',(req,res)=>
  {
     console.log(req.body);
+    let flg=req.body.filter;
     let tag =[5];
     for(let i=0;i<req.body.tags.length;i++){
       tag[i]="<"+req.body.tags[i]+">";
@@ -401,9 +459,22 @@ router.post('/register',async (req, res) => {
     for(let i=req.body.tags.length;i<5;i++){
       tag[i]="";
     }
-    const query1={
+    let query1; 
+    if(flg=="latest")
+    query1={
+      text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date desc limit 8)",
+      values: [],
+    }
+    else if (flg =="oldest")
+    query1={
       text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by creation_date limit 8)",
       values: [],
+    }
+    else{
+      query1={
+        text: "(SELECT * FROM posts where tags like '%%"+tag[0]+"%%' and tags like '%%"+tag[1]+"%%' and tags like '%%"+tag[2]+"%%' and tags like '%%"+tag[3]+"%%' and tags like '%%"+tag[4]+"%%' order by up_votes desc limit 8)",
+        values: [],
+      }
     }
     let pageCount=0;
     const query2={
@@ -546,67 +617,23 @@ router.get('/posts/:id1',(req,res)=>
 })
 
 
-//searching posts of page 1 from tags
-  router.post('/posts/tag/:id',(req,res)=>
-  {
-     let tag = req.params.id; console.log(tag)
-     let flg = req.body.filter;
-     let query1;
-     if(flg=='latest'){
-      query1 = {
-      text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date desc limit 8",
-      values: [],
-    }}
-    else if(flg =='oldest'){
-       query1 = {
-        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by creation_date limit 8",
-        values: [],
-      }
-    }
-    else {
-       query1 = {
-        text: "SELECT * FROM posts where tags like '%%<"+tag+">%%' order by up_votes desc limit 8",
-        values: [],
-      }
-    }
-    let posts=[];
-    const query2 = {
-      text: "SELECT id FROM posts where tags like '%%<"+tag+">%%'",
-      values: [],
-    }
-    let rowCount=0;
-     client.query(query1, (err, resl) => {
-          if (err) {
-            console.log(err.stack)
-          }
-          else
-          { console.log(resl.rows)
-            posts=resl.rows;
-          }
-        })
-        client.query(query2, (err, resl) => { 
-          if (err) {
-            console.log(err.stack)
-          }
-          else
-          { console.log(resl.rowCount)
-            console.log(Math.ceil(resl.rowCount/8))
-
-            res.json({
-              posts:posts,
-              totpage:Math.ceil(resl.rowCount/8)
-            })
-          }
-        })
-          
-  });
-
 //searching answers acc to pagenum
 router.get('/posts/:id1/:id2',(req,res)=>{
   let post_id =req.params.id1;
   let pagenum =req.params.id2;
-  const query ={
+  let query;
+  if(flg1=='latest')
+   query ={
+    text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date desc limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date desc limit "+(pagenum-1)*8+" )"
+  }
+  else if(flg1=='oldest')
+  query ={
     text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by creation_date limit "+(pagenum-1)*8+" )"
+  }
+  else{
+    query ={
+      text: "(SELECT * FROM answers where post_id = '"+post_id+"' order by up_votes desc limit "+pagenum*8+" ) except (SELECT * FROM answers where post_id = '"+post_id+"' order by up_votes desc limit "+(pagenum-1)*8+" )"
+    }
   }
   client.query(query, (err, resl) => {
     if (err) {
@@ -624,12 +651,26 @@ router.get('/posts/:id1/:id2',(req,res)=>{
 
 })
 
-  router.get('/posts/user/:id',(req,res)=>
+  router.post('/posts/user/:id',(req,res)=>
   {
      let owner = req.params.id; console.log(owner)
-     const query1 = {
+     let flg=req.body.filter;flg1=flg;
+     let query1;
+    if(flg=='latest')
+      query1 = {
+      text: "SELECT * FROM posts where Owner_id ="+owner+" order by creation_date desc limit 8",
+      values: [],
+    }
+    else if(flg=='oldest')
+    query1 = {
       text: "SELECT * FROM posts where Owner_id ="+owner+" order by creation_date limit 8",
       values: [],
+    }
+    else{
+      query1 = {
+        text: "SELECT * FROM posts where Owner_id ="+owner+" order by up_votes desc limit 8",
+        values: [],
+      }
     }
     let posts=[];
     const query2 = {
@@ -665,11 +706,23 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
       let tag = req.params.id1; 
       let pagenum = req.params.id2;
-      const query1={
+      let query1;
+    if(flg1=='oldest')
+       query1={
         text: "(SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+pagenum*8+" ) except (SELECT * FROM posts where Owner_id = "+tag+" order by creation_date limit "+(pagenum-1)*8 +");",
         values: [],
       }
-      client.query(query, (err, resl) => {
+      else if(flg1=='latest')
+      query1={
+        text: "(SELECT * FROM posts where Owner_id = "+tag+" order by creation_date desc limit "+pagenum*8+" ) except (SELECT * FROM posts where Owner_id = "+tag+" order by creation_date desc limit "+(pagenum-1)*8 +");",
+        values: [],
+      }
+      else
+      query1={
+        text: "(SELECT * FROM posts where Owner_id = "+tag+" order by up_votes desc limit "+pagenum*8+" ) except (SELECT * FROM posts where Owner_id = "+tag+" order by up_votes desc limit "+(pagenum-1)*8 +");",
+        values: [],
+      }
+      client.query(query1, (err, resl) => {
         if (err) {
           console.log(err.stack)
         }
@@ -845,11 +898,11 @@ router.get('/posts/:id1/:id2',(req,res)=>{
   {
    const type=req.body.type;
    const id = req.params.id;
-   let userid=req.user.id;
+   const userid=req.user.userid;
    const button=req.body.button;
    const status=req.body.status;
    //userid=-1
-   console.log(userid)
+   
    let ans;
    if(button==1) ans='upvote';
    else ans='downvote';
@@ -921,6 +974,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
     }
    }
    client.query(sql,(err,resl)=>{
+    console.log("userid "+userid)
     if(err){
       console.log(err.stack);
     }
@@ -969,6 +1023,7 @@ router.get('/posts/:id1/:id2',(req,res)=>{
         }
         else{
           ans=resl.rows[0].status
+          console.log("ans "+ans);
         }
         res.json(
           {
