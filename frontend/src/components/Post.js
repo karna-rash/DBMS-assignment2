@@ -379,7 +379,7 @@ useEffect(()=>
           <div className="flex flex-col bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
             <div className="flex flex-row border border-black mx-2 my-2">
               <div className="flex flex-col mt-8">
-                <button className="hover:bg-blue-600" onClick={handleUpvote}>
+                <button className={status === 1 ? "bg-blue-500" : "hover:bg-blue-600"} onClick={handleUpvote}>
                   <svg
                     width="24px"
                     height="24px"
@@ -391,7 +391,7 @@ useEffect(()=>
                   </svg>
                 </button>
                 <h3 className="text-center mb-4">{upvotes}</h3>
-                <button className="hover:bg-blue-600" onClick={handleDownvote}>
+                <button className={status === -1 ? "bg-blue-500" : "hover:bg-blue-600"} onClick={handleDownvote}>
                   <svg
                     width="24px"
                     height="24px"
