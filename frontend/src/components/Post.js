@@ -154,7 +154,7 @@ useEffect(()=>
          
         })
         .then((res) => {
-          if (res.data.tokenStatus == -1) {
+          if (res.data.tokenStatus != 1) {
             alert(
               "You have to login to upvote/downvote an answer.Redirecting..."
             );
@@ -187,7 +187,7 @@ useEffect(()=>
         .post("http://localhost:5000/upvote/" + id,{
           type: type,
           status:status,
-          button:1
+          button:0
         } ,{
           headers: {
             "Content-Type": "application/json",
@@ -195,7 +195,7 @@ useEffect(()=>
           }
         })
         .then((res) => {
-          if (res.data.tokenStatus == -1) {
+          if (res.data.tokenStatus != 1) {
             alert("You have to login to upvote/downvote an answer");
             setTimeout(() => {
               navigate("/login");
