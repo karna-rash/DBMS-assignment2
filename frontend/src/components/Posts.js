@@ -15,7 +15,8 @@ function Posts(props) {
   const [yvalue, setyvalue] = useState(28);
   const [multytag, setMultytag] = useState([]);
   const [filter,setFilter] = useState('latest')
-
+  const [PostsPresent, setPostsPresent] = useState(true);
+  
   function handleClick(e) {
     if (searchOption == "multiple_tags") {
       if (multytag.length == 5) {
@@ -131,6 +132,12 @@ function Posts(props) {
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
+          if(posts.length==0){
+            setPostsPresent(false);
+          }
+          else{
+            setPostsPresent(true);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -143,6 +150,7 @@ function Posts(props) {
           .then(async (res) => {
             setPosts(res.data.posts);
             setPages(res.data.totpage);
+            
           })
           .catch((err) => {
             console.log(err);
@@ -155,6 +163,7 @@ function Posts(props) {
         .then(async (res) => {
           setPosts(res.data.posts);
           setPages(res.data.totpage);
+        
         })
         .catch((err) => {
           console.log(err);
@@ -164,7 +173,8 @@ function Posts(props) {
   };
 
   useEffect(() => {
-    if (posts.length > 0) setPostsReady(1);
+    if (posts.length > 0){ setPostsReady(1);
+    setPostsPresent(true);}
   //  if (posts.length == 0) alert("No results for this!");
     console.log(posts, " ", pages);
   }, [posts]);
@@ -314,6 +324,31 @@ function Posts(props) {
               handleTagClick={handleTagClick}
             />
           )}
+          {
+            !PostsPresent && (
+              <div className="flex flex-col mx-12 rounded-lg bg-white items-center justify-center">
+            <div className="flex items-center">
+              <div className="w-12 h-12 mt-2 flex items-center justify-center bg-gray-300 rounded-md mr-2">
+                <svg
+                  fill="#000000"
+                  width="32px"
+                  height="32px"
+                  viewBox="-2.5 -2.5 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  preserveAspectRatio="xMinYMin"
+                  class="jam jam-search"
+                >
+                  <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zm6.32-1.094l3.58 3.58a1 1 0 1 1-1.415 1.413l-3.58-3.58a8 8 0 1 1 1.414-1.414z" />
+                </svg>
+              </div>
+            </div>
+            <div className="text-2xl font-semibold mt-4">No results found</div>
+            <div className="text-xl text-gray-400">
+            No posts found for the user/tags entered
+            </div>
+          </div>
+            )
+          }
         </div>
       </div>
     </div>

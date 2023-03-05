@@ -16,7 +16,7 @@ const Home2 = () => {
   const [postsReady, setPostsReady] = useState(0);
   const [posts, setPosts] = useState([]);
   const [pages, setPages] = useState(1);
-  const [PostsPresent, setPostsPresent] = useState(0);
+  const [PostsPresent, setPostsPresent] = useState(1);
   const handleSearch = (e) => {
     e.preventDefault();
     setPostsReady(0);
@@ -36,6 +36,9 @@ const Home2 = () => {
         if (res.data.totpage !== 0) {
           setPostsPresent(1);
           setPages(res.data.totpage);
+        }
+        else{
+          setPostsPresent(0);
         }
         setPostsReady(1);
       })

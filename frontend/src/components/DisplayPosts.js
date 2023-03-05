@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 
 function DisplayPosts(props)
 {
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+const [cookies, setCookie, removeCookie] = useCookies(['token']);
 const [params,setparams] = useState([]);
 const [totpagenum,settotpagenum] = useState(1);
 const [posts,setPosts] = useState([]);
