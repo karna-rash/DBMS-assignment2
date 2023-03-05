@@ -22,6 +22,27 @@ function Post() {
   const [upvotes, setupvotes] = useState(0);
   const [downvotes, setdownvotes] = useState(0);
   const navigate = useNavigate();
+  const [status,setStatus] = useState(0);
+useEffect(()=>
+{
+  axios.post("http://localhost:5000/status",{},{
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cookies.token}`,
+    },
+  })
+  .then((res)=>
+  {
+    if(res.data.tokenStatus==1)
+    {
+      
+    }
+  })
+  .catch((err)=>
+  {
+    console.log(err);
+  })
+},[]);
 
   function handleBack() {
     if (curpagenum != 1) {
@@ -88,16 +109,17 @@ function Post() {
 
   function handleUpvote(e) {
     let id = e.target.id;
+    let type = 1
     if (id != null) {
       //change the css of this button
 
       axios
-        .post("http://localhost:5000/upvote/" + id, {
+        .post("http://localhost:5000/upvote/" + id,{}, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
-          type: 0,
+          type: type,
         })
         .then((res) => {
           if (res.data.tokenStatus == -1) {
@@ -122,7 +144,7 @@ function Post() {
     let id = e.target.id;
     if (id != null) {
       axios
-        .post("http://localhost:5000/downvote/" + id, {
+        .post("http://localhost:5000/downvote/" + id,{} ,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
@@ -192,6 +214,7 @@ function Post() {
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                     id={item.id}
+                    post_type="0"
                   >
                     <path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z" />
                   </svg>
@@ -204,6 +227,7 @@ function Post() {
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                     id={item.id}
+                    post_type="0"
                   >
                     <path d="M20.901 10.566A1.001 1.001 0 0 0 20 10h-4V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v7H4a1.001 1.001 0 0 0-.781 1.625l8 10a1 1 0 0 0 1.562 0l8-10c.24-.301.286-.712.12-1.059zM12 19.399 6.081 12H10V4h4v8h3.919L12 19.399z" />
                   </svg>
@@ -324,7 +348,7 @@ function Post() {
                     height="24px"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    id={upvotes}
+                    id={post.id}
                   >
                     <path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z" />
                   </svg>
@@ -336,7 +360,8 @@ function Post() {
                     height="24px"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    id={downvotes}
+                    id={post.id}
+                    post_type={1}
                   >
                     <path d="M20.901 10.566A1.001 1.001 0 0 0 20 10h-4V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v7H4a1.001 1.001 0 0 0-.781 1.625l8 10a1 1 0 0 0 1.562 0l8-10c.24-.301.286-.712.12-1.059zM12 19.399 6.081 12H10V4h4v8h3.919L12 19.399z" />
                   </svg>
