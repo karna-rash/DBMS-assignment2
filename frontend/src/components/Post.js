@@ -55,12 +55,12 @@ useEffect(()=>
   {
     if(res.data.tokenStatus == 1)
     {
-         console.log('ikka',res.data)
+
          setStatus(res.data.status)
     }
     else
     {
-      console.log('ikkade',res.data)
+
     }
   })
   .catch((err)=>
@@ -135,16 +135,23 @@ useEffect(()=>
   function handleUpvote(e) {
     let id = e.target.id;
     let type = 1
+    if(status == 1) setStatus(0)
+    if(status == 0) setStatus(1)
+    if(status == -1) setStatus(0)
     if (id != null) {
       //change the css of this button
 
       axios
-        .post("http://localhost:5000/upvote/" + id,{}, {
+        .post("http://localhost:5000/upvote/" + id,{
+          type: type,
+          status:status,
+          button:1
+        }, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
-          type: type,
+         
         })
         .then((res) => {
           if (res.data.tokenStatus == -1) {
@@ -158,7 +165,10 @@ useEffect(()=>
         })
         .catch((err) => {
           console.log(err);
-          alert("Failed to update due to internal error. Try again");
+          alert("Failed to update due to internal error. Reloading");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         });
     }
   }
@@ -167,9 +177,18 @@ useEffect(()=>
     //change css of the button
 
     let id = e.target.id;
+    let type = 1
+    if(status == 1) setStatus(0)
+    if(status == 0) setStatus(1)
+    if(status == -1) setStatus(0)
+
     if (id != null) {
       axios
-        .post("http://localhost:5000/downvote/" + id,{} ,{
+        .post("http://localhost:5000/upvote/" + id,{
+          type: type,
+          status:status,
+          button:1
+        } ,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
@@ -182,9 +201,17 @@ useEffect(()=>
               navigate("/login");
             }, 1000);
           }
+          else
+          {
+
+          }
         })
         .catch((err) => {
           console.log(err);
+          alert("Failed to update due to internal error. Reloading");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         });
     }
   }
