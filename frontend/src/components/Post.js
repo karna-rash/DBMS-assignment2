@@ -101,13 +101,14 @@ function Post() {
         headers: {
           'Content-Type': "application/json",
           'Authorization': `Bearer ${cookies.token}`,
-      }
+      },
+      type:0
       })
       .then((res)=>
       {
          if(res.data.tokenStatus == -1)
          {
-          alert("You have to login to upvote/downvote an answer")
+          alert("You have to login to upvote/downvote an answer.Redirecting...")
           setTimeout(() => {
             navigate('/login');
           }, 1000); 
@@ -116,6 +117,7 @@ function Post() {
       .catch((err)=>
       {
          console.log(err)
+         alert('Failed to update due to internal error. Try again')
       })
     }
  }
@@ -168,10 +170,10 @@ function Post() {
         }, 2000);
     }
     else {
-        alert("You have to login to post!");
-        setTimeout(() => {
-            navigate("/login");
-        }, 2000);
+        alert("Experienced internal error. Try againn..");
+        // setTimeout(() => {
+        //     navigate("/login");
+        // }, 2000);
     }
 })
 .catch((err) => {
