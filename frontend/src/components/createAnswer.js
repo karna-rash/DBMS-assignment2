@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
 //import { useAuthContext } from '../hooks/useAuthContext';
+import { useCookies } from "react-cookie";
 
 const CreateAnswer = (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   // const { user }=useAuthContext()
   const [body, setBody] = useState("**Hello world!!!**");
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const CreateAnswer = (props) => {
     e.preventDefault();
     let converter = new showdown.Converter();
     let html = converter.makeHtml(body);
-    console.log('hello')
+    console.log(cookies.token)
     axios
       .post("http://localhost:5000/create_answer",{
         body: html,
@@ -29,7 +31,7 @@ const CreateAnswer = (props) => {
       }, {
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${document.cookie}`,
+          'Authorization': `Bearer ${cookies.token}`,
         }})      
         .then((res) => {
         if (res.data.tokenStatus == 1) {

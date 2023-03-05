@@ -5,7 +5,9 @@ import Navbar from './Navbar';
 import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import CreateAnswer from "./createAnswer";
+import { useCookies } from "react-cookie";
 function Post() {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const location = useLocation();
   const post = location.state.post;
   const EDS =location.state.Edit_status;
@@ -95,7 +97,12 @@ function Post() {
      
      //change the css of this button
      
-      axios.post('http://localhost:5000/upvote/'+id,{})
+      axios.post('http://localhost:5000/upvote/'+id,{
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': `Bearer ${cookies.token}`,
+      }
+      })
       .then((res)=>
       {
          if(res.data.tokenStatus == -1)
@@ -120,7 +127,12 @@ function Post() {
   let id = e.target.id
     if(id!=null)
     {
-      axios.post('http://localhost:5000/downvote/'+id,{})
+      axios.post('http://localhost:5000/downvote/'+id,{
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': `Bearer ${cookies.token}`,
+      }
+      })
       .then((res)=>
       {
         if(res.data.tokenStatus == -1)
@@ -142,10 +154,10 @@ function Post() {
   e.preventDefault()
   if (window.confirm('Are u sure u want to delete this post?')) {
 
-    axios.post('http://localhost:5000/delete_post/'+post_id,{},{
+    axios.post('http://localhost:5000/delete_post/'+post_id,{
     headers: {
       'Content-Type': "application/json",
-      'Authorization': `Bearer ${document.cookie}`,
+      'Authorization': `Bearer ${cookies.token}`,
   }
   })
   .then((res) => {
@@ -264,12 +276,13 @@ function Post() {
   
     return(
       <div className="flex flex-row mx-8">
+        Tags: <p>&nbsp;&nbsp;</p>
       {
         arr.map(
           (tag,index)=>{
              return(
              <div className="flex justify-between">
-               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 py-2 truncate" >{tag}
+               <button key={index} className="bg-slate-200 hover:bg-sky-500 rounded px-4 pt-1 pb-1 truncate" >{tag}
                </button>
               <p>&nbsp;&nbsp;</p> 
              </div>
@@ -300,8 +313,8 @@ function Post() {
             <div className="mx-4 my-4 [&>pre]:prefg ">{parse(post.body)}</div>
             
           </div>
-          <div className="flex flex-row justify-between w-1/2">
-                <div className="mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+                <div className="flex flex-row mx-8 mb-2 mt-4 text-center">Posted by: {post.ownername}</div>
+          <div className="flex flex-row justify-center w-full">
                 <div className = "mt-4">
 
                 {
@@ -312,7 +325,7 @@ function Post() {
           }
              {
             EDS==1 &&
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 mt-2 mb-4 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>delete</button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold w-18 h-9 py-1 px-2 mt-2 mb-4 ml-16 border border-blue-700 rounded" onClick={(e)=>handleDelete(e,post.id)}>Delete</button>
           }
 
                 </div>

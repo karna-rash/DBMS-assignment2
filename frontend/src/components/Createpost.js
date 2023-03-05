@@ -8,8 +8,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Example from "./Modal";
 //import { useAuthContext } from '../hooks/useAuthContext';
+import { useCookies } from "react-cookie";
 
 const Createpost = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   // const { user }=useAuthContext()
   const [body, setBody] = useState("**Hello world!!!**");
   const [title, settitle] = useState();
@@ -97,7 +99,7 @@ const Createpost = () => {
       }, {
         headers: {
           'Content-Type': "application/json",
-          'Authorization': `Bearer ${document.cookie}`,
+          'Authorization': `Bearer ${cookies.token}`,
         }})      
         .then((res) => {
         if (res.data.tokenStatus == 1) {
