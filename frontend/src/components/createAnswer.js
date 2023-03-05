@@ -37,8 +37,15 @@ const CreateAnswer = (props) => {
         if (res.data.tokenStatus == 1) {
           alert("Answer posted succesful")
          setTimeout(() => {
-          navigate("/home2");
+          window.location.reload();
          }, 2000);
+        }
+        else
+        {
+          alert("You have to login to post an answer.Redirecting...");
+          setTimeout(() => {
+            navigate("/login");
+           }, 1000);
         }
       })
       .catch((err) => {
