@@ -93,6 +93,20 @@ client.query(sql5, function (err, result) {
   if (err) console.error(err);
   else{
     console.log("completed sql5")
+   }
+});
+var index1="create index if not exists username on users(username); create index if not exists postid on posts(id); create index if not exists answers on answers(id)";
+client.query(index1, function (err, result) {
+  if (err) console.error(err.stack);
+  else{
+    console.log("completed index1")
+   }
+});
+var index2="create index if not exists userid on users(id); create index if not exists questionid on answers(post_id)";
+client.query(index2, function (err, result) {
+  if (err) console.error(err.stack);
+  else{
+    console.log("completed index2  index2 ayyindi")
     client.end();
    }
 });
