@@ -137,7 +137,7 @@ useEffect(()=>
     let type = 1
     if(status == 1) { setStatus(0); setupvotes(upvotes - 1)}
     if(status == 0) { setStatus(1); setupvotes(upvotes + 1)}
-    if(status == -1) { setStatus(0); setupvotes(upvotes + 1); setdownvotes(downvotes - 1)}
+    if(status == -1) { setStatus(1); setupvotes(upvotes + 1); setdownvotes(downvotes - 1)}
     if (id != null) {
       //change the css of this button
 
@@ -178,9 +178,9 @@ useEffect(()=>
 
     let id = e.target.id;
     let type = 1
-    if(status == 1) {setStatus(0); setdownvotes(downvotes - 1 )}
-    if(status == 0) {setStatus(1); setdownvotes(downvotes + 1)}
-    if(status == -1) {setStatus(0); setdownvotes(downvotes - 1); setupvotes(upvotes+1)}
+    if(status == -1) {setStatus(0); setdownvotes(downvotes - 1 )}
+    if(status == 0) {setStatus(-1); setdownvotes(downvotes + 1)}
+    if(status == 1) {setStatus(-1); setdownvotes(downvotes + 1); setupvotes(upvotes-1)}
 
     if (id != null) {
       axios
