@@ -156,15 +156,15 @@ function Post() {
   e.preventDefault()
   if (window.confirm('Are u sure u want to delete this post?')) {
 
-    axios.post('http://localhost:5000/delete_post/'+post_id,{
-    headers: {
-      'Content-Type': "application/json",
-      'Authorization': `Bearer ${cookies.token}`,
-  }
+    axios.post('http://localhost:5000/delete_post/'+post_id,{},{
+      headers: {
+        'Content-Type': "application/json",
+        'Authorization': `Bearer ${cookies.token}`
+    }
   })
   .then((res) => {
     if (res.data.tokenStatus == 1) {
-        alert("Question deleted succesful")
+        alert("Question deleted succesful.Redirecting..")
         setTimeout(() => {
             navigate("/home2");
         }, 2000);
