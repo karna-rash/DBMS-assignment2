@@ -15,7 +15,7 @@ const Home2 = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [postsReady, setPostsReady] = useState(0);
   const [posts, setPosts] = useState([]);
-  const [pages, setPages] = useState(0);
+  const [pages, setPages] = useState(1);
   const handleSearch = (e) => {
     e.preventDefault();
     setPostsReady(0);
@@ -29,7 +29,9 @@ const Home2 = () => {
       })
       .then(async (res) => {
         setPosts(res.data.posts);
-        setPages(res.data.totpage);
+        if (res.data.totpage !== 0) {
+            setPages(res.data.totpage);
+        }
         setPostsReady(1)
       })
       .catch((err) => {
@@ -68,10 +70,7 @@ const Home2 = () => {
                         <Typography>Create Post</Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                          malesuada lacus ex, sit amet blandit leo lobortis eget.
-                        </Typography>
+                        <Typography>To create a post, click the "Create Post" button located above or in the Navbar. This will take you to a page where you can create your post using the Markdown Editor. For a post, title, body, and tags (which must be selected from existing ones) are mandatory. Your post will be visible to everyone.</Typography>
                       </AccordionDetails>
                     </Accordion>
                   </li>
@@ -85,8 +84,7 @@ const Home2 = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        To edit a post, click the "Edit" button located in the page of your post and you will be taken to a page where you can edit your post using Markdown Editor. Edit button will be visible only to the post owner. 
                       </Typography>
                     </AccordionDetails>
                   </Accordion></li>
@@ -102,8 +100,7 @@ const Home2 = () => {
 
 
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        To delete a post, click the "Delete" button located in the page of your post and the entire post will be deleted. Delete button will be visible only to the post owner. 
                       </Typography>
 
 
@@ -121,8 +118,7 @@ const Home2 = () => {
 
                     <AccordionDetails>
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        On the Post page, you can find the answers to the question. To add your answer, use the Markdown editor located just before the other answers. Write your answer and then post it. Your answer will be visible to everyone.
                       </Typography>
                     </AccordionDetails>
 
@@ -141,9 +137,7 @@ const Home2 = () => {
                     <AccordionDetails>
 
                       <Typography>
-
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        There is an upvote button present for each answer and post. To upvote, press the upward arrow button located on the left side of each post/answer.
                       </Typography>
 
 
@@ -160,8 +154,7 @@ const Home2 = () => {
                     <AccordionDetails>
 
                       <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                        There is an downvote button present for each answer and post. To downvote, press the downward arrow button located on the left side of each post/answer.
                       </Typography>
                       
                     </AccordionDetails>

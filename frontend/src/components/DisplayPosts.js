@@ -8,7 +8,7 @@ function DisplayPosts(props)
 {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
 const [params,setparams] = useState([]);
-const [totpagenum,settotpagenum] = useState(0);
+const [totpagenum,settotpagenum] = useState(1);
 const [posts,setPosts] = useState([]);
 const [curpagenum,setCurpagenum] = useState(1);
 
