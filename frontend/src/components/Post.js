@@ -326,7 +326,6 @@ useEffect(()=>
       (now.getMonth() - date.getMonth());
     const years = Math.floor(diffInMonths / 12);
     const months = diffInMonths % 12;
-    console.log(date);
     return years + " years, " + months + " months" + " Ago";
   }
 
