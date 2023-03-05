@@ -77,14 +77,22 @@ var sql3="create table if not exists answers( "+
   client.query(sql3, function (err, result) {
     if (err) console.error(err);
     else{
-      client.end();
+     console.log("completed sql3")
      }
   });
 
-var sql4="create table if not exists post-upvotes(userid integer not null, postid integer not null, status integer default 0, primary key (userid,postid), foreign key (userid) references users(id), foreign key (postid) references post(id));"
+var sql4="create table if not exists post_upvotes(userid integer not null, postid integer not null, status integer default 0, primary key (userid,postid), foreign key (userid) references users(id), foreign key (postid) references posts(id));"
 client.query(sql4, function (err, result) {
   if (err) console.error(err);
   else{
+    console.log("completed sql4")
+    }
+});
+var sql5="create table if not exists answer_upvotes(userid integer not null, answerid integer not null, status integer default 0, primary key (userid,answerid), foreign key (userid) references users(id), foreign key (answerid) references answers(id));"
+client.query(sql5, function (err, result) {
+  if (err) console.error(err);
+  else{
+    console.log("completed sql5")
     client.end();
    }
 });

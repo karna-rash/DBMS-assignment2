@@ -40,6 +40,13 @@ const CreateAnswer = (props) => {
           navigate("/home2");
          }, 2000);
         }
+        else
+        {
+          alert("You have to login to post an answer.Redirecting...");
+          setTimeout(() => {
+            navigate("/login");
+           }, 1000);
+        }
       })
       .catch((err) => {
         console.log(err);
