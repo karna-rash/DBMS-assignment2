@@ -33,9 +33,8 @@ useEffect(()=>
       .get("http://localhost:5000/posts/" + post.id, {})
       .then((res) => {
         settotpagenum(res.data.totpage);
-        console.log(res.data.totpage);
-        setupvotes(res.data.up_votes);
-        setdownvotes(res.data.down_votes);
+        setupvotes(post.up_votes);
+        setdownvotes(post.down_votes);
       })
       .catch((err) => {
         console.log(err);
