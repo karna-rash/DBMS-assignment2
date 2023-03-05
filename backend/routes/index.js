@@ -493,12 +493,17 @@ router.post('/register',async (req, res) => {
 router.get('/posts/:id1',(req,res)=>
 {
     let post_id = req.params.id1; 
+    let votes;
     const query={
       text: "SELECT * FROM answers where post_id = $1 order by creation_date desc limit 8",
       values: [post_id],
     }
     const query2={
       text: "SELECT * FROM answers where post_id = '"+post_id+"'",
+      values: [],
+    }
+    const query3={
+       text: "SELECT up_votes,down_votes FROM posts where id = '"+post_id+"'",
       values: [],
     }
     let pagenum=0;
@@ -512,6 +517,15 @@ router.get('/posts/:id1',(req,res)=>
         pagenum=Math.ceil(resl.rowCount/8)
       }
     })
+    client.query(query3, (err, resl) => {
+      if (err) {
+        console.log(err.stack)
+      }
+      else
+      { 
+       votes=resl.rows
+            }
+    })
     client.query(query, (err, resl) => {
       if (err) {
         console.log(err.stack)
@@ -523,6 +537,7 @@ router.get('/posts/:id1',(req,res)=>
         res.json({
           answers:resl.rows,
           totpage:pagenum,
+          votes:votes
         })
       }
     })
