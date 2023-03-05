@@ -5,7 +5,9 @@ import Navbar from './Navbar';
 import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import CreateAnswer from "./createAnswer";
+import { useCookies } from "react-cookie";
 function Post() {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const location = useLocation();
   const post = location.state.post;
   const EDS =location.state.Edit_status;
