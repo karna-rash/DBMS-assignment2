@@ -171,7 +171,7 @@ const Home2 = () => {
           </section>
         </main>
         {!!postsReady && (
-          <div className='flex flex-col bg-white items-center justify-center rounded-lg mx-12'>
+          <div className='flex flex-col bg-white items-center justify-center rounded-lg mx-12 my-4'>
             <DisplayPosts
               posts={posts}
               pages={pages}
