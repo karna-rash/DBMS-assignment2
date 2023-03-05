@@ -19,8 +19,8 @@ function Post() {
 
   const [totpagenum, settotpagenum] = useState(1);
   const [curpagenum, setCurpagenum] = useState(1);
-  const [upvotes, setupvotes] = useState(0);
-  const [downvotes, setdownvotes] = useState(0);
+  const [upvotes, setupvotes] = useState(post.up_votes);
+  const [downvotes, setdownvotes] = useState(post.down_votes);
   const navigate = useNavigate();
   const [status,setStatus] = useState(0);
 
@@ -33,9 +33,9 @@ useEffect(()=>
       .get("http://localhost:5000/posts/" + post.id, {})
       .then((res) => {
         settotpagenum(res.data.totpage);
-        console.log(res.data.totpage);
-        setupvotes(res.data.up_votes);
-        setdownvotes(res.data.down_votes);
+        console.log(res.data);
+        setupvotes(res.data.votes[0].up_votes);
+        setdownvotes(res.data.votes[0].down_votes);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +49,7 @@ useEffect(()=>
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${cookies.token}`,
-    },
+    }
   })
   .then((res)=>
   {
@@ -150,7 +150,7 @@ useEffect(()=>
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
-          },
+          }
          
         })
         .then((res) => {
@@ -192,7 +192,7 @@ useEffect(()=>
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
-          },
+          }
         })
         .then((res) => {
           if (res.data.tokenStatus == -1) {
@@ -389,6 +389,9 @@ useEffect(()=>
                     <path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z" />
                   </svg>
                 </button>
+                
+                
+              {console.log("upvotes:",upvotes)}
                 <h3 className="text-center mb-4">{upvotes}</h3>
                 <button className={status === -1 ? "bg-blue-500" : "hover:bg-blue-600"} onClick={handleDownvote}>
                   <svg
