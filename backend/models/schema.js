@@ -102,7 +102,7 @@ client.query(index1, function (err, result) {
     console.log("completed index1")
    }
 });
-var index2="create index if not exists userid on users(id); create index if not exists questionid on answers(post_id)";
+var index2="create index if not exists userid on users(id); create index if not exists questionid on answers(post_id); create index if not exists answerid on answers(id)";
 client.query(index2, function (err, result) {
   if (err) console.error(err.stack);
   else{
