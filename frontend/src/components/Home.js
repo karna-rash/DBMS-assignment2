@@ -13,7 +13,7 @@ const Home = () => {
       <main className="p-12">
         <section id="about" className="py-12">
           <h2 className="text-3xl font-bold text-indigo-500 text-center">About us</h2>
-          <p className="text-gray-700">This is a Community Question Answer(CQA) website developed for DBMS assignment. A CQA website is an online platform where users can ask questions on various topics and get answers from other members of the community. This website include features like tags, create,edit or delete posts, search post by tags, usernames, sorting by time, upvotes.</p>
+          <p className="text-gray-700">This is a Community Question Answer (CQA) website developed for the DBMS assignment. A CQA website is an online platform where users can ask questions on various topics and get answers from other members of the community. This website includes features such as tags, the ability to create, edit, or delete posts, search posts by tags or usernames, sorting by time, and upvoting, downvoting</p>
         </section>
         <section id="contact" className="py-12 bg-gray-100">
   <h2 className="text-3xl font-bold text-indigo-500 text-center mb-8">Contact Us</h2>
