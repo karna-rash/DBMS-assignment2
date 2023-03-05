@@ -16,15 +16,18 @@ function authenticateToken(req, res, next) {
   const token = bearer && bearer.split(' ')[1];
   if (token == null) {
     res.json({ tokenStatus: -1 });
+    console.log("token not confirmed ",token)
     
   }
   else {
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
       if (err) {
+        console.log("token is invalid")
         res.json({ tokenStatus: -2 });
       }
       else {
         req.user=user
+        console.log("token confirmed")
         next();
       }
     })

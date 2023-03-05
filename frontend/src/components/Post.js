@@ -153,7 +153,6 @@ function Post() {
  const handleDelete=(e,post_id)=>{
   e.preventDefault()
   if (window.confirm('Are u sure u want to delete this post?')) {
-
     axios.post('http://localhost:5000/delete_post/'+post_id,{
     headers: {
       'Content-Type': "application/json",
