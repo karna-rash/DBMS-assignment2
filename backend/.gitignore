@@ -3,3 +3,10 @@
 # dependencies
 /node_modules
 
+/config/database.js
+
+.env
+
+test.http
+
+/.vscode/settings.json
